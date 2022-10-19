@@ -9,6 +9,8 @@ npm i concurrently
 //Lägg till på script i package json
 ("all": "concurrently \"cd ../server && npm run dev\" \"npm run dev\"")
 
+// Importera React from 'react på app.jsx
+
 // .gitignore
 - Lägg till node_modules i gitignore för lättare versionshantering
 
