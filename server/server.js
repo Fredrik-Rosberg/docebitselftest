@@ -1,6 +1,13 @@
 const express = require("express");
-const port = 3000;
-const app=express();
+const app = express();
+const port = 3001;
 
-app.get("/",(req, res)=>{res.send("servers up and running")})
-app.listen(port, ()=>{console.log(`listening to ${port}`)});
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("servers up and running");
+});
+
+app.listen(port, () => {
+  console.log(`listening to ${port}`);
+});

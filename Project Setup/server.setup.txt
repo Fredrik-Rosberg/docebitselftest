@@ -1,0 +1,13 @@
+
+//Skapar ett node projekt (y står för yes to all)
+npm init -y
+
+// Installation av express
+-npm i express
+
+// I server.js skapar vi en server som lyssnar på port 3001
+// Skickar en respons (servers up and running) på "/" 
+
+
+
+
