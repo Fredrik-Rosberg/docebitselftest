@@ -12,7 +12,7 @@ function LoginPage() {
         />
 
         <form className="signinform">
-          <h3 className="loginheader">Logga in på Docebit Selftest</h3>
+          <h1 className="loginheader">Logga in på Docebit Selftest</h1>
 
           <div className="loginfield">
             <label htmlFor="username">E-post</label>
@@ -23,9 +23,15 @@ function LoginPage() {
             <label htmlFor="password">Lösenord</label>
             <input type="password" />
           </div>
+          <div className="loginerrormessage">
+            <p>Inloggning misslyckades</p>
+            <p>Wrong password</p>
+          </div>
 
           <button className="loginbutton">Logga in</button>
-          <a className="loginforgotpassword">Glömt lösenord?</a>
+          <a href="kaoz.se" className="loginforgotpassword">
+            Glömt lösenord?
+          </a>
         </form>
       </div>
     </>

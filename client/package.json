@@ -10,6 +10,7 @@
     "all": "concurrently \"cd ../server && npm run dev\" \"npm run dev\""
   },
   "dependencies": {
+    "@fontsource/raleway": "^4.5.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
