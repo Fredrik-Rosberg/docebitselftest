@@ -14,13 +14,13 @@ const signInUser = async (req, res) => {
       user = user.rows[0];
       req.session.user = user;
       req.session.user.loggedIn = true;
-      res.status(200).json({ loggedIn: true, message: "User is logged in" });
+      res.status(200).json({ loggedIn: true, message: "Inloggad" });
     } catch (error) {
-      res.status(401).json({ loggedIn: false, message: "Wrong password" });
+      res.status(401).json({ loggedIn: false, message: "Felaktigt lösenord" });
       console.log(error);
     }
   } else {
-    res.status(401).json({ loggedIn: false, message: "No matching user" });
+    res.status(401).json({ loggedIn: false, message: "Användare finns inte" });
   }
 };
 

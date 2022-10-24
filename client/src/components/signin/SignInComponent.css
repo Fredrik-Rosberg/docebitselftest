@@ -1,122 +1,112 @@
 .signinmain {
-    display: grid;
-    grid-template-rows: 15% 1fr 15%;
-    background-color: #ebf5fb;
-    color: #000000;
-    min-height: 100vh;
+  display: grid;
+  grid-template-rows: 12% 1fr 12%;
+  background-color: #ebf5fb;
+  color: #000000;
+  min-height: 100vh;
 
-    width: 100vw;
-    align-items: center;
-    justify-items: center;
+  width: 100vw;
+  align-items: center;
+  justify-items: center;
 }
 
 .docebitlogo {
-    width: 157px;
-    height: auto;
-    justify-self: start;
-    padding-left: 5vw;
+  width: 157px;
+  height: auto;
+  justify-self: start;
+  margin-left: 5vw;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+
 }
 
 .signinform {
-    display: grid;
-    grid-template-rows: 35% 10% 10% 10% 8%;
-    height: 100%;
-    width: 30vw;
+  display: grid;
+  grid-template-rows: 35% 10% 10% 10% 8%;
+  height: 100%;
+  width: 380px;
 
-    background-color: white;
+  background-color: white;
+  justify-items: center;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.086);
+  border-radius: 5px;
+
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.loginfield {
+  display: grid;
+}
+
+.loginfield > input {
+  width: 175px;
+  height: 27px;
+  padding: 0;
+}
+.loginfield > label {
+  font-size: 14px;
+}
+
+.loginbutton {
+  border: 1px solid black;
+  height: 27px;
+  width: 75px;
+  box-shadow: rgba(0, 0, 0, 0.407) 1.95px 1.95px 2.6px;
+}
+
+.loginforgotpassword {
+  text-decoration: underline;
+  font-size: 12px;
+  align-self: start;
+  padding-top: 1vh;
+}
+
+.loginheader {
+  text-align: center;
+  font-size: 24px;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+.loginerrormessage {
+  text-align: center;
+  font-size: 14px;
+  color: rgb(255, 99, 99);
+}
+.loginerrormessage > p {
+  margin: 0;
+  padding: 0.3vh;
+}
+
+@media screen and (max-width: 960px) {
+  .loginheader {
+    padding-left: 3vw;
+    padding-right: 3vw;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .loginheader {
+    padding-left: 3vw;
+    padding-right: 3vw;
+  }
+
+  .signinform {
+    display: grid;
+    grid-template-rows: 20% 10% 10% 12% 15%;
+    height: 80vh;
+    width: 96vw;
+
     justify-items: center;
     align-items: center;
     border: 1px solid rgba(0, 0, 0, 0.086);
     border-radius: 5px;
+  }
 
-}
-
-.loginfield {
-    display: grid;
-}
-
-.loginfield>input {
-    width: 171px;
-    height: 23px;
+  .docebitlogo {
+    width: 157px;
+    height: auto;
+    justify-self: center;
     padding: 0;
-    
-    
-
-
-}
-.loginfield>label{
-    font-size: 14px;
-    
-
-}
-
-.loginbutton {
-    border: 1px solid black;
-    height: 27px;
-    width: 75px;
-    box-shadow: rgba(0, 0, 0, 0.407) 1.95px 1.95px 2.6px;
-
-}
-
-.loginforgotpassword {
-    text-decoration: underline;
-    font-size: 12px;
-    align-self: start;
-    padding-top:1vh;
-}
-
-.loginheader {
-    text-align: center;
-    font-size: 24px;
-    padding-left: 3vw;
-        padding-right: 3vw;
-}
-.loginerrormessage{
-    text-align: center;
-    font-size: 14px;
-    color: rgb(255, 99, 99);
-
-}
-.loginerrormessage>p{
-    margin: 0;
-    padding: 0.3vh;
-}
-
-
-@media screen and (max-width:960px) {
-    .loginheader {
-        padding-left: 3vw;
-        padding-right: 3vw;
-    }
-
-}
-
-@media screen and (max-width:680px) {
-    .loginheader {
-        padding-left: 3vw;
-        padding-right: 3vw;
-    }
-
-    .signinform {
-        display: grid;
-        grid-template-rows: 20% 10% 10% 12% 15%;
-        height: 80vh;
-        width: 96vw;
-
-
-        justify-items: center;
-        align-items: center;
-        border: 1px solid rgba(0, 0, 0, 0.086);
-        border-radius: 5px;
-    }
-
-    .docebitlogo {
-        width: 157px;
-        height: auto;
-        justify-self: center;
-        padding: 0;
-
-    }
-
-
+  }
 }
