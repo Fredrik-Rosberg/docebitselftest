@@ -1,0 +1,4 @@
+
+
+Installera postgres (npm i pg)
+Installera express-session

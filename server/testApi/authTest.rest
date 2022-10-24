@@ -1,0 +1,10 @@
+###
+POST http://localhost:3001/api/signin HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "rune7@hot.com",
+    "password": "Hej12345!"
+}
+###
+GET http://localhost:3001/api/signin  HTTP/1.1
