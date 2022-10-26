@@ -3,8 +3,9 @@ import "./SignInComponent.css";
 import React, { useState, useEffect } from "react";
 import { validateUserInputs } from "./validationService.js";
 import { signIn } from "./signinService";
+import {Link} from "react-router-dom"
 
-function LoginPage() {
+function SignIn() {
   const initValue = "Default";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,29 +41,24 @@ function LoginPage() {
 
   return (
     <>
-      <div className="signinmain">
-        <img
-          src="../../src/assets/cropped-DocebIT01-1-1.jpg"
-          alt=""
-          className="docebitlogo"
-        />
-
+      
         <form className="signinform" onSubmit={handleSubmit}>
-          <h1 className="loginheader">Logga in på Docebit Selftest</h1>
+          <h1 className="signinheader">Logga in på Docebit Selftest</h1>
 
-          <div className="loginfield">
-            <label htmlFor="username">E-post</label>
+          <div className="signinfield labelspace">
+            <label htmlFor="username" className="labelspace" >E-post</label>
             <input
               type="text"
               onChange={(e) => {
                 setEmail(e.target.value), setErrorEmail(initValue);
               }}
               value={email}
+              
             />
           </div>
 
-          <div className="loginfield">
-            <label htmlFor="password">Lösenord</label>
+          <div className="signinfield">
+            <label htmlFor="password" className="labelspace">Lösenord</label>
             <input
               type="password"
               onChange={(e) => {
@@ -71,7 +67,7 @@ function LoginPage() {
               value={password}
             />
           </div>
-          <div className="loginerrormessage">
+          <div className="signinerrormessage">
             {showMessages ? (
               errorPassword == initValue ? (
                 ""
@@ -87,14 +83,14 @@ function LoginPage() {
             )}
           </div>
 
-          <button className="loginbutton">Logga in</button>
-          <a href="" className="loginforgotpassword">
+          <button className="signinbutton">Logga in</button>
+          <Link to="/reset"className="signinforgotpassword">
             Glömt lösenord?
-          </a>
+          </Link>
         </form>
-      </div>
+      
     </>
   );
 }
 
-export default LoginPage;
+export default SignIn;
