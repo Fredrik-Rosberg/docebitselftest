@@ -7,7 +7,7 @@ import "@fontsource/raleway";
 import HomeComponent from "./components/home/HomeComponent"
 import NewPassword from "./components/passwordreset/NewPasswordComponent";
 function App() {
-  const [count, setCount] = useState(0);
+  
 
   return (
     <Router>
