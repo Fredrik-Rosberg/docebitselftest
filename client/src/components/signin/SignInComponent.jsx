@@ -5,35 +5,28 @@ import { validateUserInputs } from "./validationService.js";
 import { signIn } from "./signinService";
 import {Link} from "react-router-dom"
 
-function SignIn() {
-  const initValue = "Default";
+function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorPassword, setErrorPassword] = useState(initValue);
-  const [errorEmail, setErrorEmail] = useState(initValue);
+  const [errorMessage, setErrorMessage] = useState("");
   const [showMessages, setShowMessages] = useState(false);
 
   //OnSubmit kollas så att det inte är några felmeddelanden pga användarens felaktiga inputs. Kör endast signIn om det är ifyllt rätt enligt kravspecen.
+
   useEffect(() => {
-    const { emailError, passwordError } = validateUserInputs(email, password);
-    setErrorPassword(passwordError);
-    setErrorEmail(emailError);
+    const error = validateUserInputs(email, password);
+    setErrorMessage(error);
     setShowMessages(false);
   }, [email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (errorEmail == "" && errorPassword == "") {
+    if (errorMessage == "") {
       const user = { email: email, password: password };
       let response = await signIn(user);
-      console.log(response);
       if (response == "No matching user") {
-        setErrorEmail(response);
-      } else if (response == "Congrats you are logged in") {
-        setErrorPassword(response);
-      } else {
-        setErrorPassword(response);
+        setErrorMessage("Kontrollera att du angivit rätt E-post och lösenord");
       }
     }
     setShowMessages(true);
@@ -50,7 +43,7 @@ function SignIn() {
             <input
               type="text"
               onChange={(e) => {
-                setEmail(e.target.value), setErrorEmail(initValue);
+                setEmail(e.target.value), setErrorMessage("");
               }}
               value={email}
               
@@ -62,20 +55,19 @@ function SignIn() {
             <input
               type="password"
               onChange={(e) => {
-                setPassword(e.target.value), setErrorPassword(initValue);
+                setPassword(e.target.value), setErrorMessage("");
               }}
               value={password}
             />
           </div>
           <div className="signinerrormessage">
             {showMessages ? (
-              errorPassword == initValue ? (
+              errorMessage == "" ? (
                 ""
               ) : (
                 <>
                   <p>Inloggning misslyckades</p>
-                  <p>{errorEmail}</p>
-                  <p>{errorPassword}</p>
+                  <p>{errorMessage}</p>
                 </>
               )
             ) : (

@@ -8,7 +8,7 @@ export const signIn = async (data) => {
       body: JSON.stringify(data),
     });
     let response = await dataResponse.json();
-    console.log(response);
+    
     if (response.loggedIn) {
       return response.message;
     } else {
