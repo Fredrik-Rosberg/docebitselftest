@@ -3,8 +3,9 @@ import "./SignInComponent.css";
 import React, { useState, useEffect } from "react";
 import { validateUserInputs } from "./validationService.js";
 import { signIn } from "./signinService";
+import { Link } from "react-router-dom";
 
-function LoginPage() {
+function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -33,60 +34,56 @@ function LoginPage() {
 
   return (
     <>
-      <div className="signinmain">
-        <img
-          src="../../src/assets/cropped-DocebIT01-1-1.jpg"
-          alt=""
-          className="docebitlogo"
-        />
+      <form className="signinform" onSubmit={handleSubmit}>
+        <h1 className="signinheader">Logga in på Docebit Selftest</h1>
 
-        <form className="signinform" onSubmit={handleSubmit}>
-          <h1 className="loginheader">Logga in på Docebit Selftest</h1>
+        <div className="signinfield labelspace">
+          <label htmlFor="username" className="labelspace">
+            E-post
+          </label>
+          <input
+            type="text"
+            onChange={(e) => {
+              setEmail(e.target.value), setErrorMessage("");
+            }}
+            value={email}
+          />
+        </div>
 
-          <div className="loginfield">
-            <label htmlFor="username">E-post</label>
-            <input
-              type="text"
-              onChange={(e) => {
-                setEmail(e.target.value), setErrorMessage("");
-              }}
-              value={email}
-            />
-          </div>
-
-          <div className="loginfield">
-            <label htmlFor="password">Lösenord</label>
-            <input
-              type="password"
-              onChange={(e) => {
-                setPassword(e.target.value), setErrorMessage("");
-              }}
-              value={password}
-            />
-          </div>
-          <div className="loginerrormessage">
-            {showMessages ? (
-              errorMessage == "" ? (
-                ""
-              ) : (
-                <>
-                  <p>Inloggning misslyckades</p>
-                  <p>{errorMessage}</p>
-                </>
-              )
-            ) : (
+        <div className="signinfield">
+          <label htmlFor="password" className="labelspace">
+            Lösenord
+          </label>
+          <input
+            type="password"
+            onChange={(e) => {
+              setPassword(e.target.value), setErrorMessage("");
+            }}
+            value={password}
+          />
+        </div>
+        <div className="signinerrormessage">
+          {showMessages ? (
+            errorMessage == "" ? (
               ""
-            )}
-          </div>
+            ) : (
+              <>
+                <p>Inloggning misslyckades</p>
+                <p>{errorMessage}</p>
+              </>
+            )
+          ) : (
+            ""
+          )}
+        </div>
 
-          <button className="loginbutton">Logga in</button>
-          <a href="" className="loginforgotpassword">
-            Glömt lösenord?
-          </a>
-        </form>
-      </div>
+        <button className="signinbutton">Logga in</button>
+        <Link to="/reset" className="signinforgotpassword">
+          Glömt lösenord?
+        </Link>
+      </form>
     </>
   );
 }
 
-export default LoginPage;
+export default SignIn;

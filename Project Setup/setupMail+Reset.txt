@@ -1,0 +1,4 @@
+// Installera nodemailer
+//Skapa fil med gmailkonfiguraton för att skicka via gmail. se sendResetEmail.js
+
+//Ev. lösning. Skapa ett harangid som finns till varje user i databasen. Detta används som url/id vid klick på länken för att binda nya lösenordet till user. Vi hämtar paramen för att hämta usern. Vid återställning av lösenord ska även denna harangid bytas till en ny. Giltighetstid. 

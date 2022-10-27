@@ -30,8 +30,11 @@ export const validateEmail = (email) => {
 
 export const validateUserInputs = (email, password) => {
   const emailError = validateEmail(email);
-
   const passwordError = validatePassword(password);
 
-  return { emailError, passwordError };
+  if (emailError === "" && passwordError === "") {
+    return "";
+  } else {
+    return "Kontrollera att du angivit rätt E-post och lösenord";
+  }
 };
