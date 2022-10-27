@@ -3,13 +3,11 @@
     grid-template-rows: 30% 10% 10% 10% 10% 15%;
     height: 100%;
     width: 380px;
-
     background-color: white;
     justify-items: center;
     align-items: center;
     border: 1px solid rgba(0, 0, 0, 0.086);
     border-radius: 5px;
-
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
@@ -64,9 +62,7 @@
 
 .resetpasswordtext {
     margin: 3vw;
-    
     text-align: center;
-    
 }
 
 .labelspace {
