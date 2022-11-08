@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS users(
 id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+firstname varchar(50) NOT NULL,
+lastname varchar(50) NOT NULL,
 email varchar(55) NOT NULL,
 hashedpassword varchar(255) NOT NULL, 
 role varchar(55) NOT NULL,
@@ -42,7 +44,7 @@ FOREIGN KEY (testid) REFERENCES test(id),
 FOREIGN KEY (userid) REFERENCES users(id)
 );
 
-INSERT INTO users (email, hashedpassword, role, resetid) VALUES ('admin@admin.com', 'dafd082f83963dc30b4c7ffd6d78a2b62263c17a229aab3e0d0245064c1e07aacadf31946dd0be78e76968b6abe7d93efc5da2df37172affdae3b4450c3112fa', 'admin', 'd5063206-f6f5-455c-a3e2-b81b28c08172'  );
+INSERT INTO users (firstname, lastname, email, hashedpassword, role) VALUES ('admin', 'admin', 'admin@admin.com', 'dafd082f83963dc30b4c7ffd6d78a2b62263c17a229aab3e0d0245064c1e07aacadf31946dd0be78e76968b6abe7d93efc5da2df37172affdae3b4450c3112fa', 'admin'  );
 INSERT INTO test (testname, uploaddate, maxscore) VALUES ('testavtest', '2022-10-12', '40');
 INSERT INTO course (name, startdate, enddate, testid) VALUES ('testcourse', '2022-10-12', '2022-12-12','1');
 INSERT INTO courseoccasion (courseid, userid) VALUES ('1','1');
