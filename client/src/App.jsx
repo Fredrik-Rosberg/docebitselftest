@@ -23,7 +23,7 @@ function App() {
           <Route path="/" element={<SignInComponent />} />
           <Route path="/reset" element={<SendResetMailComponent />} />
           <Route path="/home" element={<HomeComponent />} />
-          <Route path="/newpassword" element={<NewPassword />} />
+          <Route path="/newpassword/:id" element={<NewPassword />} />
         </Routes>
         
       </div>

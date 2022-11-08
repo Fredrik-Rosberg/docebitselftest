@@ -23,20 +23,18 @@ app.use(
   })
 );
 
-const sendMail=require("./src/resetPasswordService/sendResetEmail")
-//Skickar mail som faen. 
-// sendMail();
+const sendMail = require("./src/resetPasswordService/resetPasswordRouter.js");
+
 //Routes
 const authRouter = require("./src/authenticate/authRouter.js");
 
 app.use("/", authRouter);
+app.use("/", sendMail);
 
 app.get("/api", (req, res) => {
   res.send("servers up and running");
 });
 //declared nodemailer
-
-
 
 app.listen(PORT, () => {
   console.log(`listening to ${PORT}`);

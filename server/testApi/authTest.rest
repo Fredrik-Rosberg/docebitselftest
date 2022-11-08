@@ -8,3 +8,14 @@ Content-Type: application/json
 }
 ###
 GET http://localhost:3001/api/signin  HTTP/1.1
+
+###
+GET http://localhost:3001/api/newpassword/ba27491c-9c94-49bb-a867-a81ef1b8ad77 HTTP/1.1
+###
+PUT http://localhost:3001/api/reset HTTP/1.1
+Content-Type:  application/json
+
+{"newPassword":"Hej12345!",
+
+    "usedResetId":"64c29b5d-8650-4db6-8cb6-7d233bbb7e6a"}
+
