@@ -27,8 +27,9 @@ const sendMail = require("./src/resetPasswordService/resetPasswordRouter.js");
 
 //Routes
 const authRouter = require("./src/authenticate/authRouter.js");
-
+const userRouter = require("./src/users/userRouter");
 app.use("/", authRouter);
+app.use("/", userRouter);
 app.use("/", sendMail);
 
 app.get("/api", (req, res) => {

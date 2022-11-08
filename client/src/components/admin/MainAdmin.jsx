@@ -1,6 +1,6 @@
 import "./mainAdmin.css";
 import React from "react";
-import CreateAccount from "./CreateAccount";
+import CreateAccount from "./createAccount/CreateAccount";
 import { AiOutlineProfile } from "react-icons/ai";
 import "../../assets/cropped-DocebIT01-1-1.jpg";
 
@@ -32,7 +32,7 @@ function MainAdmin() {
           </div>
         </div>
         <main className="adminrightmain">
-          <CreateAccount/>
+          <CreateAccount />
         </main>
       </div>
     </>

@@ -13,8 +13,6 @@
   display: grid;
   grid-template-columns: 35% 228px;
   align-items: center;
-  row-gap: ;
-  
 }
 
 .createaccountinput>input{
