@@ -56,9 +56,9 @@ const resetPassword = async (req, res) => {
         encryptedPassword,
         req.body.usedResetId,
       ]);
-      res.json({ message: "success" });
+      res.json({ message: "success", result: true });
     } else {
-      res.json({ message: "failed" });
+      res.json({ message: "failed", result: false });
     }
   } catch (error) {
     console.log(error);

@@ -1,6 +1,5 @@
 const url = "/api/reset/";
 
-
 export const sendMail = async (mail) => {
   try {
     let dataResponse = await fetch(url, {
@@ -9,7 +8,6 @@ export const sendMail = async (mail) => {
       body: JSON.stringify(mail),
     });
     let response = await dataResponse.json();
-    console.log(response);
   } catch (error) {
     console.log(error);
   }
@@ -23,26 +21,22 @@ export const updatePassword = async (resetids) => {
     });
 
     let response = await dataResponse.json();
-    console.log("hej");
+    console.log(response.result)
+    return response.result;
   } catch (error) {
     console.log(error);
+    return response.result;
   }
 };
 
 export const getExpireDate = async (resetid) => {
   let dataResponse = await fetch(url + resetid);
   let response = await dataResponse.json();
-  if (response.sessionExpired) {
-    return true;
-  } else return false;
+  return response.resetIdValid;
 };
 
 export const destroyResetId = async (resetid) => {
   let dataResponse = await fetch(url + resetid);
-
   let response = await dataResponse.json();
-  console.log(response);
-  if (response.sessionExpired) {
-    return true;
-  } else return false;
+    return response.resetIdValid;
 };
