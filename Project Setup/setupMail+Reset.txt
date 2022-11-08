@@ -2,3 +2,11 @@
 //Skapa fil med gmailkonfiguraton för att skicka via gmail. se sendResetEmail.js
 
 //Ev. lösning. Skapa ett harangid som finns till varje user i databasen. Detta används som url/id vid klick på länken för att binda nya lösenordet till user. Vi hämtar paramen för att hämta usern. Vid återställning av lösenord ska även denna harangid bytas till en ny. Giltighetstid. 
+
+
+//använd crypto för att rendera uuid. crypto.randomUUID();
+//sätt uuid på mailen i sendResetEmailKomponenten.
+//andvänd :id i route.
+//plocka ner med useParam och skicka tillsammans med det nya        lösenordet från frontend
+//uppdatera användare genom att söka fram rätt user med resetid. byt lösenord och sätt ett nytt resetid
+//resetid är nullat tills återställningsmailskickas. Rätt användare får sedan resetidt. När lösenord är bytt nullas resetid igen för att hindra att någon kommer åt det och kan använda det för att quera in nytt lösenord. 

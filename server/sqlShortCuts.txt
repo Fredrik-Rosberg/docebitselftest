@@ -1,0 +1,9 @@
+"""Skapar unik insert i databas med bibehållen primarykey på id"""
+ALTER TABLE course ADD CONSTRAINT makeuniq UNIQUE("name",startdate);
+
+"""courseoccasion kommer att innehålla användarid och kursid"""
+
+
+"""Tar ut hela table till courseoccasion från kurs"""
+SELECT course.name, course.startdate, course.enddate, test.testname, users.email FROM courseoccasion INNER JOIN course ON course.id = courseoccasion.courseid 
+INNER JOIN users ON users.id = courseoccasion.userid INNER JOIN test ON test.id = course.testid

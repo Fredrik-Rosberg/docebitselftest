@@ -2,8 +2,18 @@ import "../signin/SignInComponent.css";
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { sendMail } from "./sendResetMailService";
 function SendResetMail() {
   const [sent, setSent] = useState(false);
+  const [mail, setMail] = useState();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMail(mail);
+    const load = { mail: mail };
+    setSent(true);
+    await sendMail(load);
+  };
 
   return (
     <>
@@ -18,11 +28,13 @@ function SendResetMail() {
           <div></div>
 
           <Link to="/">
-            <button className="signinbutton">Tillbaka</button>
+            <button type="button" className="signinbutton">
+              Tillbaka
+            </button>
           </Link>
         </div>
       ) : (
-        <form onSubmit={(e) => setSent(true)} className="signinform">
+        <form onSubmit={handleSubmit} className="signinform">
           <h2>Återställ lösenord</h2>
           <p className="resetpasswordtext">
             Fyll i den e-postadress som är registrerad för ditt konto. Ett mail
@@ -31,10 +43,10 @@ function SendResetMail() {
           <div></div>
           <div className="signinfield moveup">
             <label className="labelspace">E-post</label>
-            <input type="text"></input>
+            <input type="text" onChange={(e) => setMail(e.target.value)} />
           </div>
           <button type="submit" className="signinbutton">
-            Skicka
+            Fortsätt
           </button>
         </form>
       )}
