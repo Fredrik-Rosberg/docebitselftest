@@ -2,14 +2,9 @@ body {
   margin: 0;
   font-family: "Raleway";
   background-color: #ebf5fb;
-
-
 }
 
-
-
 .app {
-
   display: grid;
   grid-template-rows: 12% 1fr 12%;
   color: #000000;
@@ -17,7 +12,6 @@ body {
   width: 100vw;
   align-items: center;
   justify-items: center;
-
 }
 
 .docebitlogo {

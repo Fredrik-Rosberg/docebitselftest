@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+}
+.adminmain {
+  display: grid;
+  grid-template-columns: 295px 1fr;
+  height: 100vh;
+  width: 100vw;
+}
+.adminleftmain {
+  background-color: white;
+}
+
+.menublock {
+  margin-top: 20vh;
+}
+.adminitem {
+  display: grid;
+  grid-template-columns: 12% 75%;
+  margin-bottom: 2vh;
+  margin-left: 2vh;
+  text-align: start;
+}
+.adminitem > :first-child {
+  padding-top: 1px;
+  padding-left: 1vw;
+}
+.adminitem > :last-child {
+  margin-left: 1vw;
+}
+
+.adminrightmain {
+  background-color: #ebf5fb;
+  text-align: center;
+  justify-self: start;
+  width: 30vw;
+  margin-left: 100px;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "../signin/SignInComponent.css";
 import { validatePassword } from "../signin/validationService.js";
 import { getExpireDate, updatePassword } from "./sendResetMailService";
