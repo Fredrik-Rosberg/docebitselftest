@@ -21,7 +21,6 @@ const createAccount = async (req, res) => {
     let sqlQuery =
       "INSERT INTO users (firstname, lastname, email, hashedpassword, role) VALUES ($1,$2,$3,$4,$5 )";
     const userExists = await getUserByEmail(req.body.email);
-    console.log(userExists)
     if (userExists == null) {
       let result = await db.query(sqlQuery, [
         req.body.firstName,
@@ -30,7 +29,6 @@ const createAccount = async (req, res) => {
         encryptedPassword,
         req.body.role,
       ]);
-      console.log(result)
       if (result.rowCount) {
         res.json({ message: "Konto skapat", result: true });
       }
