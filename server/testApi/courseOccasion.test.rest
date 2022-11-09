@@ -1,0 +1,9 @@
+###
+POST http://localhost:3001/api/course/occasion HTTP/1.1
+Content-Type: application/json
+
+{
+    "courseid": 3,
+    "userid": 1
+}
+

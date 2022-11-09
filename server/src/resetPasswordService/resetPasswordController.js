@@ -2,10 +2,12 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const encrypt = require("../../config/encryption");
 const db = require("../../db");
+const { getUserByEmail } = require("../users/userController");
 
 const sendMail = async (req, res) => {
   await setResetIdByEmail(req.body.mail);
   const resetId = await getResetIdByEmail(req.body.mail);
+  const userExist = await getUserByEmail(req.body.mail);
 
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -27,18 +29,21 @@ const sendMail = async (req, res) => {
     to: req.body.mail,
     subject: "Återställ lösenord",
     text: "Skickat från DocebIT selftest",
-    html: `<a href="http://localhost:5173/newpassword/${resetId}">Återställ lösenord</a>`,
+    html: `<a href="http://localhost:5173/reset/${resetId}">Återställ lösenord</a>`,
   };
-
-  transporter.sendMail(mailOptions, function (err, success) {
-    if (err) {
-      console.log(err);
-      res.status(401).json({ message: "inget mail skickat" });
-    } else {
-      console.log("Email is sent");
-      res.status(200).json({ message: "mail är skickat" });
-    }
-  });
+  if (userExist!=null) {
+    transporter.sendMail(mailOptions, function (err, success) {
+      if (err) {
+        console.log(err);
+        res.status(401).json({ message: "inget mail skickat" });
+      } else {
+        console.log("Email is sent");
+        res.status(200).json({ message: "mail är skickat" });
+      }
+    });
+  } else {
+    res.status(400).json({ message: "Misslyckat skickförsök" });
+  }
 };
 
 const resetPassword = async (req, res) => {
@@ -109,7 +114,9 @@ const getExpireDate = async (req, res) => {
     } else {
       res.json({ resetIdValid: false });
     }
-  } catch (error) {res.json({message: error})}
+  } catch (error) {
+    res.json({ message: error });
+  }
 };
 
 module.exports = { sendMail, resetPassword, getExpireDate };

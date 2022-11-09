@@ -22,6 +22,7 @@ name varchar(55) NOT NULL,
 startdate date NOT NULL,
 enddate date NOT NULL,
 testid int,
+courseorganizer varchar(55) NOT NULL,
 FOREIGN KEY (testid) REFERENCES test(id),
 UNIQUE (name, startdate)
 );

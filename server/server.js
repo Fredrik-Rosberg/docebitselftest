@@ -23,14 +23,17 @@ app.use(
   })
 );
 
-const sendMail = require("./src/resetPasswordService/resetPasswordRouter.js");
+
 
 //Routes
+const sendMail = require("./src/resetPasswordService/resetPasswordRouter.js");
 const authRouter = require("./src/authenticate/authRouter.js");
 const userRouter = require("./src/users/userRouter");
+const courseRouter = require("./src/course/courseRouter");
 app.use("/", authRouter);
 app.use("/", userRouter);
 app.use("/", sendMail);
+app.use("/", courseRouter);
 
 app.get("/api", (req, res) => {
   res.send("servers up and running");

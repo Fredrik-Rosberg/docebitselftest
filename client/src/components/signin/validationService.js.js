@@ -38,3 +38,15 @@ export const validateUserInputs = (email, password) => {
     return "Kontrollera att du angivit rätt E-post och lösenord";
   }
 };
+
+// Kontrollerar att användarens input bara består av bokstäver
+
+export const validateUserInputOnlyLetters = (input) => {
+  if (!input) {
+    return "Vänligen fyll i samtliga uppgifter för att skapa kurstillfälle";
+  } else if (!new RegExp(/^[A-Za-z]+$/).test(input) || input.length > 100) {
+    return "Får endast innehålla bokstäver och vara max 100 tecken långt";
+  }
+
+  return "";
+};
