@@ -11,21 +11,28 @@ function CreateAccount() {
     password: "",
     role: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const [validationMessage, setValidationMessage] = useState("");
   const [showMessages, setShowMessages] = useState(false);
 
   useEffect(() => {
     const error = validateUserInputs(newUser.email, newUser.password);
-    setErrorMessage(error);
+    setValidationMessage(error);
     setShowMessages(false);
   }, [newUser.email, newUser.password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let result = await createAccount(newUser);
-    console.log(result);
+    if (newUser.role == "") {
+      setValidationMessage("Vänligen fyll i alla uppgifter");
+    }
+    if (validationMessage == "") {
+      let result = await createAccount(newUser);
+      setMessage(result);
+    }
+    setShowMessages(true);
   };
-  
+
   return (
     <>
       <form onSubmit={handleSubmit} className="createaccountform">
@@ -40,7 +47,7 @@ function CreateAccount() {
             name="firstname"
             onChange={(e) => {
               setNewUser({ ...newUser, firstName: e.target.value }),
-                setErrorMessage("");
+                setMessage("");
             }}
           />
         </div>
@@ -51,7 +58,7 @@ function CreateAccount() {
             name="lastname"
             onChange={(e) => {
               setNewUser({ ...newUser, lastName: e.target.value }),
-                setErrorMessage("");
+                setMessage("");
             }}
           />
         </div>
@@ -61,8 +68,7 @@ function CreateAccount() {
             type="text"
             name="email"
             onChange={(e) => {
-              setNewUser({ ...newUser, email: e.target.value }),
-                setErrorMessage("");
+              setNewUser({ ...newUser, email: e.target.value }), setMessage("");
             }}
           />
         </div>
@@ -73,13 +79,13 @@ function CreateAccount() {
             name="password"
             onChange={(e) => {
               setNewUser({ ...newUser, password: e.target.value }),
-                setErrorMessage("");
+                setMessage("");
             }}
           />
         </div>
         <div className="createaccountinput">
           <label htmlFor="account">Konto:</label>
-          <select size="2">
+          <select>
             <option
               onClick={(e) => {
                 setNewUser({ ...newUser, role: e.target.value });
@@ -103,9 +109,28 @@ function CreateAccount() {
 
           <button className="createaccountbutton">Skapa konto</button>
         </div>
+        <div>
+          {showMessages ? (
+            message == "" && validationMessage == "" ? (
+              ""
+            ) : (
+              <>
+                <p>{message}</p>
+                <p>{validationMessage}</p>
+              </>
+            )
+          ) : (
+            ""
+          )}
+        </div>
       </form>
     </>
   );
 }
 
 export default CreateAccount;
+
+// Lagt till valideringsmeddelande för email o lösenord
+// + meddelande för att konto skapats eller användare finns redan
+// Om newUser.role är en tom sträng så sätts valideringsmeddelandet till vänligen fyll i alla uppgifter
+// Tagit bort console log
