@@ -7,7 +7,7 @@ export const sendMail = async (mail) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(mail),
     });
-    let response = await dataResponse.json();
+    
   } catch (error) {
     console.log(error);
   }

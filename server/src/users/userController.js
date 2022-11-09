@@ -6,10 +6,11 @@ const getUserByEmail = async (email) => {
     let sqlQuery = "SELECT id, email FROM users WHERE email=$1";
     const userExists = await db.query(sqlQuery, [email]);
 
-    if (userExists.rows[0]) {
+    if (userExists.rowCount) {
       return userExists.rows[0];
+    } else {
+      return null;
     }
-    return null;
   } catch (error) {
     return error;
   }

@@ -1,0 +1,35 @@
+.createcourseform{
+    display: grid;
+    margin-top: 100px;
+    grid-template-rows: repeat(6, 1fr);
+    
+}
+.courseinput{
+    display: grid;
+    grid-template-columns: 150px 228px;
+    width: 70vw;
+    text-align: start;
+    margin-bottom: 12px;
+    align-items: center;
+    font-size: 13px;
+}
+.courseinput>h2{
+    margin: 0;
+    align-self: start;
+}
+.dateinput{
+    width: 100px;
+    height: 27px;
+}
+.courseinput>button{
+    border: 1px solid black;
+        border-radius: 3px;
+        height: 27px;
+        width: 60px;
+        box-shadow: rgba(0, 0, 0, 0.253) 1.95px 1.95px 2.6px;
+        justify-self: flex-end;
+}
+.nameinput{
+    width: 228px;
+    height: 27px;
+}

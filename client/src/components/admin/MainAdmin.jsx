@@ -3,6 +3,7 @@ import React from "react";
 import CreateAccount from "./createAccount/CreateAccount";
 import { AiOutlineProfile } from "react-icons/ai";
 import "../../assets/cropped-DocebIT01-1-1.jpg";
+import CreateCourse from "../createCourseOccasion/createCourseOccasion";
 
 function MainAdmin() {
   return (
@@ -32,7 +33,8 @@ function MainAdmin() {
           </div>
         </div>
         <main className="adminrightmain">
-          <CreateAccount />
+          {/* <CreateAccount /> */}
+          <CreateCourse/>
         </main>
       </div>
     </>

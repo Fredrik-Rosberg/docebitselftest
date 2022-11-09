@@ -4,7 +4,6 @@ import "./App.css";
 import SignInComponent from "./components/signin/SignInComponent";
 import SendResetMailComponent from "./components/passwordreset/SendResetMailComponent";
 import "@fontsource/raleway";
-import HomeComponent from "./components/home/HomeComponent";
 import NewPassword from "./components/passwordreset/NewPasswordComponent";
 import MainAdmin from "./components/admin/MainAdmin";
 function App() {
@@ -25,7 +24,6 @@ function App() {
         <Routes>
           <Route path="/" element={<SignInComponent />} />
           <Route path="/reset" element={<SendResetMailComponent />} />
-          <Route path="/home" element={<HomeComponent />} />
           <Route path="/reset/:id" element={<NewPassword />} />
           <Route path="/admin" element={<MainAdmin />} />
         </Routes>
