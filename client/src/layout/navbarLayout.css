@@ -1,0 +1,32 @@
+.main-navbar {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+}
+.navbar {
+  display: grid;
+  grid-template-rows: 100px 100px 1fr;
+  background-color: white;
+  height: 100vh;
+  text-align: center;
+  font-size: 13px;
+}
+.navbar-body {
+  justify-self: start;
+  align-self: center;
+}
+.navbar-logo {
+  width: 120px;
+  height: auto;
+  justify-self: center;
+  align-self: center;
+}
+.navbar-links {
+  display: grid;
+  grid-template-rows: 30px 1fr;
+  padding-top: 20px;
+  padding-left: 30px;
+  text-align: start;
+}
+.navbar-links>a{
+    text-decoration: none;
+}
