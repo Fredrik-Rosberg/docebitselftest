@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
-import './navbarLayout.css'
+import "./navbarLayout.css";
+import { GrDocumentText } from "react-icons/gr";
 
 const NavbarLayout = () => {
   return (
@@ -13,11 +14,31 @@ const NavbarLayout = () => {
             className="navbar-logo"
           />
           <div className="navbar-links">
-            <Link to="/admin/courseoccasion/create">Kurstillfälle</Link>
-            <Link to="/admin/account/create">Konto</Link>
-          </div>
-          <div>
-            <Link to="/">Logga ut</Link>
+            <Link to="/admin/courseoccasion/create">
+              <GrDocumentText />
+              Översikt
+            </Link>
+            <Link to="/admin/account/create">
+              <GrDocumentText />
+              Konto
+            </Link>
+            <Link to="/admin/account/create">
+              <GrDocumentText />
+              Test
+            </Link>
+            <Link to="/admin/courseoccasion/create">
+              <GrDocumentText />
+              Kurstillfälle
+            </Link>
+            <Link to="/admin/account/create">
+              <GrDocumentText />
+              Kurs
+            </Link>
+            <Link to="/admin/account/create">
+              <GrDocumentText />
+              Mitt konto
+            </Link>
+            <Link to="/"className="navbar-signout">Logga ut</Link>
           </div>
         </div>
         <div className="navbar-body">
