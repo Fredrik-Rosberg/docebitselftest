@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./createCourseOccasion.css";
 import { validateUserInputOnlyLetters } from "../signin/validationService.js";
-import { createCourse } from "../createCourseOccasion/createCourseOccasionService";
+import { createCourseOccasion } from "../createCourseOccasion/createCourseOccasionService";
 
 const CreateCourseOccasion = () => {
   const [newCourseOccasion, setNewCourseOccasion] = useState({
@@ -32,8 +32,8 @@ const CreateCourseOccasion = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validationMessage == "") {
-      let result = await createCourse(newCourseOccasion);
+    if ((validationMessage == "")) {
+      let result = await createCourseOccasion(newCourseOccasion);
       setMessage(result);
     }
     setShowMessages(true);
@@ -41,80 +41,78 @@ const CreateCourseOccasion = () => {
 
   return (
     <>
-      {/* <div className="adminrightmain"> */}
-        <form onSubmit={handleSubmit} className="createcourseform">
-          <div className="courseinput">
-            <div></div>
-            <h2>Skapa kurstillfälle</h2>
-          </div>
-          <div className="courseinput">
-            <label htmlFor="kursnamn">Kursnamn:</label>
-            <input
-              type="text"
-              className="nameinput"
-              onChange={(e) => {
-                setNewCourseOccasion({
-                  ...newCourseOccasion,
-                  name: e.target.value,
-                });
-              }}
-            />
-          </div>
-          <div className="courseinput">
-            <label htmlFor="kursanordnare">Kursanordnare:</label>
-            <input
-              type="text"
-              className="nameinput"
-              onChange={(e) => {
-                setNewCourseOccasion({
-                  ...newCourseOccasion,
-                  courseorganizer: e.target.value,
-                });
-              }}
-            />
-          </div>
-          <div className="courseinput">
-            <label htmlFor="giltigfrom">Kursstart:</label>
-            <input
-              type="date"
-              className="dateinput"
-              onChange={(e) => {
-                setNewCourseOccasion({
-                  ...newCourseOccasion,
-                  startdate: e.target.value,
-                });
-              }}
-            />
-          </div>
-          <div className="courseinput">
-            <label htmlFor="giltigtom">Kursslut:</label>
-            <input
-              type="date"
-              className="dateinput"
-              onChange={(e) => {
-                setNewCourseOccasion({
-                  ...newCourseOccasion,
-                  enddate: e.target.value,
-                });
-              }}
-            />
-          </div>
-          <div className="courseinput">
-            <div></div>
-            <button>Spara</button>
-          </div>
-          <div className="showmessage">
-            {showMessages ? (
-              <>
-                <p>{message}</p>
-                <p>{validationMessage}</p>
-              </>
-            ) : (
-              ""
-            )}
-          </div>
-        </form>
-      {/* </div> */}
+      <form onSubmit={handleSubmit} className="createcourseform">
+        <div className="courseinput">
+          <div></div>
+          <h2>Skapa kurstillfälle</h2>
+        </div>
+        <div className="courseinput">
+          <label htmlFor="kursnamn">Kursnamn:</label>
+          <input
+            type="text"
+            className="nameinput"
+            onChange={(e) => {
+              setNewCourseOccasion({
+                ...newCourseOccasion,
+                name: e.target.value,
+              }), setValidationMessage("");
+            }}
+          />
+        </div>
+        <div className="courseinput">
+          <label htmlFor="kursanordnare">Kursanordnare:</label>
+          <input
+            type="text"
+            className="nameinput"
+            onChange={(e) => {
+              setNewCourseOccasion({
+                ...newCourseOccasion,
+                courseorganizer: e.target.value,
+              }), setValidationMessage("");
+            }}
+          />
+        </div>
+        <div className="courseinput">
+          <label htmlFor="giltigfrom">Kursstart:</label>
+          <input
+            type="date"
+            className="dateinput"
+            onChange={(e) => {
+              setNewCourseOccasion({
+                ...newCourseOccasion,
+                startdate: e.target.value,
+              });
+            }}
+          />
+        </div>
+        <div className="courseinput">
+          <label htmlFor="giltigtom">Kursslut:</label>
+          <input
+            type="date"
+            className="dateinput"
+            onChange={(e) => {
+              setNewCourseOccasion({
+                ...newCourseOccasion,
+                enddate: e.target.value,
+              });
+            }}
+          />
+        </div>
+        <div className="courseinput">
+          <div></div>
+          <button>Spara</button>
+        </div>
+        <div className="showmessage">
+          {showMessages ? (
+            <>
+              <p>{message}</p>
+              <p>{validationMessage}</p>
+            </>
+          ) : (
+            ""
+          )}
+        </div>
+      </form>
     </>
   );
 };
