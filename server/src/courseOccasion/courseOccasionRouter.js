@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { courseOccasion } = require("./courseOccasionController");
+const { createCourseOccasion } = require("./courseOccasionController");
 
-router.post("/api/course/occasion", courseOccasion);
+router.post("/api/course/occasion", createCourseOccasion);
 router.get("/api/courseoccasion", );
 module.exports = router;

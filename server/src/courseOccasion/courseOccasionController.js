@@ -1,6 +1,6 @@
 const db = require("../../db");
 
-const courseOccasion = async (req, res) => {
+const createCourseOccasion = async (req, res) => {
   try {
     const sqlQuery =
       "INSERT INTO course (name, startdate, enddate, courseorganizer) VALUES($1, $2,$3, $4)";
@@ -30,4 +30,4 @@ const getCourseOccasions = async (req, res) => {
   res.json(result.rows);
 };
 
-module.exports = { courseOccasion, getCourseOccasions };
+module.exports = { createCourseOccasion, getCourseOccasions };
