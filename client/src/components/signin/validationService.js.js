@@ -44,7 +44,7 @@ export const validateUserInputs = (email, password) => {
 export const validateUserInputOnlyLetters = (input) => {
   if (!input) {
     return "Vänligen fyll i samtliga uppgifter för att skapa kurstillfälle";
-  } else if (!new RegExp(/^[A-Za-z]+$/).test(input) || input.length > 100) {
+  } else if (!new RegExp(/^[A-Öa-ö]+$/).test(input) || input.length > 100) {
     return "Får endast innehålla bokstäver och vara max 100 tecken långt";
   }
 

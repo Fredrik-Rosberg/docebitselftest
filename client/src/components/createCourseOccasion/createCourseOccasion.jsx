@@ -26,13 +26,23 @@ const CreateCourseOccasion = () => {
     if (validatedCourseOrganizer != "") {
       setValidationMessage(validatedCourseOrganizer);
     }
+    if (newCourseOccasion.startdate == "" || newCourseOccasion.enddate == "") {
+      setValidationMessage(
+        "Vänligen fyll i samtliga uppgifter för att skapa kurstillfälle"
+      );
+    }
 
     setShowMessages(false);
-  }, [newCourseOccasion.name, newCourseOccasion.courseorganizer]);
+  }, [
+    newCourseOccasion.name,
+    newCourseOccasion.courseorganizer,
+    newCourseOccasion.startdate,
+    newCourseOccasion.enddate,
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ((validationMessage == "")) {
+    if (validationMessage == "") {
       let result = await createCourseOccasion(newCourseOccasion);
       setMessage(result);
     }
@@ -55,7 +65,8 @@ const CreateCourseOccasion = () => {
               setNewCourseOccasion({
                 ...newCourseOccasion,
                 name: e.target.value,
-              }), setValidationMessage("");
+              }),
+                setValidationMessage("");
             }}
           />
         </div>
@@ -68,33 +79,39 @@ const CreateCourseOccasion = () => {
               setNewCourseOccasion({
                 ...newCourseOccasion,
                 courseorganizer: e.target.value,
-              }), setValidationMessage("");
+              }),
+                setValidationMessage("");
             }}
           />
         </div>
         <div className="courseinput">
           <label htmlFor="giltigfrom">Kursstart:</label>
           <input
+            min={new Date().toLocaleDateString("sv-SE")}
+            max={newCourseOccasion.enddate}
             type="date"
             className="dateinput"
             onChange={(e) => {
               setNewCourseOccasion({
                 ...newCourseOccasion,
                 startdate: e.target.value,
-              });
+              }),
+                setValidationMessage("");
             }}
           />
         </div>
         <div className="courseinput">
           <label htmlFor="giltigtom">Kursslut:</label>
           <input
+            min={newCourseOccasion.startdate==""? new Date().toLocaleDateString("sv-SE"):newCourseOccasion.startdate}
             type="date"
             className="dateinput"
             onChange={(e) => {
               setNewCourseOccasion({
                 ...newCourseOccasion,
                 enddate: e.target.value,
-              });
+              }),
+                setValidationMessage("");
             }}
           />
         </div>
