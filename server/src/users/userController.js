@@ -16,6 +16,16 @@ const getUserByEmail = async (email) => {
   }
 };
 
+const getUsers = async (req,res) => {
+  try{
+    let sqlQuery = 'SELECT id, email, firstname, lastname FROM users'
+    const users = await db.query(sqlQuery)
+    console.log(users.rows)
+  }catch(error){
+    console.log(error)
+  }
+}
+
 const createAccount = async (req, res) => {
   try {
     let encryptedPassword = encrypt(req.body.password);
@@ -43,5 +53,6 @@ const createAccount = async (req, res) => {
 
 module.exports = {
   getUserByEmail,
+  getUsers,
   createAccount,
 };

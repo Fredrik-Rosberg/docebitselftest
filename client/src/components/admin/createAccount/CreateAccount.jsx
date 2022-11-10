@@ -9,23 +9,22 @@ function CreateAccount() {
     lastName: "",
     email: "",
     password: "",
-    role: "",
+    role: "user",
   });
   const [message, setMessage] = useState("");
   const [validationMessage, setValidationMessage] = useState("");
   const [showMessages, setShowMessages] = useState(false);
 
   useEffect(() => {
-    const error = validateUserInputs(newUser.email, newUser.password);
+    const error = validateUserInputs(newUser);
     setValidationMessage(error);
     setShowMessages(false);
-  }, [newUser.email, newUser.password]);
+
+  }, [newUser.email, newUser.password, newUser.role]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newUser.role == "") {
-      setValidationMessage("Vänligen fyll i alla uppgifter");
-    }
+   
     if (validationMessage == "") {
       let result = await createAccount(newUser);
       setMessage(result);
@@ -85,19 +84,21 @@ function CreateAccount() {
         </div>
         <div className="createaccountinput">
           <label htmlFor="account">Konto:</label>
-          <select>
+          <select value={newUser.role} onChange={(e) => setNewUser({...newUser, role: e.target.value})}>
             <option
-              onClick={(e) => {
-                setNewUser({ ...newUser, role: e.target.value });
-              }}
+              // onChange={(e) => {
+              //   setNewUser({ ...newUser, role: e.target.value }),
+              //     setMessage("");
+              // }}
               value="user"
             >
               Kursdeltagare
             </option>
             <option
-              onClick={(e) => {
-                setNewUser({ ...newUser, role: e.target.value });
-              }}
+              // onClick={(e) => {
+              //   setNewUser({ ...newUser, role: e.target.value }),
+              //     setMessage("");
+              // }}
               value="admin"
             >
               Administratör

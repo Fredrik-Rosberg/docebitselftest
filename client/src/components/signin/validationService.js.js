@@ -28,11 +28,11 @@ export const validateEmail = (email) => {
 
 // Sätter meddelande för både email och password beroende på om användarens input följer kravspecen. Returnerar respektive meddelande.
 
-export const validateUserInputs = (email, password) => {
-  const emailError = validateEmail(email);
-  const passwordError = validatePassword(password);
+export const validateUserInputs = (userInput) => {
+  const emailError = validateEmail(userInput.email);
+  const passwordError = validatePassword(userInput.password);
 
-  if (emailError === "" && passwordError === "") {
+  if (emailError === "" && passwordError === "" && userInput.firstName && userInput.lastName ) {
     return "";
   } else {
     return "Kontrollera att du angivit rätt E-post och lösenord";
