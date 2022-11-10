@@ -39,13 +39,25 @@ const CreateCourseOccasion = () => {
     newCourseOccasion.startdate,
     newCourseOccasion.enddate,
   ]);
+  const clearForm =async()=> {
+    setNewCourseOccasion({name: "",
+    startdate: "",
+    enddate: "",
+    courseorganizer: ""})
+    
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validationMessage == "") {
       let result = await createCourseOccasion(newCourseOccasion);
       setMessage(result);
+      clearForm();
+      console.log(result)
+      setShowMessages(true);
+      console.log(showMessages)
     }
+    
     setShowMessages(true);
   };
 
@@ -59,6 +71,7 @@ const CreateCourseOccasion = () => {
         <div className="courseinput">
           <label htmlFor="kursnamn">Kursnamn:</label>
           <input
+            value={newCourseOccasion.name}
             type="text"
             className="nameinput"
             onChange={(e) => {
@@ -73,6 +86,7 @@ const CreateCourseOccasion = () => {
         <div className="courseinput">
           <label htmlFor="kursanordnare">Kursanordnare:</label>
           <input
+            value={newCourseOccasion.courseorganizer}
             type="text"
             className="nameinput"
             onChange={(e) => {
@@ -87,6 +101,7 @@ const CreateCourseOccasion = () => {
         <div className="courseinput">
           <label htmlFor="giltigfrom">Kursstart:</label>
           <input
+            value={newCourseOccasion.startdate}
             min={new Date().toLocaleDateString("sv-SE")}
             max={newCourseOccasion.enddate}
             type="date"
@@ -103,7 +118,12 @@ const CreateCourseOccasion = () => {
         <div className="courseinput">
           <label htmlFor="giltigtom">Kursslut:</label>
           <input
-            min={newCourseOccasion.startdate==""? new Date().toLocaleDateString("sv-SE"):newCourseOccasion.startdate}
+            value={newCourseOccasion.enddate}
+            min={
+              newCourseOccasion.startdate == ""
+                ? new Date().toLocaleDateString("sv-SE")
+                : newCourseOccasion.startdate
+            }
             type="date"
             className="dateinput"
             onChange={(e) => {

@@ -3,7 +3,7 @@ const db = require("../../db");
 const createCourseOccasion = async (req, res) => {
   try {
     const sqlQuery =
-      "INSERT INTO course (name, startdate, enddate, courseorganizer) VALUES($1, $2,$3, $4)";
+      "INSERT INTO courseoccasion (name, startdate, enddate, courseorganizer) VALUES($1, $2,$3, $4)";
     let result = await db.query(sqlQuery, [
       req.body.name,
       req.body.startdate,
@@ -19,6 +19,7 @@ const createCourseOccasion = async (req, res) => {
       res.status(400).json({ message: "Misslyckat", result: false });
     }
   } catch (error) {
+    res.status(400).json({ message: "Kurstillfälle existerar redan", result: false });
     console.log(error) 
   }
 };
