@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./createCourseOccasion.css";
 import { validateUserInputOnlyLetters } from "../signin/validationService.js";
-import { createCourse } from "../createCourseOccasion/createCourseOccasionService";
+import { createCourseOccasion } from "../createCourseOccasion/createCourseOccasionService";
 
 const CreateCourseOccasion = () => {
   const [newCourseOccasion, setNewCourseOccasion] = useState({
@@ -33,7 +33,7 @@ const CreateCourseOccasion = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if ((validationMessage == "")) {
-      let result = await createCourse(newCourseOccasion);
+      let result = await createCourseOccasion(newCourseOccasion);
       setMessage(result);
     }
     setShowMessages(true);
@@ -55,7 +55,7 @@ const CreateCourseOccasion = () => {
               setNewCourseOccasion({
                 ...newCourseOccasion,
                 name: e.target.value,
-              });
+              }), setValidationMessage("");
             }}
           />
         </div>
@@ -68,7 +68,7 @@ const CreateCourseOccasion = () => {
               setNewCourseOccasion({
                 ...newCourseOccasion,
                 courseorganizer: e.target.value,
-              });
+              }), setValidationMessage("");
             }}
           />
         </div>
