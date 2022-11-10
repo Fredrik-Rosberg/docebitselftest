@@ -39,25 +39,14 @@ const CreateCourseOccasion = () => {
     newCourseOccasion.startdate,
     newCourseOccasion.enddate,
   ]);
-  const clearForm =async()=> {
-    setNewCourseOccasion({name: "",
-    startdate: "",
-    enddate: "",
-    courseorganizer: ""})
-    
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validationMessage == "") {
       let result = await createCourseOccasion(newCourseOccasion);
       setMessage(result);
-      clearForm();
-      console.log(result)
-      setShowMessages(true);
-      console.log(showMessages)
     }
-    
+
     setShowMessages(true);
   };
 
