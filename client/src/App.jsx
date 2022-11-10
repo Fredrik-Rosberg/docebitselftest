@@ -5,29 +5,27 @@ import SignInComponent from "./components/signin/SignInComponent";
 import SendResetMailComponent from "./components/passwordreset/SendResetMailComponent";
 import "@fontsource/raleway";
 import NewPassword from "./components/passwordreset/NewPasswordComponent";
-import MainAdmin from "./components/admin/MainAdmin";
+import MainLayout from "./layout/MainLayout";
+import NavbarLayout from "./layout/NavbarLayout";
+import CreateCourseOccasion from "./components/createCourseOccasion/createCourseOccasion";
+import CreateAccount from "./components/admin/createAccount/CreateAccount";
 function App() {
   return (
     <Router>
-      <div className="app">
-        <header className="headerstyle">
-        <img
-          src="../../src/assets/cropped-DocebIT01-1-1.png"
-          alt=""
-          className="docebitlogo"
-        />
-
-        </header>
-        
-
-
-        <Routes>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
           <Route path="/" element={<SignInComponent />} />
           <Route path="/reset" element={<SendResetMailComponent />} />
           <Route path="/reset/:id" element={<NewPassword />} />
-          <Route path="/admin" element={<MainAdmin />} />
-        </Routes>
-      </div>
+        </Route>
+        <Route path="/admin" element={<NavbarLayout />}>
+          <Route
+            path="/admin/courseoccasion/create"
+            element={<CreateCourseOccasion />}
+          />
+          <Route path="/admin/account/create" element={<CreateAccount />} />
+        </Route>
+      </Routes>
     </Router>
   );
 }

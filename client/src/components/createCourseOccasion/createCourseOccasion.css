@@ -1,22 +1,27 @@
+
 .createcourseform{
     display: grid;
-    margin-top: 100px;
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 45px);
+  margin-left: 200px;
+
+      /* background-color: #ebf5fb; */
+
     
 }
 .courseinput{
-    display: grid;
-    grid-template-columns: 150px 228px;
-    width: 70vw;
-    text-align: start;
-    margin-bottom: 12px;
-    align-items: center;
     font-size: 13px;
+    text-align: start;
+    display: grid;
+    grid-template-columns: 35% 175px;
+    align-items: center;
 }
-.courseinput>h2{
-    margin: 0;
-    align-self: start;
-}
+/* .courseinput>input{
+    height: 27px;
+    padding: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+} */
+
 .dateinput{
     width: 100px;
     height: 27px;
@@ -25,11 +30,11 @@
     border: 1px solid black;
         border-radius: 3px;
         height: 27px;
-        width: 60px;
+        width: auto;
         box-shadow: rgba(0, 0, 0, 0.253) 1.95px 1.95px 2.6px;
         justify-self: flex-end;
 }
-.nameinput{
+/* .nameinput{
     width: 228px;
     height: 27px;
-}
+} */

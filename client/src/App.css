@@ -4,23 +4,13 @@ body {
   background-color: #ebf5fb;
 }
 
-.app {
-  display: grid;
-  grid-template-rows: 12% 1fr 12%;
-  color: #000000;
-  min-height: 100vh;
-  width: 100vw;
-  align-items: center;
-  justify-items: center;
+button:active {
+  background-color: lightgray;
 }
-
-.docebitlogo {
-  width: 157px;
-  height: auto;
-  justify-self: start;
-  margin-left: 5vw;
-}
-
-.headerstyle {
-  justify-self: start;
+input {
+  width: auto;
+  height: 27px;
+  padding: 0;
+  padding-left: 5px;
+  padding-right: 5px;
 }
