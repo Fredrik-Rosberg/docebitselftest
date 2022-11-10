@@ -30,6 +30,7 @@ const CreateCourseOccasion = () => {
       setValidationMessage(
         "Vänligen fyll i samtliga uppgifter för att skapa kurstillfälle"
       );
+
     }
 
     setShowMessages(false);
@@ -44,9 +45,11 @@ const CreateCourseOccasion = () => {
     e.preventDefault();
     if (validationMessage == "") {
       let result = await createCourseOccasion(newCourseOccasion);
+      console.log(result)
       setMessage(result);
-    }
 
+    }
+    
     setShowMessages(true);
   };
 
@@ -68,7 +71,8 @@ const CreateCourseOccasion = () => {
                 ...newCourseOccasion,
                 name: e.target.value,
               }),
-                setValidationMessage("");
+                setValidationMessage(""),
+                setMessage("");
             }}
           />
         </div>
@@ -83,7 +87,8 @@ const CreateCourseOccasion = () => {
                 ...newCourseOccasion,
                 courseorganizer: e.target.value,
               }),
-                setValidationMessage("");
+                setValidationMessage(""),
+                setMessage("");
             }}
           />
         </div>
@@ -100,7 +105,8 @@ const CreateCourseOccasion = () => {
                 ...newCourseOccasion,
                 startdate: e.target.value,
               }),
-                setValidationMessage("");
+                setValidationMessage(""),
+                setMessage("");
             }}
           />
         </div>
@@ -120,7 +126,7 @@ const CreateCourseOccasion = () => {
                 ...newCourseOccasion,
                 enddate: e.target.value,
               }),
-                setValidationMessage("");
+                setValidationMessage(""), setMessage("");
             }}
           />
         </div>

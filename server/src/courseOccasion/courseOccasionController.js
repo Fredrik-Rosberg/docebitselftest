@@ -12,7 +12,7 @@ const createCourseOccasion = async (req, res) => {
     ]);
    
     
-
+    console.log(result)
     if (result.rowCount) {
       res.status(200).json({message:"Kurstillfälle skapat"})
     } else {
