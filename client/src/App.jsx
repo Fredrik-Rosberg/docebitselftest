@@ -9,6 +9,7 @@ import MainLayout from "./layout/MainLayout";
 import NavbarLayout from "./layout/NavbarLayout";
 import CreateCourseOccasion from "./components/createCourseOccasion/createCourseOccasion";
 import CreateAccount from "./components/admin/createAccount/CreateAccount";
+import AccountTable from "./components/tables/AccountTable";
 function App() {
   return (
     <Router>
@@ -24,6 +25,8 @@ function App() {
             element={<CreateCourseOccasion />}
           />
           <Route path="/admin/account/create" element={<CreateAccount />} />
+          <Route path="/admin/account/users" element={<AccountTable />} />
+
         </Route>
       </Routes>
     </Router>
