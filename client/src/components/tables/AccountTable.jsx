@@ -11,10 +11,11 @@ const AccountTable = () => {
     getUser();
   }, []);
 
+  return
     <>
    
     </>
-  );
+  
 };
 
 export default AccountTable;
