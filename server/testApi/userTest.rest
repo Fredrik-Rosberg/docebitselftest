@@ -12,3 +12,5 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3001/api/user HTTP/1.1
+###
+GET http://localhost:3001/api/user/46 HTTP/1.1
