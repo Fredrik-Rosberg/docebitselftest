@@ -30,6 +30,21 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  try {
+    let sqlQuery =
+      "SELECT id, email, firstname, lastname FROM users WHERE id=$1";
+    const user = await db.query(sqlQuery, [req.params.id]);
+    if (user.rows[0]) {
+      res.json(user.rows[0]);
+    } else {
+      res.status(404).json({ message: "Ingen användare funnen" });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+};
+
 const createAccount = async (req, res) => {
   try {
     let encryptedPassword = encrypt(req.body.password);
@@ -55,19 +70,19 @@ const createAccount = async (req, res) => {
   }
 };
 
-const changePassword = async(req,res) => {
-try {
-  if(req.body.password) {
-
+const changePassword = async (req, res) => {
+  try {
+    if (req.body.password) {
+    }
+  } catch (error) {
+    console.log();
   }
-} catch (error) {
-  console.log();
-}
-}
+};
 
 module.exports = {
   getUserByEmail,
   getUsers,
   createAccount,
-  changePassword
+  changePassword,
+  getUser,
 };

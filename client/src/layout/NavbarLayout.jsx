@@ -5,14 +5,11 @@ import { GrDocumentText } from "react-icons/gr";
 import ModalComponent from "../components/modal/ModalComponent";
 import { useState } from "react";
 
-
 const NavbarLayout = () => {
   const [openModal, setOpenModal] = useState(false);
-  
-  
-  
-  function handleSignOut(){
-    console.log("träff")
+
+  function handleSignOut() {
+    console.log("träff");
     req.session.destroy();
   }
 
@@ -46,14 +43,12 @@ const NavbarLayout = () => {
               <GrDocumentText />
               Kurs
             </Link>
-            <Link to="/admin/account/create">
+            <Link to="/admin/myaccount">
               <GrDocumentText />
-              Mitt konto
+              Mitt nya 
             </Link>
-           
-            <button onClick={() => setOpenModal(true)}>logga ut</button>
 
-            
+            <button onClick={() => setOpenModal(true)}>logga ut</button>
           </div>
         </div>
         <div className="navbar-body">
@@ -65,7 +60,6 @@ const NavbarLayout = () => {
         onClose={() => setOpenModal(!openModal)}
         show={openModal}
         signOut={handleSignOut}
-
       ></ModalComponent>
     </>
   );
