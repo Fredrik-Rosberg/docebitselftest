@@ -45,7 +45,7 @@ const NavbarLayout = () => {
             </Link>
             <Link to="/admin/myaccount">
               <GrDocumentText />
-              Mitt nya 
+              Mitt konto
             </Link>
 
             <button onClick={() => setOpenModal(true)}>logga ut</button>
