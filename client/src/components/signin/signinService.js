@@ -10,6 +10,7 @@ export const signIn = async (data) => {
     let response = await dataResponse.json();
 
     if (response.loggedIn) {
+      localStorage.setItem("userId", response.userId);
       return response;
     } else {
       console.log(response);

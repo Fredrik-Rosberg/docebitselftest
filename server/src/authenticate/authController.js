@@ -13,7 +13,9 @@ const signInUser = async (req, res) => {
       user = user.rows[0];
       req.session.user = user;
       req.session.user.loggedIn = true;
-      res.status(200).json({ loggedIn: true, message: "Inloggad" });
+      res
+        .status(200)
+        .json({ loggedIn: true, message: "Inloggad", userId: user.id });
     } else {
       res
         .status(401)
