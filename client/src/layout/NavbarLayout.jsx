@@ -1,9 +1,21 @@
 import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, Navigate } from "react-router-dom";
 import "./navbarLayout.css";
 import { GrDocumentText } from "react-icons/gr";
+import ModalComponent from "../components/modal/ModalComponent";
+import { useState } from "react";
+
 
 const NavbarLayout = () => {
+  const [openModal, setOpenModal] = useState(false);
+  
+  
+  
+  function handleSignOut(){
+    console.log("träff")
+    req.session.destroy();
+  }
+
   return (
     <>
       <div className="main-navbar">
@@ -38,13 +50,23 @@ const NavbarLayout = () => {
               <GrDocumentText />
               Mitt konto
             </Link>
-            <Link to="/"className="navbar-signout">Logga ut</Link>
+           
+            <button onClick={() => setOpenModal(true)}>logga ut</button>
+
+            
           </div>
         </div>
         <div className="navbar-body">
           <Outlet />
         </div>
       </div>
+      <ModalComponent
+        content="Är du säker på att du vill logga ut?"
+        onClose={() => setOpenModal(!openModal)}
+        show={openModal}
+        signOut={handleSignOut}
+
+      ></ModalComponent>
     </>
   );
 };
