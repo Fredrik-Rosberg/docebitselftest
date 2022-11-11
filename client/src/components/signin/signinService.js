@@ -8,12 +8,12 @@ export const signIn = async (data) => {
       body: JSON.stringify(data),
     });
     let response = await dataResponse.json();
-    
+
     if (response.loggedIn) {
-      return response.message;
+      return response;
     } else {
-      console.log(response.message);
-      return response.message;
+      console.log(response);
+      return response;
     }
   } catch (error) {
     console.log(error);

@@ -32,7 +32,7 @@ export const validateUserInputs = (userInput) => {
   const emailError = validateEmail(userInput.email);
   const passwordError = validatePassword(userInput.password);
 
-  if (emailError === "" && passwordError === "" && userInput.firstName && userInput.lastName ) {
+  if (emailError === "" && passwordError === "" || userInput.firstName && userInput.lastName ) {
     return "";
   } else {
     return "Kontrollera att du angivit rätt E-post och lösenord";
