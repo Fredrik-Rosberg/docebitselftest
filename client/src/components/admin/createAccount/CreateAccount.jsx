@@ -35,7 +35,9 @@ function CreateAccount() {
       console.log(result)
       if (result == "Användare finns redan") {
         setValidationMessage(result);
+        setMessage("")
       } else {
+       
         setMessage(result);
       }
     }
