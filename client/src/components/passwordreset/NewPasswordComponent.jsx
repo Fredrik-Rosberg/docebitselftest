@@ -24,17 +24,15 @@ function NewPassword() {
   }, []);
 
   useEffect(() => {
-    const error = validatePassword(passwordOne);
-    const errorTwo = validatePassword(passwordTwo);
-
-    if (error == "" && errorTwo == "") {
-      if (passwordOne == passwordTwo) {
+    if (passwordOne == passwordTwo) {
+      const error = validatePassword(passwordOne);
+      if (error == "") {
         setErrorMessage("success");
       } else {
-        setErrorMessage("Kontrollera att lösenorden är lika");
+        setErrorMessage("Kontrollera att lösenordet uppfyller kraven");
       }
     } else {
-      setErrorMessage("Kontrollera att lösenordet uppfyller kraven");
+      setErrorMessage("Kontrollera att lösenorden är lika");
     }
     setShowMessage(false);
   }, [passwordOne, passwordTwo]);

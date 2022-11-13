@@ -1,6 +1,6 @@
 import "./createAccount.css";
 import React, { useState, useEffect } from "react";
-import { validateUserInputs } from "../../signin/validationService.js";
+import { validateInputsCreateAccount } from "../../signin/validationService.js";
 import { createAccount } from "./createAccountService";
 
 function CreateAccount() {
@@ -16,11 +16,11 @@ function CreateAccount() {
   const [showMessages, setShowMessages] = useState(false);
 
   useEffect(() => {
-    const error = validateUserInputs(newUser);
+    const error = validateInputsCreateAccount(newUser);
     setValidationMessage(error);
     setShowMessages(false);
 
-  }, [newUser.email, newUser.password, newUser.role]);
+  }, [newUser.email, newUser.password, newUser.role, newUser.firstName, newUser.lastName]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
