@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////////////
+// Basmetoder
+//////////////////////////////////////////////////////////////
+
+//Kollar password så att den fyller kriterierna.
 export const validatePassword = (password) => {
   if (!password) {
     return "Fyll i lösenord";
@@ -26,31 +31,72 @@ export const validateEmail = (email) => {
   return "";
 };
 
+//Kollar så att name fyller kriterierna.
+export const validateName = (name) => {
+  if (!name) {
+    return "Vänligen fyll i samtliga uppgifter för att skapa kurstillfälle";
+  } else if (!new RegExp(/^[A-Öa-ö]+$/).test(name) || name.length > 100) {
+    return "Får endast innehålla bokstäver och vara max 100 tecken långt";
+  }
 
+  return "";
+};
 
+//////////////////////////////////////////////////////////////////////////
+// Componentspecifika metoder som kallar på basmetoder
+///////////////////////////////////////////////////////////////
 
+// Kollar signIn så att det fyller kraven och sätter meddelande
 
-// Sätter meddelande för både email och password beroende på om användarens input följer kravspecen. Returnerar respektive meddelande.
-
-export const validateUserInputs = (userInput) => {
+export const validateInputsSignIn = (userInput) => {
   const emailError = validateEmail(userInput.email);
   const passwordError = validatePassword(userInput.password);
 
-  if (emailError === "" && passwordError === "" || userInput.firstName && userInput.lastName ) {
+  if (emailError === "" && passwordError === "") {
     return "";
   } else {
     return "Kontrollera att du angivit rätt E-post och lösenord";
   }
 };
 
-// Kontrollerar att användarens input bara består av bokstäver
+// Kollar CourseOccasion så att det fyller kraven och sätter meddelande
 
-export const validateUserInputOnlyLetters = (input) => {
-  if (!input) {
-    return "Vänligen fyll i samtliga uppgifter för att skapa kurstillfälle";
-  } else if (!new RegExp(/^[A-Öa-ö]+$/).test(input) || input.length > 100) {
-    return "Får endast innehålla bokstäver och vara max 100 tecken långt";
+export const validateInputsCourseOccasion = (userInput) => {
+  const nameError = validateName(userInput);
+
+  if (nameError == "") {
+    return "";
+  } else {
+    return nameError;
   }
+};
 
-  return "";
+// Kollar CreateAccount så att det fyller kraven och sätter meddelande
+
+export const validateInputsCreateAccount = (userinputs) => {
+  console.log(userinputs)
+  const firstNameError = validateName(userinputs.firstName);
+  const lastNameError = validateName(userinputs.lastName);
+  const emailError = validateEmail(userinputs.email);
+  const passwordError = validatePassword(userinputs.password);
+  if (
+    firstNameError == "" &&
+    lastNameError == "" &&
+    emailError == "" &&
+    passwordError == ""
+  ) {
+    return "";
+  }
+  if(firstNameError!=""){
+    return firstNameError
+  }
+  if(lastNameError!=""){
+    return lastNameError
+  }
+  if(emailError!=""){
+    return emailError
+  }
+  if(passwordError!=""){
+    return passwordError
+  }
 };

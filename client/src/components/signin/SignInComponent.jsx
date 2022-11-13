@@ -1,7 +1,7 @@
 import "./SignInComponent.css";
 
 import React, { useState, useEffect } from "react";
-import { validateUserInputs } from "./validationService.js";
+import { validateInputsSignIn } from "./validationService.js";
 import { signIn } from "./signinService";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -16,7 +16,7 @@ function SignIn() {
 
   useEffect(() => {
     const userInput = { email: email, password: password };
-    const error = validateUserInputs(userInput);
+    const error = validateInputsSignIn(userInput);
     setErrorMessage(error);
     setShowMessages(false);
   }, [email, password]);

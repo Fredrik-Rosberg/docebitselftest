@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./createCourseOccasion.css";
-import { validateUserInputOnlyLetters } from "../signin/validationService.js";
+import { validateInputsCourseOccasion } from "../signin/validationService.js";
 import { createCourseOccasion } from "../createCourseOccasion/createCourseOccasionService";
 
 const CreateCourseOccasion = () => {
@@ -15,8 +15,8 @@ const CreateCourseOccasion = () => {
   const [showMessages, setShowMessages] = useState(false);
 
   useEffect(() => {
-    let validatedName = validateUserInputOnlyLetters(newCourseOccasion.name);
-    let validatedCourseOrganizer = validateUserInputOnlyLetters(
+    let validatedName = validateInputsCourseOccasion(newCourseOccasion.name);
+    let validatedCourseOrganizer = validateInputsCourseOccasion(
       newCourseOccasion.courseorganizer
     );
 
