@@ -1,16 +1,24 @@
 import React from "react";
-import { Outlet, Link, Navigate } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import "./navbarLayout.css";
 import { GrDocumentText } from "react-icons/gr";
 import ModalComponent from "../components/modal/ModalComponent";
 import { useState } from "react";
+import { signOut } from "../components/signin/signinService";
 
 const NavbarLayout = () => {
   const [openModal, setOpenModal] = useState(false);
+  let navigate = useNavigate(false);
 
-  function handleSignOut() {
-    console.log("träff");
-    req.session.destroy();
+  async function  handleSignOut() {
+    localStorage.clear();
+    let response=await signOut();
+     if (response.signedOut) {
+       navigate("/");
+     }
+     else{
+      "wft"
+     }
   }
 
   return (
