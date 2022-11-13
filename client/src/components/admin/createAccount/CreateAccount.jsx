@@ -19,15 +19,25 @@ function CreateAccount() {
     const error = validateInputsCreateAccount(newUser);
     setValidationMessage(error);
     setShowMessages(false);
-
-  }, [newUser.email, newUser.password, newUser.role, newUser.firstName, newUser.lastName]);
+  }, [
+    newUser.email,
+    newUser.password,
+    newUser.role,
+    newUser.firstName,
+    newUser.lastName,
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
+
     if (validationMessage == "") {
       let result = await createAccount(newUser);
-      setMessage(result);
+      console.log(result)
+      if (result == "Användare finns redan") {
+        setValidationMessage(result);
+      } else {
+        setMessage(result);
+      }
     }
     setShowMessages(true);
   };
@@ -84,7 +94,10 @@ function CreateAccount() {
         </div>
         <div className="createaccountinput">
           <label htmlFor="account">Konto:</label>
-          <select value={newUser.role} onChange={(e) => setNewUser({...newUser, role: e.target.value})}>
+          <select
+            value={newUser.role}
+            onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+          >
             <option
               // onChange={(e) => {
               //   setNewUser({ ...newUser, role: e.target.value }),
@@ -116,8 +129,10 @@ function CreateAccount() {
               ""
             ) : (
               <>
-                <p>{message}</p>
-                <p>{validationMessage}</p>
+                <p className="createaccountmessage">{message}</p>
+                <p className="createaccountvalidationmessage">
+                  {validationMessage}
+                </p>
               </>
             )
           ) : (

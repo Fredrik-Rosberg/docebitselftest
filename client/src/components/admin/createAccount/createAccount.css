@@ -37,3 +37,12 @@
   width: 50%;
   overflow-y: auto;
 }
+.createaccountvalidationmessage {
+  color: red;
+  text-align: center;
+}
+
+.createaccountmessage {
+  color: rgb(1, 152, 1);
+  text-align: center;
+}

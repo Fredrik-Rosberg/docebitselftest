@@ -52,12 +52,12 @@ const CreateCourseOccasion = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="createcourseform">
-        <div className="courseinput">
+      <form onSubmit={handleSubmit} className="createcourseoccasionform">
+        <div className="courseoccasioninput">
           <div></div>
           <h2>Skapa kurstillfälle</h2>
         </div>
-        <div className="courseinput">
+        <div className="courseoccasioninput">
           <label htmlFor="kursnamn">Kursnamn:</label>
           <input
             value={newCourseOccasion.name}
@@ -73,7 +73,7 @@ const CreateCourseOccasion = () => {
             }}
           />
         </div>
-        <div className="courseinput">
+        <div className="courseoccasioninput">
           <label htmlFor="kursanordnare">Kursanordnare:</label>
           <input
             value={newCourseOccasion.courseorganizer}
@@ -89,7 +89,7 @@ const CreateCourseOccasion = () => {
             }}
           />
         </div>
-        <div className="courseinput">
+        <div className="courseoccasioninput">
           <label htmlFor="giltigfrom">Kursstart:</label>
           <input
             value={newCourseOccasion.startdate}
@@ -107,7 +107,7 @@ const CreateCourseOccasion = () => {
             }}
           />
         </div>
-        <div className="courseinput">
+        <div className="courseoccasioninput">
           <label htmlFor="giltigtom">Kursslut:</label>
           <input
             value={newCourseOccasion.enddate}
@@ -128,15 +128,15 @@ const CreateCourseOccasion = () => {
             }}
           />
         </div>
-        <div className="courseinput">
+        <div className="courseoccasioninput">
           <div></div>
           <button>Spara</button>
         </div>
         <div>
           {showMessages ? (
             <>
-              <p className="showmessage">{message}</p>
-              <p className="showvalidationmessage">{validationMessage}</p>
+              <p className="courseoccasionmessage">{message}</p>
+              <p className="courseoccasionvalidationmessage">{validationMessage}</p>
             </>
           ) : (
             ""
