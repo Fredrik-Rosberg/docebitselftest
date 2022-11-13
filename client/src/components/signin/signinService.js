@@ -20,3 +20,16 @@ export const signIn = async (data) => {
     console.log(error);
   }
 };
+ export const signOut =async ()=>{
+  try {
+     let dataResponse= await fetch(url, {method:"delete"})
+     let response=await dataResponse.json();
+     return(response)
+  } catch (error) {
+    return error
+  }
+   
+
+
+
+ }

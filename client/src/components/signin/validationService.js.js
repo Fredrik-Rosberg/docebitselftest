@@ -26,6 +26,10 @@ export const validateEmail = (email) => {
   return "";
 };
 
+
+
+
+
 // Sätter meddelande för både email och password beroende på om användarens input följer kravspecen. Returnerar respektive meddelande.
 
 export const validateUserInputs = (userInput) => {
