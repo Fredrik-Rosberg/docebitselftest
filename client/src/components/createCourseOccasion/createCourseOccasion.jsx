@@ -15,22 +15,16 @@ const CreateCourseOccasion = () => {
   const [showMessages, setShowMessages] = useState(false);
 
   useEffect(() => {
-    let validatedName = validateInputsCourseOccasion(newCourseOccasion.name);
-    let validatedCourseOrganizer = validateInputsCourseOccasion(
-      newCourseOccasion.courseorganizer
-    );
+    let validatedName = validateInputsCourseOccasion(newCourseOccasion);
 
     if (validatedName != "") {
       setValidationMessage(validatedName);
     }
-    if (validatedCourseOrganizer != "") {
-      setValidationMessage(validatedCourseOrganizer);
-    }
+
     if (newCourseOccasion.startdate == "" || newCourseOccasion.enddate == "") {
       setValidationMessage(
         "Vänligen fyll i samtliga uppgifter för att skapa kurstillfälle"
       );
-
     }
 
     setShowMessages(false);
@@ -45,11 +39,14 @@ const CreateCourseOccasion = () => {
     e.preventDefault();
     if (validationMessage == "") {
       let result = await createCourseOccasion(newCourseOccasion);
-      console.log(result)
-      setMessage(result);
-
+      if (result == "Kurstillfälle skapat") {
+        setMessage(result);
+      } else {
+        setMessage("");
+        setValidationMessage(result);
+      }
     }
-    
+
     setShowMessages(true);
   };
 
@@ -126,7 +123,8 @@ const CreateCourseOccasion = () => {
                 ...newCourseOccasion,
                 enddate: e.target.value,
               }),
-                setValidationMessage(""), setMessage("");
+                setValidationMessage(""),
+                setMessage("");
             }}
           />
         </div>
@@ -134,11 +132,11 @@ const CreateCourseOccasion = () => {
           <div></div>
           <button>Spara</button>
         </div>
-        <div className="showmessage">
+        <div>
           {showMessages ? (
             <>
-              <p>{message}</p>
-              <p>{validationMessage}</p>
+              <p className="showmessage">{message}</p>
+              <p className="showvalidationmessage">{validationMessage}</p>
             </>
           ) : (
             ""

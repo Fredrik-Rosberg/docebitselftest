@@ -15,7 +15,6 @@ export const validatePassword = (password) => {
   ) {
     return "Lösenordet måste innehålla en stor bokstav, en liten bokstav, en siffra och ett specialtecken";
   }
-
   return "";
 };
 
@@ -27,7 +26,6 @@ export const validateEmail = (email) => {
   } else if (!new RegExp(/[^@ ]+@[^@ ]+\.[^@ .]{2,}/).test(email)) {
     return "Måste vara en giltig email";
   }
-
   return "";
 };
 
@@ -38,7 +36,6 @@ export const validateName = (name) => {
   } else if (!new RegExp(/^[A-Öa-ö]+$/).test(name) || name.length > 100) {
     return "Får endast innehålla bokstäver och vara max 100 tecken långt";
   }
-
   return "";
 };
 
@@ -51,7 +48,6 @@ export const validateName = (name) => {
 export const validateInputsSignIn = (userInput) => {
   const emailError = validateEmail(userInput.email);
   const passwordError = validatePassword(userInput.password);
-
   if (emailError === "" && passwordError === "") {
     return "";
   } else {
@@ -62,19 +58,22 @@ export const validateInputsSignIn = (userInput) => {
 // Kollar CourseOccasion så att det fyller kraven och sätter meddelande
 
 export const validateInputsCourseOccasion = (userInput) => {
-  const nameError = validateName(userInput);
-
-  if (nameError == "") {
+  const nameError = validateName(userInput.name);
+  const courseOrganizerError = validateName(userInput.courseorganizer);
+  if (nameError == "" && courseOrganizerError =="") {
     return "";
-  } else {
-    return nameError;
+  } 
+  if(nameError!=""){
+    return nameError
+  }
+  if(courseOrganizerError!=""){
+    return courseOrganizerError
   }
 };
 
 // Kollar CreateAccount så att det fyller kraven och sätter meddelande
 
 export const validateInputsCreateAccount = (userinputs) => {
-  console.log(userinputs)
   const firstNameError = validateName(userinputs.firstName);
   const lastNameError = validateName(userinputs.lastName);
   const emailError = validateEmail(userinputs.email);
@@ -87,16 +86,16 @@ export const validateInputsCreateAccount = (userinputs) => {
   ) {
     return "";
   }
-  if(firstNameError!=""){
-    return firstNameError
+  if (firstNameError != "") {
+    return firstNameError;
   }
-  if(lastNameError!=""){
-    return lastNameError
+  if (lastNameError != "") {
+    return lastNameError;
   }
-  if(emailError!=""){
-    return emailError
+  if (emailError != "") {
+    return emailError;
   }
-  if(passwordError!=""){
-    return passwordError
+  if (passwordError != "") {
+    return passwordError;
   }
 };
