@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./myAccount.css";
-import { getCurrentUser } from "./myAccountService";
+import { getCurrentUser } from "./MyAccount.service";
 const MyAccount = () => {
   const [user, setUser] = useState({ firstname: "", lastname: "", email: "" });
 

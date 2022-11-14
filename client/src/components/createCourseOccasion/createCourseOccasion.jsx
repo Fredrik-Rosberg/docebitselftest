@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./createCourseOccasion.css";
-import { validateInputsCourseOccasion } from "../signin/validationService.js";
-import { createCourseOccasion } from "../createCourseOccasion/createCourseOccasionService";
+import { validateInputsCourseOccasion } from "../signIn/validation.service.js";
+import { createCourseOccasion } from "./createCourseOccasion.service";
 
 const CreateCourseOccasion = () => {
   const [newCourseOccasion, setNewCourseOccasion] = useState({
@@ -136,7 +136,9 @@ const CreateCourseOccasion = () => {
           {showMessages ? (
             <>
               <p className="courseoccasionmessage">{message}</p>
-              <p className="courseoccasionvalidationmessage">{validationMessage}</p>
+              <p className="courseoccasionvalidationmessage">
+                {validationMessage}
+              </p>
             </>
           ) : (
             ""

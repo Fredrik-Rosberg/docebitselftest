@@ -1,8 +1,8 @@
-import "../signin/SignInComponent.css";
+import "../signIn/signIn.css";
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { sendMail } from "./sendResetMailService";
+import { sendMail } from "./sendResetMail.service";
 function SendResetMail() {
   const [sent, setSent] = useState(false);
   const [mail, setMail] = useState();

@@ -1,7 +1,7 @@
 import "./createAccount.css";
 import React, { useState, useEffect } from "react";
 import { validateInputsCreateAccount } from "../../signIn/validation.service.js";
-import { createAccount } from "./createAccount.service";
+import { createAccount } from "./createAccountService";
 
 function CreateAccount() {
   const [newUser, setNewUser] = useState({

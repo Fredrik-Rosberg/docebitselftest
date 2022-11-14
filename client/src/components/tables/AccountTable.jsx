@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getUsers } from "../course/courseService";
+import { getUsers } from "../course/createCourse.service.";
 const AccountTable = () => {
   const [users, setUsers] = useState({});
   const getUser = async () => {

@@ -1,8 +1,8 @@
-import "./SignInComponent.css";
+import "./signIn.css";
 
 import React, { useState, useEffect } from "react";
-import { validateInputsSignIn } from "./validationService.js";
-import { signIn } from "./signinService";
+import { validateInputsSignIn } from "./validation.service.js";
+import { signIn } from "./signin.service";
 import { Link, useNavigate } from "react-router-dom";
 
 function SignIn() {

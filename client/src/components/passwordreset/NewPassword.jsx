@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import "../signin/SignInComponent.css";
-import { validatePassword } from "../signin/validationService.js";
-import { getExpireDate, updatePassword } from "./sendResetMailService";
+import "../signIn/signIn.css";
+import { validatePassword } from "../signIn/validation.service.js";
+import { getExpireDate, updatePassword } from "./sendResetMail.service";
 
 function NewPassword() {
   const [success, setSuccess] = useState(false);

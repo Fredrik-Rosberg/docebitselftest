@@ -2,23 +2,22 @@ import React from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import "./navbarLayout.css";
 import { GrDocumentText } from "react-icons/gr";
-import ModalComponent from "../components/modal/ModalComponent";
+import ModalComponent from "../components/modal/Modal";
 import { useState } from "react";
-import { signOut } from "../components/signin/signinService";
+import { signOut } from "../components/signIn/signin.service";
 
 const NavbarLayout = () => {
   const [openModal, setOpenModal] = useState(false);
   let navigate = useNavigate(false);
 
-  async function  handleSignOut() {
+  async function handleSignOut() {
     localStorage.clear();
-    let response=await signOut();
-     if (response.signedOut) {
-       navigate("/");
-     }
-     else{
-      "wft"
-     }
+    let response = await signOut();
+    if (response.signedOut) {
+      navigate("/");
+    } else {
+      ("wft");
+    }
   }
 
   return (

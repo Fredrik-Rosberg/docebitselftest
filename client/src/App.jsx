@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import SignInComponent from "./components/signin/SignInComponent";
-import SendResetMailComponent from "./components/passwordreset/SendResetMailComponent";
+import SignInComponent from "./components/signIn/SignIn";
+import SendResetMailComponent from "./components/passwordreset/SendResetMail";
 import "@fontsource/raleway";
-import NewPassword from "./components/passwordreset/NewPasswordComponent";
+import NewPassword from "./components/passwordreset/NewPassword";
 import MainLayout from "./layout/MainLayout";
 import NavbarLayout from "./layout/NavbarLayout";
-import CreateCourseOccasion from "./components/createCourseOccasion/createCourseOccasion";
+import CreateCourseOccasion from "./components/createCourseOccasion/CreateCourseOccasion";
 import CreateAccount from "./components/admin/createAccount/CreateAccount";
 import AccountTable from "./components/tables/AccountTable";
 import MyAccount from "./components/Account/MyAccount";
