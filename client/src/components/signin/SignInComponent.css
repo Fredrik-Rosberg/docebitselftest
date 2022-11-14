@@ -1,74 +1,66 @@
 .signinform {
-    display: grid;
-    grid-template-rows: 30% 10% 10% 10% 10% 15%;
-    height: 100%;
-    width: 380px;
-    background-color: white;
-    justify-items: center;
-    align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.086);
-    border-radius: 5px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: grid;
+  grid-template-rows: 180px 80px 60px 50px 40px 50px;
+  height: 100%;
+  width: 380px;
+  background-color: white;
+  justify-items: center;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.086);
+  border-radius: 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .signinfield {
-    display: grid;
+  display: grid;
 }
 
-.signinfield>input {
-    width: 175px;
-    height: 27px;
-    padding: 0;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.signinfield>label {
-    font-size: 14px;
+.signinfield > label {
+  font-size: 14px;
 }
 
 .signinbutton {
-    border: 1px solid black;
-    border-radius: 3px;
-    height: 27px;
-    width: 75px;
-    box-shadow: rgba(0, 0, 0, 0.253) 1.95px 1.95px 2.6px;
+  border: 1px solid black;
+  border-radius: 3px;
+  height: 27px;
+  width: 75px;
+  box-shadow: rgba(0, 0, 0, 0.253) 1.95px 1.95px 2.6px;
 }
 
 .signinforgotpassword {
-    text-decoration: underline;
-    font-size: 12px;
-    align-self: start;
-    padding-top: 1vh;
+  text-decoration: underline;
+  font-size: 12px;
+  align-self: start;
+  padding-top: 1vh;
 }
 
 .signinheader {
-    text-align: center;
-    font-size: 24px;
-    padding-left: 2vw;
-    padding-right: 2vw;
+  text-align: center;
+  font-size: 24px;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  margin-top: 80px;
 }
 
 .signinerrormessage {
-    text-align: center;
-    font-size: 14px;
-    color: rgb(255, 99, 99);
+  text-align: center;
+  font-size: 14px;
+  color: rgb(255, 99, 99);
 }
 
-.signinerrormessage>p {
-    margin: 0;
-    padding: 0.3vh;
+.signinerrormessage > p {
+  margin: 0;
+  padding: 0.3vh;
 }
 
 .resetpasswordtext {
-    margin: 3vw;
-    text-align: center;
+  margin: 3vw;
+  text-align: center;
 }
 
 .labelspace {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
-.moveup{
-    margin-bottom: 7vh;
+.moveup {
+  margin-bottom: 7vh;
 }
-
