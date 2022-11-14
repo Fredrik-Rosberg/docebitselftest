@@ -19,3 +19,7 @@ input {
 h2 {
   font-size: 14px;
 }
+
+button:hover{
+  cursor: pointer;
+}

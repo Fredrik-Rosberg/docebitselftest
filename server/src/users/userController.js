@@ -30,10 +30,10 @@ const getUsers = async (req, res) => {
   }
 };
 
-const getUser = async (req, res) => {
+const getUserById = async (req, res) => {
   try {
     let sqlQuery =
-      "SELECT id, email, firstname, lastname FROM users WHERE id=$1";
+      "SELECT id, email, firstname, lastname, role FROM users WHERE id=$1";
     const user = await db.query(sqlQuery, [req.params.id]);
     if (user.rows[0]) {
       res.json(user.rows[0]);
@@ -53,8 +53,8 @@ const createAccount = async (req, res) => {
     const userExists = await getUserByEmail(req.body.email);
     if (userExists == null) {
       let result = await db.query(sqlQuery, [
-        req.body.firstName,
-        req.body.lastName,
+        req.body.firstname,
+        req.body.lastname,
         req.body.email,
         encryptedPassword,
         req.body.role,
@@ -64,6 +64,31 @@ const createAccount = async (req, res) => {
       }
     } else {
       res.json({ message: "Användare finns redan", result: false });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const editUser = async (req, res) => {
+  try {
+    const { firstname, lastname, email, password, role } = req.body;
+    const userId = req.params.id;
+    let encryptedPassword = encrypt(password);
+    let sqlQuery =
+      "UPDATE users SET firstname=$1,lastname=$2,email=$3,hashedpassword=$4,role=$5 WHERE id =$6";
+    let result = await db.query(sqlQuery, [
+      firstname,
+      lastname,
+      email,
+      encryptedPassword,
+      role,
+      userId,
+    ]);
+    if (result.rowCount) {
+      res.status(200).json({ message: "Konto uppdaterat" });
+    } else {
+      res.status(400).json({ message: "Något gick fel" });
     }
   } catch (error) {
     console.error(error);
@@ -84,5 +109,6 @@ module.exports = {
   getUsers,
   createAccount,
   changePassword,
-  getUser,
+  getUserById,
+  editUser,
 };

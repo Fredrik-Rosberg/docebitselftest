@@ -12,7 +12,7 @@
   font-size: 13px;
   text-align: start;
   display: grid;
-  grid-template-columns: 45% 175px;
+  grid-template-columns: 120px 175px;
   align-items: center;
 }
 

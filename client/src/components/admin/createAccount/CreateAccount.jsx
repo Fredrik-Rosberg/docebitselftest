@@ -5,8 +5,8 @@ import { createAccount } from "./createAccount.service";
 
 function CreateAccount() {
   const [newUser, setNewUser] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     role: "user",
@@ -23,8 +23,8 @@ function CreateAccount() {
     newUser.email,
     newUser.password,
     newUser.role,
-    newUser.firstName,
-    newUser.lastName,
+    newUser.firstname,
+    newUser.lastname,
   ]);
 
   const handleSubmit = async (e) => {
@@ -56,7 +56,7 @@ function CreateAccount() {
             type="text"
             name="firstname"
             onChange={(e) => {
-              setNewUser({ ...newUser, firstName: e.target.value }),
+              setNewUser({ ...newUser, firstname: e.target.value }),
                 setMessage("");
             }}
           />
@@ -67,7 +67,7 @@ function CreateAccount() {
             type="text"
             name="lastname"
             onChange={(e) => {
-              setNewUser({ ...newUser, lastName: e.target.value }),
+              setNewUser({ ...newUser, lastname: e.target.value }),
                 setMessage("");
             }}
           />
@@ -99,24 +99,8 @@ function CreateAccount() {
             value={newUser.role}
             onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
           >
-            <option
-              // onChange={(e) => {
-              //   setNewUser({ ...newUser, role: e.target.value }),
-              //     setMessage("");
-              // }}
-              value="user"
-            >
-              Kursdeltagare
-            </option>
-            <option
-              // onClick={(e) => {
-              //   setNewUser({ ...newUser, role: e.target.value }),
-              //     setMessage("");
-              // }}
-              value="admin"
-            >
-              Administratör
-            </option>
+            <option value="user">Kursdeltagare</option>
+            <option value="admin">Administratör</option>
           </select>
         </div>
         <div className="createaccountinput">

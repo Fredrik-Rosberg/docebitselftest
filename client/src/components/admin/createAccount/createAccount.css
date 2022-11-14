@@ -7,7 +7,7 @@
   font-size: 13px;
   text-align: start;
   display: grid;
-  grid-template-columns: 45% 175px;
+  grid-template-columns: 120px 175px;
   align-items: center;
 }
 
@@ -31,11 +31,8 @@
 }
 .createaccountvalidationmessage {
   color: rgb(255, 99, 99);
-
-  text-align: center;
 }
 
 .createaccountmessage {
   color: rgb(1, 152, 1);
-  text-align: center;
 }

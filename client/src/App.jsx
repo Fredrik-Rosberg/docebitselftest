@@ -11,6 +11,8 @@ import CreateCourseOccasion from "./components/createCourseOccasion/CreateCourse
 import CreateAccount from "./components/admin/createAccount/CreateAccount";
 import AccountTable from "./components/tables/AccountTable";
 import MyAccount from "./components/Account/MyAccount";
+import Overview from "./components/admin/overview/Overview";
+import EditAccount from "./components/admin/editAccount/EditAccount";
 function App() {
   return (
     <Router>
@@ -28,6 +30,10 @@ function App() {
           <Route path="/admin/account/create" element={<CreateAccount />} />
           <Route path="/admin/account/users" element={<AccountTable />} />
           <Route path="/admin/myaccount" element={<MyAccount />} />
+          <Route path="/admin/account/:id" element={<EditAccount />} />
+          <Route path="/admin/overview" element={<Overview />} />
+
+
         </Route>
       </Routes>
     </Router>

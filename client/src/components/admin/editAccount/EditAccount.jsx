@@ -1,128 +1,126 @@
-import "./createAccount.css";
+import "./editAccount.css";
 import React, { useState, useEffect } from "react";
 import { validateInputsCreateAccount } from "../../signIn/validation.service.js";
-import { createAccount } from "./createAccountService";
+import { editAccount } from "./editAccount.service";
+import { useParams, Link } from "react-router-dom";
+import { getUserById } from "../../Account/MyAccount.service";
 
-function CreateAccount() {
-  const [newUser, setNewUser] = useState({
-    firstName: "",
-    lastName: "",
+function EditAccount() {
+  const [user, setUser] = useState({
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     role: "user",
+    id: useParams().id,
   });
+
   const [message, setMessage] = useState("");
   const [validationMessage, setValidationMessage] = useState("");
   const [showMessages, setShowMessages] = useState(false);
 
+  async function getUser() {
+    let currentUser = await getUserById(user.id);
+    currentUser.password = "";
+    console.log(currentUser);
+    setUser(currentUser);
+  }
   useEffect(() => {
-    const error = validateInputsCreateAccount(newUser);
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    const error = validateInputsCreateAccount(user);
+    console.log(error);
     setValidationMessage(error);
     setShowMessages(false);
-  }, [
-    newUser.email,
-    newUser.password,
-    newUser.role,
-    newUser.firstName,
-    newUser.lastName,
-  ]);
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validationMessage == "") {
-      let result = await createAccount(newUser);
-      console.log(result);
-      if (result == "Användare finns redan") {
+      let result = await editAccount(user);
+      if (result == "Något gick fel") {
         setValidationMessage(result);
         setMessage("");
       } else {
         setMessage(result);
       }
     }
+
     setShowMessages(true);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="createaccountform">
-        <div className="createaccountinput">
+      <form onSubmit={handleSubmit} className="editaccountform">
+        <div className="editaccountinput">
           <div></div>
-          <h2>Nytt konto</h2>
+          <h2>Ändra kontouppgifter</h2>
         </div>
-        <div className="createaccountinput">
+        <div className="editaccountinput">
           <label htmlFor="firstname">Förnamn:</label>
           <input
             type="text"
             name="firstname"
+            value={user.firstname}
             onChange={(e) => {
-              setNewUser({ ...newUser, firstName: e.target.value }),
-                setMessage("");
+              setUser({ ...user, firstname: e.target.value }), setMessage("");
             }}
           />
         </div>
-        <div className="createaccountinput">
+        <div className="editaccountinput">
           <label htmlFor="lastname">Efternamn:</label>
           <input
             type="text"
             name="lastname"
+            value={user.lastname}
             onChange={(e) => {
-              setNewUser({ ...newUser, lastName: e.target.value }),
-                setMessage("");
+              setUser({ ...user, lastname: e.target.value }), setMessage("");
             }}
           />
         </div>
-        <div className="createaccountinput">
+        <div className="editaccountinput">
           <label htmlFor="email">E-postadress:</label>
           <input
             type="text"
             name="email"
+            value={user.email}
             onChange={(e) => {
-              setNewUser({ ...newUser, email: e.target.value }), setMessage("");
+              setUser({ ...user, email: e.target.value }), setMessage("");
             }}
           />
         </div>
-        <div className="createaccountinput">
+        <div className="editaccountinput">
           <label htmlFor="password">Lösenord:</label>
           <input
             type="password"
             name="password"
             onChange={(e) => {
-              setNewUser({ ...newUser, password: e.target.value }),
-                setMessage("");
+              setUser({ ...user, password: e.target.value }), setMessage("");
             }}
           />
         </div>
-        <div className="createaccountinput">
+        <div className="editaccountinput">
           <label htmlFor="account">Konto:</label>
           <select
-            value={newUser.role}
-            onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+            value={user.role}
+            onChange={(e) => setUser({ ...user, role: e.target.value })}
           >
-            <option
-              // onChange={(e) => {
-              //   setNewUser({ ...newUser, role: e.target.value }),
-              //     setMessage("");
-              // }}
-              value="user"
-            >
-              Kursdeltagare
-            </option>
-            <option
-              // onClick={(e) => {
-              //   setNewUser({ ...newUser, role: e.target.value }),
-              //     setMessage("");
-              // }}
-              value="admin"
-            >
-              Administratör
-            </option>
+            <option value="User">Kursdeltagare</option>
+            <option value="admin">Administratör</option>
           </select>
         </div>
-        <div className="createaccountinput">
+        <div className="editaccountinput">
           <div></div>
+          <div className="editaccountbuttons">
+            <button className="editaccountbutton">
+              <Link to="/admin/overview">Tillbaka</Link>
+            </button>
 
-          <button className="createaccountbutton">Skapa konto</button>
+            <button className="editaccountbutton">Spara</button>
+          </div>
         </div>
         <div>
           {showMessages ? (
@@ -130,8 +128,8 @@ function CreateAccount() {
               ""
             ) : (
               <>
-                <p className="createaccountmessage">{message}</p>
-                <p className="createaccountvalidationmessage">
+                <p className="editaccountmessage">{message}</p>
+                <p className="editaccountvalidationmessage">
                   {validationMessage}
                 </p>
               </>
@@ -145,7 +143,7 @@ function CreateAccount() {
   );
 }
 
-export default CreateAccount;
+export default EditAccount;
 
 // Lagt till valideringsmeddelande för email o lösenord
 // + meddelande för att konto skapats eller användare finns redan

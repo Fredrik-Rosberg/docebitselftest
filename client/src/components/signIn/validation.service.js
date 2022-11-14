@@ -74,8 +74,8 @@ export const validateInputsCourseOccasion = (userInput) => {
 // Kollar CreateAccount så att det fyller kraven och sätter meddelande
 
 export const validateInputsCreateAccount = (userinputs) => {
-  const firstNameError = validateName(userinputs.firstName);
-  const lastNameError = validateName(userinputs.lastName);
+  const firstNameError = validateName(userinputs.firstname);
+  const lastNameError = validateName(userinputs.lastname);
   const emailError = validateEmail(userinputs.email);
   const passwordError = validatePassword(userinputs.password);
   if (

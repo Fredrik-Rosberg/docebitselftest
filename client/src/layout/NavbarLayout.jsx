@@ -30,7 +30,7 @@ const NavbarLayout = () => {
             className="navbar-logo"
           />
           <div className="navbar-links">
-            <Link to="/admin/courseoccasion/create">
+            <Link to="/admin/overview">
               <GrDocumentText />
               Översikt
             </Link>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./myAccount.css";
-import { getCurrentUser } from "./MyAccount.service";
+import { getUserById } from "./MyAccount.service";
 const MyAccount = () => {
   const [user, setUser] = useState({ firstname: "", lastname: "", email: "" });
 
   async function loadUser(userId) {
-    let user = await getCurrentUser(userId);
+    let user = await getUserById(userId);
     setUser(user);
   }
 

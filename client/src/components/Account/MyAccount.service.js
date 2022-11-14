@@ -1,4 +1,4 @@
-export const getCurrentUser = async (userId) => {
+export const getUserById = async (userId) => {
     try {
       let dataResponse = await fetch('/api/user/' +userId)
   if(dataResponse.ok)
