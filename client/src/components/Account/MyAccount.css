@@ -1,11 +1,6 @@
-.myaccountheader{
+.myaccountheader {
   display: grid;
   grid-template-columns: 45% 175px;
-  margin-left: 200px;
-
-}
-.myaccountheader > h2 {
-  font-size: 14px;
 }
 
 .myaccountform {
@@ -19,8 +14,6 @@
   display: grid;
   grid-template-columns: 45% 175px;
   align-items: center;
-  margin-left: 200px;
-
 }
 
 .myccountinput > label {

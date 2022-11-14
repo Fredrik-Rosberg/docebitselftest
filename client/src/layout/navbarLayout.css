@@ -12,7 +12,8 @@
 }
 .navbar-body {
   justify-self: start;
-  align-self: center;
+  margin-top: 180px;
+  margin-left: 200px
 }
 .navbar-logo {
   width: 120px;
