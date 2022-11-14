@@ -25,3 +25,5 @@ Content-Type: application/json
     "password": "Hej12345!",
     "role": "user"
 }
+###
+GET http://localhost:3001/api/test HTTP/1.1

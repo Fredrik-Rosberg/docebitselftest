@@ -1,0 +1,64 @@
+.tables-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.container {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 200px;
+}
+.tables-container::-webkit-scrollbar {
+  display: none; /*for Chrome, Safari and Opere*/
+}
+
+.selected-row:hover {
+  background-color: rgb(148, 184, 231);
+  cursor: pointer;
+}
+
+.tables {
+  border-collapse: collapse;
+  background-color: white;
+  height: 100%;
+}
+thead {
+  background-color: #dddddd;
+}
+thead > tr {
+  height: 13px;
+}
+thead > tr > td {
+  font-size: 13px;
+  font-weight: 500;
+}
+tbody > tr > td {
+  font-size: 12px;
+  font-weight: 400;
+}
+.focus {
+  background-color: #ececec;
+}
+tr {
+  height: 30px;
+}
+td {
+  border-left: 1px solid black;
+}
+tbody {
+  overflow-y: auto;
+  width: 100%;
+}
+tr:nth-child(even) {
+  background-color: #ececec;
+}
+.overview-table-submit{
+    display: grid;
+    grid-template-columns: 80vw 1fr;
+}
+.selected-row:active{
+  background-color: rgb(148, 184, 231);
+
+}
+

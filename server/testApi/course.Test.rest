@@ -7,3 +7,5 @@ Content-Type: application/json
     "userid": 1
 }
 
+###
+GET http://localhost:3001/api/course HTTP/1.1
