@@ -1,15 +1,36 @@
-.tables-container {
+.overview-main {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 80px auto 100px;
+  margin-left: -120px;
+}
+td {
+  padding: 0;
+}
+table {
+  border-spacing: 0;
+  text-indent: 0;
+}
+.overview-tables {
+  display: grid;
+  grid-template-columns: auto auto auto;
 }
 .container {
+  padding-left: 20px;
+}
+.overview-table-course {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding-left: 20px;
+}
+.table-container {
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
   overflow-y: scroll;
   overflow-x: hidden;
   height: 200px;
+  border: black solid 2px;
 }
-.tables-container::-webkit-scrollbar {
+.table-container::-webkit-scrollbar {
   display: none; /*for Chrome, Safari and Opere*/
 }
 
@@ -23,19 +44,22 @@
   background-color: white;
   height: 100%;
 }
-thead {
+.thead {
   background-color: #dddddd;
+  border-bottom: black solid 1px;
 }
-thead > tr {
-  height: 13px;
-}
-thead > tr > td {
+
+.thead > tr > th {
   font-size: 13px;
   font-weight: 500;
+  padding: 0;
 }
+
 tbody > tr > td {
   font-size: 12px;
   font-weight: 400;
+  border-right: black solid 1px;
+  padding: 0;
 }
 .focus {
   background-color: #ececec;
@@ -43,22 +67,24 @@ tbody > tr > td {
 tr {
   height: 30px;
 }
-td {
-  border-left: 1px solid black;
-}
-tbody {
+
+/* tbody {
   overflow-y: auto;
   width: 100%;
-}
+} */
 tr:nth-child(even) {
   background-color: #ececec;
 }
-.overview-table-submit{
-    display: grid;
-    grid-template-columns: 80vw 1fr;
-}
-.selected-row:active{
+
+.selected-row:active {
   background-color: rgb(148, 184, 231);
-
 }
-
+.button {
+  border: 1px solid black;
+  border-radius: 3px;
+  height: 27px;
+  width: auto;
+  box-shadow: rgba(0, 0, 0, 0.253) 1.95px 1.95px 2.6px;
+  justify-self: flex-end;
+  align-self: flex-end;
+}

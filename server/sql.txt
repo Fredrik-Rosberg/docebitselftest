@@ -29,11 +29,11 @@ UNIQUE (name, startdate)
 
 CREATE TABLE IF NOT EXISTS course(
 id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-courseid int NOT NULL,
+courseoccasionid int NOT NULL,
 userid int NOT NULL,
 FOREIGN KEY (courseid) REFERENCES course(id),
 FOREIGN KEY (userid) REFERENCES users(id),
-UNIQUE (courseid, userid)
+UNIQUE (courseoccasionid, userid)
 );
 
 CREATE TABLE IF NOT EXISTS results(

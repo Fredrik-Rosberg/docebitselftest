@@ -1,13 +1,43 @@
 const db = require("../../db");
 
+
 const createCourse = async (req, res) => {
   try {
-    let sqlQuery =
-      "INSERT INTO courseoccasion (courseid, userid) VALUES($1,$2)";
-    let result = await db.query(sqlQuery, [req.body.courseid, req.body.userid]);
-    res.status(200).json({ message: "Konto skapat" });
+    let result = await addTestToCourseOccasion(
+      req.body.testid,
+      req.body.courseoccasionid
+    );
+    
+    if (!result.error) {
+      let sqlQuery =
+        "INSERT INTO course (courseoccasionid, userid) VALUES($1,$2)";
+      let result = await db.query(sqlQuery, [
+        req.body.courseoccasionid,
+        req.body.userid,
+      ]);
+      if (result.rowCount) {
+        res.status(200).json({ message: "Kurs har skapats" });
+      } else {
+        res.status(400).send({ error: "Kurs ej skapad" });
+      }
+    } else {
+      res.status(400).send({ error: result.error });
+    }
   } catch (error) {
-    res.status(400).json({ message: "Misslyckat" });
+    res.status(400).json({ error: error.detail });
+  }
+};
+const addTestToCourseOccasion = async (testId, courseOccasionId) => {
+  try {
+    let sqlQuery = "UPDATE courseoccasion SET testid=$1 WHERE id=$2";
+    let result = await db.query(sqlQuery, [testId, courseOccasionId]);
+    if (result.rowCount) {
+      return { message: "TestId tillags i kurstillfälle" };
+    } else {
+      return { error: "Något gick fel" };
+    }
+  } catch (error) {
+    return { error: error };
   }
 };
 

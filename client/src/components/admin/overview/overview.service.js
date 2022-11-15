@@ -31,6 +31,16 @@ export const getCourseOccasions = async () => {
   if (response.ok) {
     return data;
   } else {
+    return data;
+  }
+};
+
+export const createCourse = async () => {
+  let response = await fetch("/api/course");
+  let data = await response.json();
+  if (response.ok) {
+    return data.message;
+  } else {
     return data.message;
   }
 };
