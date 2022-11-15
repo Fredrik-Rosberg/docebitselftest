@@ -37,9 +37,10 @@ const MyAccount = () => {
         </div>
         <div className="myaccountinput">
           <div></div>
-          <button className="myaccountbutton">
-            <Link to="/admin">Ändra lösenord</Link>
-          </button>
+
+          <Link to={`/admin/account/${user.id}/changepassword`}>
+            <button className="myaccountbutton">Ändra lösenord</button>
+          </Link>
         </div>
       </form>
     </>

@@ -73,7 +73,7 @@ function NewPassword() {
             Ditt lösenord måste vara minst 8 tecken, innehålla versaler, minst
             en siffra och ett specialtecken.
           </p>
-          <div></div>
+          
 
           <div className="signinfield labelspace">
             <label htmlFor="password" className="labelspace">
@@ -98,6 +98,7 @@ function NewPassword() {
               }}
             />
           </div>
+          <div></div>
           <button className="signinbutton">Återställ</button>
           {showMessage ? (
             <p className="signinerrormessage">{errorMessage}</p>

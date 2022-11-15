@@ -3,7 +3,7 @@ import React from "react";
 import CreateAccount from "./createAccount/CreateAccount";
 import { AiOutlineProfile } from "react-icons/ai";
 import "../../assets/cropped-DocebIT01-1-1.jpg";
-import CreateCourse from "../createCourseOccasion/createCourseOccasion";
+import CreateCourse from "../createCourseOccasion/CreateCourseOccasion";
 
 function MainAdmin() {
   return (
