@@ -1,30 +1,40 @@
 const db = require("../../db");
 
+const createCourses = async (req, res) => {
+  // array
+  let response = [];
+  const dataArray = req.body;
+  let result = dataArray.forEach((data) => createCourse(data));
 
-const createCourse = async (req, res) => {
+  console.log(response);
+  console.log(result);
+  // if (result.rowCount) {
+  //   res.status(200).json({ message: "Kurs har skapats" });
+  // } else {
+  //   res.status(400).send({ error: "Kurs ej skapad" });
+  // }
+};
+
+const createCourse = async (data) => {
   try {
     let result = await addTestToCourseOccasion(
-      req.body.testid,
-      req.body.courseoccasionid
+      data.testid,
+      data.courseoccasionid
     );
-    
+
     if (!result.error) {
       let sqlQuery =
         "INSERT INTO course (courseoccasionid, userid) VALUES($1,$2)";
       let result = await db.query(sqlQuery, [
-        req.body.courseoccasionid,
-        req.body.userid,
+        data.courseoccasionid,
+        data.userid,
       ]);
-      if (result.rowCount) {
-        res.status(200).json({ message: "Kurs har skapats" });
-      } else {
-        res.status(400).send({ error: "Kurs ej skapad" });
-      }
+      return { message: "success" };
     } else {
-      res.status(400).send({ error: result.error });
+      return { error: result.error };
     }
   } catch (error) {
-    res.status(400).json({ error: error.detail });
+    return { error: error.detail };
   }
 };
 const addTestToCourseOccasion = async (testId, courseOccasionId) => {
@@ -90,4 +100,5 @@ module.exports = {
   deleteCourse,
   getCourse,
   getTests,
+  createCourses,
 };
