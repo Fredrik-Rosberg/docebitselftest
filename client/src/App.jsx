@@ -13,6 +13,7 @@ import AccountTable from "./components/tables/AccountTable";
 import MyAccount from "./components/Account/MyAccount";
 import Overview from "./components/admin/overview/Overview";
 import EditAccount from "./components/admin/editAccount/EditAccount";
+import ChangePassword from "./components/admin/changePassword/ChangePassword";
 function App() {
   return (
     <Router>
@@ -31,6 +32,7 @@ function App() {
           <Route path="/admin/account/users" element={<AccountTable />} />
           <Route path="/admin/myaccount" element={<MyAccount />} />
           <Route path="/admin/account/:id" element={<EditAccount />} />
+          <Route path="/admin/account/:id/changepassword" element={<ChangePassword />} />
           <Route path="/admin/overview" element={<Overview />} />
 
 

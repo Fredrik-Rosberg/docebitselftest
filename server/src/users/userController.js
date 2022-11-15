@@ -96,11 +96,40 @@ const editUser = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
+  console.log(req.body.password)
+  const encryptedPassword = encrypt(req.body.password);
+
   try {
-    if (req.body.password) {
+    let sqlQuery = "UPDATE users SET hashedpassword=$1 WHERE id=$2";
+    let result = await db.query(sqlQuery, [encryptedPassword, req.body.id]);
+    console.log(result);
+    if (result.rowCount) {
+      res.status(200).json({ message: "Lösenord ändrat", result:true });
+    } else {
+      res.status(400).json({ message: "Misslyckad ändring", result: false });
     }
   } catch (error) {
-    console.log();
+    res.status(400).json({ message: "Misslyckad ändring2" });
+  }
+};
+
+const checkCurrentPassword = async (req, res) => {
+  let hashedpassword = encrypt(req.body.currentpassword);
+  
+  try {
+    let getCurrentPassword = await db.query(
+      "SELECT hashedpassword FROM users WHERE id =$1 and hashedpassword=$2",
+      [req.params.id, hashedpassword]
+    );
+    console.log(getCurrentPassword)
+    if (getCurrentPassword.rowCount) {
+      res.status(200).json({ message: "correct password", result: true });
+    } else {
+      res.status(400).json({ message: "wrong password", result: false });
+    }
+  } catch (error) {
+    res.status(400).json({message:"nublevdefel"})
+    console.log(error);
   }
 };
 
@@ -111,4 +140,5 @@ module.exports = {
   changePassword,
   getUserById,
   editUser,
+  checkCurrentPassword,
 };
