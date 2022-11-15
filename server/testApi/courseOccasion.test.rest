@@ -1,11 +1,11 @@
-POST http://localhost:3001/api/course/occasion HTTP/1.1
+POST http://localhost:3001/api/courseoccasion HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "phpphpphpkurs",
+    "name": "Kurs6",
     "startdate": "2022-11-11",
     "enddate":"2022-12-12",
-    "courseorganizer":null
+    "courseorganizer":"test"
     
 }
 ###
@@ -13,4 +13,4 @@ DELETE  http://localhost:3001/api/course/8
 
 ###
 
-GET http://localhost:3001/api/course HTTP/1.1
+GET http://localhost:3001/api/courseoccasion HTTP/1.1

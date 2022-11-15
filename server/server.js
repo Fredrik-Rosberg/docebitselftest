@@ -23,14 +23,12 @@ app.use(
   })
 );
 
-
-
 //Routes
 const sendMail = require("./src/resetPasswordService/resetPasswordRouter.js");
 const authRouter = require("./src/authenticate/authRouter.js");
 const userRouter = require("./src/users/userRouter");
 const courseRouter = require("./src/course/courseRouter");
-const courseOccasionRouter=require("./src/courseOccasion/courseOccasionRouter")
+const courseOccasionRouter = require("./src/courseOccasion/courseOccasionRouter");
 app.use("/", authRouter);
 app.use("/", userRouter);
 app.use("/", sendMail);

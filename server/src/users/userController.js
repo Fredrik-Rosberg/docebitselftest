@@ -21,7 +21,7 @@ const getUsers = async (req, res) => {
     let sqlQuery = "SELECT id, email, firstname, lastname FROM users";
     const users = await db.query(sqlQuery);
     if (users.rowCount != 0) {
-      res.status(200).json({ users: users.rows });
+      res.status(200).json(users.rows);
     } else {
       res.status(200).json({ message: "Inga användare funna" });
     }

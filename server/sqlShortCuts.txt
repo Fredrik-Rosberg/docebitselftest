@@ -7,3 +7,6 @@ ALTER TABLE course ADD CONSTRAINT makeuniq UNIQUE("name",startdate);
 """Tar ut hela table till courseoccasion från kurs"""
 SELECT course.name, course.startdate, course.enddate, test.testname, users.email FROM courseoccasion INNER JOIN course ON course.id = courseoccasion.courseid 
 INNER JOIN users ON users.id = courseoccasion.userid INNER JOIN test ON test.id = course.testid
+
+""""
+SELECT courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, test.testname, users.email FROM course INNER JOIN courseoccasion ON course.courseid = courseoccasion.id INNER JOIN users ON users.id = course.userid INNER JOIN test ON test.id = courseoccasion.testid
