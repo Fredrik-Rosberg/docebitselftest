@@ -30,33 +30,34 @@ const NavbarLayout = () => {
             className="navbar-logo"
           />
           <div className="navbar-links">
-            <Link to="/admin/overview">
+            <Link className="navbar-link" to="/admin/overview">
               <GrDocumentText />
               Översikt
             </Link>
-            <Link to="/admin/account/create">
+            <Link className="navbar-link" to="/admin/account/create">
               <GrDocumentText />
               Konto
             </Link>
-            <Link to="/admin/account/create">
+            <Link className="navbar-link" to="/admin/test">
               <GrDocumentText />
               Test
             </Link>
-            <Link to="/admin/courseoccasion/create">
+            <Link className="navbar-link" to="/admin/courseoccasion/create">
               <GrDocumentText />
               Kurstillfälle
             </Link>
-            <Link to="/admin/account/users">
+            <Link className="navbar-link" to="/admin/account/users">
               <GrDocumentText />
               Kurs
             </Link>
-            <Link to="/admin/myaccount">
+            <Link className="navbar-link" to="/admin/myaccount">
               <GrDocumentText />
               Mitt konto
             </Link>
-
-            <button onClick={() => setOpenModal(true)}>logga ut</button>
           </div>
+          <button className="navbar-signout" onClick={() => setOpenModal(true)}>
+            Logga ut
+          </button>
         </div>
         <div className="navbar-body">
           <Outlet />
