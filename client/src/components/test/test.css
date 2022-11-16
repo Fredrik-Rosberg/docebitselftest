@@ -12,7 +12,7 @@
   padding: 0;
 }
 
-.test-csv-input{
+.test-csv-input {
   font-size: 12px;
   padding: 0;
 }
@@ -29,6 +29,6 @@
 
 .test-status-row {
   display: grid;
-  grid-template-columns: 120px 44px auto;
+  grid-template-columns: 120px 55px 190px;
   align-items: center;
 }
