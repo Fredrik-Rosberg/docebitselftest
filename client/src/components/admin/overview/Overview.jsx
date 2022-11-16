@@ -18,11 +18,20 @@ const Overview = () => {
 
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     console.log(newCourse.user);
-  //     setNewArray((newArray) => [...newArray, newCourse.user]);
-  //     console.log(newArray);
-  //   }, [newCourse.user]);
+  const updateState = (id, fieldname) => {
+    const newState = newArray.map((obj) => {
+      return { ...obj, [fieldname]: id };
+    });
+
+    setNewArray(newState);
+  };
+
+  useEffect(() => {
+    let test = newCourse
+    console.log(newCourse.user);
+    setNewArray((newArray) => [...newArray, newCourse.user]);
+    console.log(newArray);
+  }, [newCourse.user, newCourse.test, newCourse.courseoccasion]);
 
   function handleDoubleClick(id) {
     navigate(`/admin/account/${id}`);
@@ -33,12 +42,10 @@ const Overview = () => {
     console.log(newArray);
   }
   async function handleAddToNewCourse(id, fieldname) {
-    // newArray.forEach((user) => setNewUsernewArray.push({ [fieldname]: id }));
-    // console.log(newArray);
-    setNewCourse({ ...newCourse, [fieldname]: id });
-    setNewArray([...newArray, newCourse]);
 
-    // console.log(newArray);
+    updateState(id, fieldname);
+    console.log(newArray);
+
   }
   async function handleAddCourse() {
     setCourses((courses) => [...courses, newCourse]);
