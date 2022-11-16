@@ -26,29 +26,17 @@ const Overview = () => {
     setNewArray(newState);
   };
 
-  useEffect(() => {
-    let test = newCourse
-    console.log(newCourse.user);
-    setNewArray((newArray) => [...newArray, newCourse.user]);
-    console.log(newArray);
-  }, [newCourse.user, newCourse.test, newCourse.courseoccasion]);
 
   function handleDoubleClick(id) {
     navigate(`/admin/account/${id}`);
   }
-  async function handleAddUserToNewCourse(id, fieldname) {
-    setNewCourse({ ...newCourse, [fieldname]: id });
-    setNewArray((newArray) => [...newArray, newCourse]);
-    console.log(newArray);
-  }
-  async function handleAddToNewCourse(id, fieldname) {
 
+  async function handleAddToNewCourse(id, fieldname) {
     updateState(id, fieldname);
     console.log(newArray);
-
   }
   async function handleAddCourse() {
-    setCourses((courses) => [...courses, newCourse]);
+    setCourses(newArray);
   }
   async function fetchUsers() {
     let data = await getUsers();
@@ -103,7 +91,7 @@ const Overview = () => {
                         handleDoubleClick(user.id);
                       }}
                       onClick={(e) => {
-                        handleAddUserToNewCourse(user, "user");
+                        setNewArray((newArray) => [...newArray, {user:user}]);
                       }}
                     >
                       <td>{user.firstname}</td>
@@ -159,7 +147,7 @@ const Overview = () => {
                       className="selected-row"
                       key={test.id}
                       onClick={(e) => {
-                        handleAddToNewCourse(test, "test");
+                        updateState(test, "test");
                       }}
                     >
                       <td>{test.testname}</td>
@@ -230,7 +218,7 @@ const Overview = () => {
                       className="selected-row"
                       key={occasion.id}
                       onClick={(e) => {
-                        handleAddToNewCourse(occasion, "courseoccasion");
+                        updateState(occasion, "courseoccasion");
                       }}
                     >
                       <td>{occasion.courseorganizer}</td>
