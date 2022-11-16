@@ -1,47 +1,44 @@
+const { response } = require("express");
 const db = require("../../db");
 
-const createCourse = async (req, res) => {
-  try {
-    const responseArray = [];
+const createCourses = async (req, res) => {
+  let responseArray = [];
 
-    //Skapar rätt format för pg-format dvs en array i en array
+  let dataArray = req.body;
 
-    let dataArray = req.body;
+  let sqlQuery =
+    "INSERT INTO course(courseoccasionid, userid, testid) VALUES ($1, $2, $3)";
 
-    // let successCount;
-    // let failCount;
+  let iteration = 1;
 
-    let sqlQuery =
-      "INSERT INTO course(courseoccasionid, userid, testid) VALUES ($1, $2, $3)";
-
-    dataArray.forEach(async (data) => {
-      try {
-        let response = await db.query(sqlQuery, [
-          data.courseoccasionid,
-          data.userid,
-          data.testid,
-        ]);
-
-        // successCount++
-
-        console.log(response);
-      } catch (error) {
-        // failCount++
-
-        console.log(error.detail);
-
-        responseArray.push(error.detail);
+  dataArray.forEach(async (data) => {
+    try {
+      await db.query(sqlQuery, [
+        data.courseoccasionid,
+        data.userid,
+        data.testid,
+      ]);
+    } catch (error) {
+      responseArray.push(error.detail);
+    }
+    console.log(iteration);
+    if (iteration == dataArray.length) {
+      if (responseArray.length > 0) {
+        res.status(400).json({
+          message: dataArray.length-responseArray.length +" Kurs(er) tillagda",
+          errorcount: responseArray.length,
+          errormessage: "Kurs(er) existerar redan",
+          error: responseArray,
+          
+        });
+      } else {
+        res
+          .status(200)
+          .json({ addcount: dataArray.length, message: "Kurs(er) tillagda" });
       }
-    });
-
-    //  console.log(failCount)
-
-    //  console.log(successCount)
-
-    console.log(responseArray);
-  } catch (error) {
-    console.log(error);
-  }
+    }
+    iteration++;
+  });
 };
 
 const getCourse = async (req, res) => {
@@ -88,9 +85,9 @@ const getTests = async (req, res) => {
   }
 };
 module.exports = {
-  createCourse,
+  createCourses,
   getCourses,
   deleteCourse,
   getCourse,
-  getTests
+  getTests,
 };

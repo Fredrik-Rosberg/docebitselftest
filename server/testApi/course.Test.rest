@@ -3,12 +3,12 @@ POST http://localhost:3001/api/course HTTP/1.1
 Content-Type: application/json
 
     [
-  {  "courseoccasionid": 28,
-    "userid": 47,
+  {  "courseoccasionid": 60,
+    "userid": 1,
     "testid": 2}, 
     {
-            "courseoccasionid": 28,
-    "userid": 46,
+            "courseoccasionid": 50,
+    "userid": 3,
     "testid": 2
     }
     ]

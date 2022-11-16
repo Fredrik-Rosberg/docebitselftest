@@ -21,9 +21,7 @@ id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 name varchar(55) NOT NULL,
 startdate date NOT NULL,
 enddate date NOT NULL,
-testid int,
 courseorganizer varchar(55) NOT NULL,
-FOREIGN KEY (testid) REFERENCES test(id),
 UNIQUE (name, startdate)
 );
 
@@ -31,9 +29,11 @@ CREATE TABLE IF NOT EXISTS course(
 id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 courseoccasionid int NOT NULL,
 userid int NOT NULL,
+testid int NOT NULL,
 FOREIGN KEY (courseid) REFERENCES course(id),
 FOREIGN KEY (userid) REFERENCES users(id),
-UNIQUE (courseoccasionid, userid)
+FOREIGN KEY (testid) REFERENCES test(id),
+UNIQUE (courseoccasionid, userid, testid)
 );
 
 CREATE TABLE IF NOT EXISTS results(
