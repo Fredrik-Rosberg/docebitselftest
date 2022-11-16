@@ -4,7 +4,7 @@ import {
   getUsers,
   getCourseOccasions,
   getTests,
-  getCourses,
+  createCourses,
 } from "./overview.service";
 import "./overview.css";
 
@@ -14,18 +14,34 @@ const Overview = () => {
   const [courseoccasion, setCourseOccasion] = useState([]);
   const [courses, setCourses] = useState([]);
   const [newCourse, setNewCourse] = useState({});
+  const [newArray, setNewArray] = useState([]);
+
   const navigate = useNavigate();
+
+  //   useEffect(() => {
+  //     console.log(newCourse.user);
+  //     setNewArray((newArray) => [...newArray, newCourse.user]);
+  //     console.log(newArray);
+  //   }, [newCourse.user]);
 
   function handleDoubleClick(id) {
     navigate(`/admin/account/${id}`);
   }
-  async function handleClick(id, fieldname) {
-    console.log(fieldname);
+  async function handleAddUserToNewCourse(id, fieldname) {
     setNewCourse({ ...newCourse, [fieldname]: id });
+    setNewArray((newArray) => [...newArray, newCourse]);
+    console.log(newArray);
+  }
+  async function handleAddToNewCourse(id, fieldname) {
+    // newArray.forEach((user) => setNewUsernewArray.push({ [fieldname]: id }));
+    // console.log(newArray);
+    setNewCourse({ ...newCourse, [fieldname]: id });
+    setNewArray([...newArray, newCourse]);
+
+    // console.log(newArray);
   }
   async function handleAddCourse() {
     setCourses((courses) => [...courses, newCourse]);
-    console.log(courses);
   }
   async function fetchUsers() {
     let data = await getUsers();
@@ -49,6 +65,13 @@ const Overview = () => {
     fetchCourseOccassions();
     courseoccasion.map((data) => console.log(data.enddate));
   }, []);
+
+  async function saveCourses() {
+    let response = await createCourses(courses);
+    console.log(response);
+    setCourses([]);
+    setNewCourse({});
+  }
   return (
     <>
       <div className="overview-main">
@@ -73,7 +96,7 @@ const Overview = () => {
                         handleDoubleClick(user.id);
                       }}
                       onClick={(e) => {
-                        handleClick(user, "user");
+                        handleAddUserToNewCourse(user, "user");
                       }}
                     >
                       <td>{user.firstname}</td>
@@ -82,6 +105,9 @@ const Overview = () => {
                     </tr>
                   ))}
                   <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -126,7 +152,7 @@ const Overview = () => {
                       className="selected-row"
                       key={test.id}
                       onClick={(e) => {
-                        handleClick(test, "test");
+                        handleAddToNewCourse(test, "test");
                       }}
                     >
                       <td>{test.testname}</td>
@@ -197,7 +223,7 @@ const Overview = () => {
                       className="selected-row"
                       key={occasion.id}
                       onClick={(e) => {
-                        handleClick(occasion, "courseoccasion");
+                        handleAddToNewCourse(occasion, "courseoccasion");
                       }}
                     >
                       <td>{occasion.courseorganizer}</td>
@@ -266,25 +292,74 @@ const Overview = () => {
               </thead>
               <tbody>
                 {courses.map((course) => (
-                  <tr className="selected-row" key={course.user.id}>
+                  <tr
+                    className="selected-row"
+                    key={course.user.id + Math.random()}
+                  >
                     <td>{course.courseoccasion.courseorganizer}</td>
                     <td>{course.courseoccasion.name}</td>
                     <td>
-                      {new Date(course.courseoccasion.startdate).toLocaleDateString("se-SE")}
+                      {new Date(
+                        course.courseoccasion.startdate
+                      ).toLocaleDateString("se-SE")}
                     </td>
                     <td>
-                      {new Date(course.courseoccasion.enddate).toLocaleDateString("se-SE")}
+                      {new Date(
+                        course.courseoccasion.enddate
+                      ).toLocaleDateString("se-SE")}
                     </td>
                     <td>{course.test.testname}</td>
                     <td>{course.user.email}</td>
                   </tr>
                 ))}
               </tbody>
+              {/* <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>{" "}
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>{" "}
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>{" "}
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>{" "}
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr> */}
             </table>
           </div>
           <button className="button">Ta bort rad(er)</button>
         </div>
-        <button className="button">Spara kurser</button>
+        <button onClick={saveCourses} className="button">
+          Spara kurser
+        </button>
       </div>
     </>
   );
