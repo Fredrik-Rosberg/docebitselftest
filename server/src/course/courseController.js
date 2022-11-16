@@ -1,53 +1,46 @@
 const db = require("../../db");
 
-const createCourses = async (req, res) => {
-  // array
-  let response = [];
-  const dataArray = req.body;
-  let result = dataArray.forEach((data) => createCourse(data));
-
-  console.log(response);
-  console.log(result);
-  // if (result.rowCount) {
-  //   res.status(200).json({ message: "Kurs har skapats" });
-  // } else {
-  //   res.status(400).send({ error: "Kurs ej skapad" });
-  // }
-};
-
-const createCourse = async (data) => {
+const createCourse = async (req, res) => {
   try {
-    let result = await addTestToCourseOccasion(
-      data.testid,
-      data.courseoccasionid
-    );
+    const responseArray = [];
 
-    if (!result.error) {
-      let sqlQuery =
-        "INSERT INTO course (courseoccasionid, userid) VALUES($1,$2)";
-      let result = await db.query(sqlQuery, [
-        data.courseoccasionid,
-        data.userid,
-      ]);
-      return { message: "success" };
-    } else {
-      return { error: result.error };
-    }
+    //Skapar rätt format för pg-format dvs en array i en array
+
+    let dataArray = req.body;
+
+    // let successCount;
+    // let failCount;
+
+    let sqlQuery =
+      "INSERT INTO course(courseoccasionid, userid, testid) VALUES ($1, $2, $3)";
+
+    dataArray.forEach(async (data) => {
+      try {
+        let response = await db.query(sqlQuery, [
+          data.courseoccasionid,
+          data.userid,
+          data.testid,
+        ]);
+
+        // successCount++
+
+        console.log(response);
+      } catch (error) {
+        // failCount++
+
+        console.log(error.detail);
+
+        responseArray.push(error.detail);
+      }
+    });
+
+    //  console.log(failCount)
+
+    //  console.log(successCount)
+
+    console.log(responseArray);
   } catch (error) {
-    return { error: error.detail };
-  }
-};
-const addTestToCourseOccasion = async (testId, courseOccasionId) => {
-  try {
-    let sqlQuery = "UPDATE courseoccasion SET testid=$1 WHERE id=$2";
-    let result = await db.query(sqlQuery, [testId, courseOccasionId]);
-    if (result.rowCount) {
-      return { message: "TestId tillags i kurstillfälle" };
-    } else {
-      return { error: "Något gick fel" };
-    }
-  } catch (error) {
-    return { error: error };
+    console.log(error);
   }
 };
 
@@ -99,6 +92,5 @@ module.exports = {
   getCourses,
   deleteCourse,
   getCourse,
-  getTests,
-  createCourses,
+  getTests
 };
