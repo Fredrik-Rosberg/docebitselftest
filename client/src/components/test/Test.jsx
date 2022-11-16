@@ -9,19 +9,27 @@ const Test = () => {
   const [name, setName] = useState("");
   const [showMessage, setShowMessage] = useState("");
 
-  useEffect(() => {
-    setError("");
-    setStatus("Redo");
-  }, [name], [file]);
+  useEffect(
+    () => {
+      setError("");
+      setStatus("Redo");
+    },
+    [name],
+    [file]
+  );
   const handleOnChange = (event) => {
+    setFile();
+    if (event.target.files[0]) {
+      setShowMessage(false);
 
-    Papa.parse(event.target.files[0], {
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        setFile(results.data);
-      },
-    });
+      Papa.parse(event.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          setFile(results.data);
+        },
+      });
+    }
   };
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -42,9 +50,9 @@ const Test = () => {
           setStatus(result.status);
         }
         console.log(result);
-      }else{
-        setError("Vänligen ladda upp fil")
-        setShowMessage(true)
+      } else {
+        setError("Vänligen ladda upp fil");
+        setShowMessage(true);
       }
     }
   };
