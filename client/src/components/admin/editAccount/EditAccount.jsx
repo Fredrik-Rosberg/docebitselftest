@@ -22,7 +22,6 @@ function EditAccount() {
   async function getUser() {
     let currentUser = await getUserById(user.id);
     currentUser.password = "";
-    console.log(currentUser);
     setUser(currentUser);
   }
   useEffect(() => {
@@ -31,7 +30,6 @@ function EditAccount() {
 
   useEffect(() => {
     const error = validateInputsCreateAccount(user);
-    console.log(error);
     setValidationMessage(error);
     setShowMessages(false);
   }, [user]);

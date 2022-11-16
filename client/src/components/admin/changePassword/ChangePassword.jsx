@@ -3,8 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import "./changePassword.css";
 import { changePassword, checkCurrentPassword } from "./changePassword.service";
 import { validatePassword } from "../../signIn/validation.service";
+import UpdatePasswordModal from "../../modal/UpdatedPassWordModal";
 
 function ChangePassword() {
+  const [openModal, setOpenModal] = useState(false);
   const [success, setSuccess] = useState(false);
   const [passwordOne, setPasswordOne] = useState();
   const [passwordTwo, setPasswordTwo] = useState();
@@ -20,7 +22,9 @@ function ChangePassword() {
       if (error == "") {
         setErrorMessage("success");
       } else {
-        setErrorMessage("Kontrollera att lösenordet uppfyller kraven");
+        setErrorMessage(
+          "Lösenordet måste innehålla 8-50 tecken, minst en stor bokstav, en liten bokstav, en siffra samt ett specialtecken (!&?-#)"
+        );
       }
     } else {
       setErrorMessage("Kontrollera att lösenorden är lika");
@@ -38,6 +42,7 @@ function ChangePassword() {
 
     if (errorMessage == "success" && checkedPassword) {
       setSuccess(true);
+      setOpenModal(true);
       let resp = await changePassword(passwordOne, params.id);
       console.log(resp.result);
     } else if (errorMessage == "success" && !checkedPassword) {
@@ -50,76 +55,75 @@ function ChangePassword() {
 
   return (
     <>
-      {success ? (
-        <div className="signinform">
-          <div></div>
-          <p>Ditt lösenord är nu ändrat</p>
-          <Link to="/">
-            <button className="signinbutton">Logga in</button>
-          </Link>
+      <form className="changepasswordform" onSubmit={handleSubmit}>
+        <h2 className="changepasswordheader">
+          <div></div> Ändra lösenord
+        </h2>
+
+        <div className="changepasswordinput">
+          <label htmlFor="password" className="labelspace">
+            Nuvarande lösenord:
+          </label>
+          <input
+            type="password"
+            onChange={(e) => {
+              setCurrentPassword(e.target.value);
+            }}
+          />
         </div>
-      ) : (
-        <form className="changepasswordform" onSubmit={handleSubmit}>
-          <h2 className="changepasswordheader">
-            <div></div> Ändra lösenord
-          </h2>
 
-          <div className="changepasswordinput">
-            <label htmlFor="password" className="labelspace">
-              Nuvarande lösenord:
-            </label>
-            <input
-              type="password"
-              onChange={(e) => {
-                setCurrentPassword(e.target.value);
-              }}
-            />
-          </div>
-
-          <div className="changepasswordinput">
-            <label htmlFor="password" className="labelspace">
-              Nytt lösenord:
-            </label>
-            <input
-              type="password"
-              onChange={(e) => {
-                setPasswordOne(e.target.value);
-              }}
-            />
-          </div>
-
-          <div className="changepasswordinput">
-            <label htmlFor="confirmpassword" className="labelspace">
-              Upprepa nytt lösenord:
-            </label>
-            <input
-              type="password"
-              onChange={(e) => {
-                setPasswordTwo(e.target.value);
-              }}
-            />
-          </div>
-          <div></div>
-          <div className="changepasswordbuttoncontainer">
-            <div></div>
-            <div>
-              <Link to="/admin/myaccount">
-                <button type="button" className="changepasswordbutton">
-                  Tillbaka
-                </button>
-              </Link>
-              <button type="submit" className="changepasswordbutton">
-                Spara
-              </button>
-            </div>
-          </div>
-          {showMessage ? (
-            <p className="signinerrormessage">{errorMessage}</p>
+        <div className="changepasswordinput">
+          <label htmlFor="password" className="labelspace">
+            Nytt lösenord:
+          </label>
+          {success ? (
+            <UpdatePasswordModal
+              content="Lösenord har ändrats"
+              onClose={() => setOpenModal(!openModal)}
+              show={openModal}
+            ></UpdatePasswordModal>
           ) : (
             ""
           )}
-        </form>
-      )}
+          <input
+            type="password"
+            onChange={(e) => {
+              setPasswordOne(e.target.value);
+            }}
+          />
+        </div>
+
+        <div className="changepasswordinput">
+          <label htmlFor="confirmpassword" className="labelspace">
+            Upprepa nytt lösenord:
+          </label>
+          <input
+            type="password"
+            onChange={(e) => {
+              setPasswordTwo(e.target.value);
+            }}
+          />
+        </div>
+        <div></div>
+        <div className="changepasswordbuttoncontainer">
+          <div></div>
+          <div>
+            <Link to="/admin/myaccount">
+              <button type="button" className="changepasswordbutton">
+                Tillbaka
+              </button>
+            </Link>
+            <button type="submit" className="changepasswordbutton">
+              Spara
+            </button>
+          </div>
+        </div>
+        {showMessage ? (
+          <p className="signinerrormessage">{errorMessage}</p>
+        ) : (
+          ""
+        )}
+      </form>
     </>
   );
 }
