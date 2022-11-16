@@ -1,44 +1,44 @@
+const { response } = require("express");
 const db = require("../../db");
 
+const createCourses = async (req, res) => {
+  let responseArray = [];
 
-const createCourse = async (req, res) => {
-  try {
-    let result = await addTestToCourseOccasion(
-      req.body.testid,
-      req.body.courseoccasionid
-    );
-    
-    if (!result.error) {
-      let sqlQuery =
-        "INSERT INTO course (courseoccasionid, userid) VALUES($1,$2)";
-      let result = await db.query(sqlQuery, [
-        req.body.courseoccasionid,
-        req.body.userid,
+  let dataArray = req.body;
+
+  let sqlQuery =
+    "INSERT INTO course(courseoccasionid, userid, testid) VALUES ($1, $2, $3)";
+
+  let iteration = 1;
+
+  dataArray.forEach(async (data) => {
+    try {
+      await db.query(sqlQuery, [
+        data.courseoccasionid,
+        data.userid,
+        data.testid,
       ]);
-      if (result.rowCount) {
-        res.status(200).json({ message: "Kurs har skapats" });
+    } catch (error) {
+      responseArray.push(error.detail);
+    }
+    console.log(iteration);
+    if (iteration == dataArray.length) {
+      if (responseArray.length > 0) {
+        res.status(400).json({
+          message: dataArray.length-responseArray.length +" Kurs(er) tillagda",
+          errorcount: responseArray.length,
+          errormessage: "Kurs(er) existerar redan",
+          error: responseArray,
+          
+        });
       } else {
-        res.status(400).send({ error: "Kurs ej skapad" });
+        res
+          .status(200)
+          .json({ addcount: dataArray.length, message: "Kurs(er) tillagda" });
       }
-    } else {
-      res.status(400).send({ error: result.error });
     }
-  } catch (error) {
-    res.status(400).json({ error: error.detail });
-  }
-};
-const addTestToCourseOccasion = async (testId, courseOccasionId) => {
-  try {
-    let sqlQuery = "UPDATE courseoccasion SET testid=$1 WHERE id=$2";
-    let result = await db.query(sqlQuery, [testId, courseOccasionId]);
-    if (result.rowCount) {
-      return { message: "TestId tillags i kurstillfälle" };
-    } else {
-      return { error: "Något gick fel" };
-    }
-  } catch (error) {
-    return { error: error };
-  }
+    iteration++;
+  });
 };
 
 const getCourse = async (req, res) => {
@@ -85,7 +85,7 @@ const getTests = async (req, res) => {
   }
 };
 module.exports = {
-  createCourse,
+  createCourses,
   getCourses,
   deleteCourse,
   getCourse,
