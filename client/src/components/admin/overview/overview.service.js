@@ -36,16 +36,25 @@ export const getCourseOccasions = async () => {
   }
 };
 
-export const createCourse = async () => {
+export const createCourses = async (coursesArray) => {
+  let courses = [];
+  coursesArray.map((course) =>
+    courses.push({
+      userid: course.user.id,
+      courseoccasionid: course.courseoccasion.id,
+      testid: course.test.id,
+    })
+  );
+
   let dataResponse = await fetch("/api/course", {
     method: "post",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    body: JSON.stringify(courses),
   });
   let data = await dataResponse.json();
   if (dataResponse.ok) {
-    return data.message;
+    return data;
   } else {
-    return data.message;
+    return data;
   }
 };
