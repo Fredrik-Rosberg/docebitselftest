@@ -28,12 +28,15 @@ const sendMail = require("./src/resetPasswordService/resetPasswordRouter.js");
 const authRouter = require("./src/authenticate/authRouter.js");
 const userRouter = require("./src/users/userRouter");
 const courseRouter = require("./src/course/courseRouter");
+const testRouter = require("./src/tests/testRouter");
+
 const courseOccasionRouter = require("./src/courseOccasion/courseOccasionRouter");
 app.use("/", authRouter);
 app.use("/", userRouter);
 app.use("/", sendMail);
 app.use("/", courseRouter);
 app.use("/", courseOccasionRouter);
+app.use("/", testRouter);
 
 app.get("/api", (req, res) => {
   res.send("servers up and running");

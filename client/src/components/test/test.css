@@ -29,6 +29,6 @@
 
 .test-status-row {
   display: grid;
-  grid-template-columns: 120px 55px 190px;
+  grid-template-columns: 120px 150px 100px;
   align-items: center;
 }

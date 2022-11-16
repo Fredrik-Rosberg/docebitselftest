@@ -1,5 +1,5 @@
 ###
-POST http://localhost:3001/api/signin HTTP/1.1
+POST http://localhost:3001/api/test HTTP/1.1
 Content-Type: application/json
 
 {
@@ -7,7 +7,7 @@ Content-Type: application/json
     "password": "Hej12345!"
 }
 ###
-GET http://localhost:3001/api/signin  HTTP/1.1
+GET http://localhost:3001/api/test  HTTP/1.1
 
 ###
 GET http://localhost:3001/api/newpassword/ba27491c-9c94-49bb-a867-a81ef1b8ad77 HTTP/1.1

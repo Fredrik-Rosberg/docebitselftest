@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
+import { uploadCsv } from "./test.service";
 import "./test.css";
 const Test = () => {
-  const [file, setFile] = useState({});
+  const [file, setFile] = useState();
   const [status, setStatus] = useState("Redo");
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [showMessage, setShowMessage] = useState("");
 
-  const fileReader = new FileReader();
-
+  useEffect(() => {
+    setError("");
+    setStatus("Redo");
+  }, [name], [file]);
   const handleOnChange = (event) => {
-    console.log(event);
-    // Passing file data (event.target.files[0]) to parse using Papa.parse
+
     Papa.parse(event.target.files[0], {
       header: true,
       skipEmptyLines: true,
@@ -21,7 +23,7 @@ const Test = () => {
       },
     });
   };
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     if (!new RegExp(/^[A-Öa-ö\d]+$/).test(name) || name.length > 100) {
       setError(
@@ -29,13 +31,20 @@ const Test = () => {
       );
       setShowMessage(true);
     } else {
-      console.log("skicka objekt");
       if (file) {
-        fileReader.onload = function (event) {
-          const csvOutput = event.target.result;
-        };
-
-        fileReader.readAsText(file);
+        let csvFile = { name: name, file: file };
+        let result = await uploadCsv(csvFile);
+        if (result.error) {
+          setError(result.error);
+          setShowMessage(true);
+          setStatus("Misslyckad inläsning");
+        } else {
+          setStatus(result.status);
+        }
+        console.log(result);
+      }else{
+        setError("Vänligen ladda upp fil")
+        setShowMessage(true)
       }
     }
   };
