@@ -35,8 +35,9 @@ const Overview = () => {
     console.log(newArray);
   }
   async function handleAddCourse() {
-    // setNewArray([]);
-    setCourses(newArray);
+    
+    setCourses(courses.concat(newArray));
+    setNewArray([]);
   }
   async function fetchUsers() {
     let data = await getUsers();
