@@ -41,7 +41,6 @@ const Overview = () => {
   }
   async function fetchUsers() {
     let data = await getUsers();
-    console.log(data);
     setUsers(data);
   }
   async function fetchTests() {
@@ -51,9 +50,8 @@ const Overview = () => {
 
   async function fetchCourseOccassions() {
     let data = await getCourseOccasions();
-
     setCourseOccasion(data);
-    console.log(data);
+    
   }
   useEffect(() => {
     fetchUsers();

@@ -1,4 +1,4 @@
-const url="/api/course/occasion"
+const url="/api/courseoccasion"
 
 
 export const createCourseOccasion = async (course) => {
