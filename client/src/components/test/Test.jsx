@@ -4,7 +4,7 @@ import { uploadCsv } from "./test.service";
 import "./test.css";
 const Test = () => {
   const [file, setFile] = useState();
-  const [status, setStatus] = useState("Redo");
+  const [status, setStatus] = useState("");
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [showMessage, setShowMessage] = useState("");
@@ -12,7 +12,7 @@ const Test = () => {
   useEffect(
     () => {
       setError("");
-      setStatus("Redo");
+      setStatus("");
     },
     [name],
     [file]
@@ -27,6 +27,7 @@ const Test = () => {
         skipEmptyLines: true,
         complete: function (results) {
           setFile(results.data);
+          setStatus("Redo");
         },
       });
     }

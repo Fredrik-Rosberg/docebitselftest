@@ -26,7 +26,6 @@ const Overview = () => {
     setNewArray(newState);
   };
 
-
   function handleDoubleClick(id) {
     navigate(`/admin/account/${id}`);
   }
@@ -36,7 +35,8 @@ const Overview = () => {
     console.log(newArray);
   }
   async function handleAddCourse() {
-    setCourses(newArray);
+    setNewArray([]);
+    setCourses(courses=> [...courses, newArray]);
   }
   async function fetchUsers() {
     let data = await getUsers();
@@ -91,7 +91,10 @@ const Overview = () => {
                         handleDoubleClick(user.id);
                       }}
                       onClick={(e) => {
-                        setNewArray((newArray) => [...newArray, {user:user}]);
+                        setNewArray((newArray) => [
+                          ...newArray,
+                          { user: user },
+                        ]);
                       }}
                     >
                       <td>{user.firstname}</td>
