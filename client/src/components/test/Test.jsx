@@ -10,14 +10,14 @@ const Test = () => {
   const [showMessage, setShowMessage] = useState("");
 
   //Nollställer error och status meddelande
-  useEffect(
-    () => {
-      setError("");
+  useEffect(() => {
+    setError("");
+    if (!file) {
       setStatus("");
-    },
-    [name],
-    [file]
-  );
+    } else {
+      setStatus("Redo");
+    }
+  }, [name, file]);
 
   const handleOnChange = (event) => {
     setFile();
@@ -28,8 +28,11 @@ const Test = () => {
         header: true,
         skipEmptyLines: true,
         complete: function (results) {
-          setFile(results.data);
-          setStatus("Redo");
+          if (results.errors.length > 0) {
+            setStatus("Misslyckad inläsning");
+          } else {
+            setFile(results.data);
+          }
         },
       });
     }
@@ -55,7 +58,7 @@ const Test = () => {
         }
         console.log(result);
       } else {
-        setError("Vänligen ladda upp fil");
+        setStatus("Misslyckad inläsning");
         setShowMessage(true);
       }
     }
