@@ -9,6 +9,7 @@ const Test = () => {
   const [name, setName] = useState("");
   const [showMessage, setShowMessage] = useState("");
 
+  //Nollställer error och status meddelande
   useEffect(
     () => {
       setError("");
@@ -17,6 +18,7 @@ const Test = () => {
     [name],
     [file]
   );
+
   const handleOnChange = (event) => {
     setFile();
     if (event.target.files[0]) {
@@ -32,6 +34,7 @@ const Test = () => {
       });
     }
   };
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     if (!new RegExp(/^[A-Öa-ö\d]+$/).test(name) || name.length > 100) {
