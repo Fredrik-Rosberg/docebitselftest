@@ -15,7 +15,7 @@ const Overview = () => {
   const [courses, setCourses] = useState([]);
   const [newCourse, setNewCourse] = useState({});
   const [newArray, setNewArray] = useState([]);
-  const [filteredArray, setFilteredArray]=useState([])
+  const [filteredArray, setFilteredArray] = useState([]);
 
   const navigate = useNavigate();
 
@@ -36,24 +36,29 @@ const Overview = () => {
     console.log(newArray);
   }
 
-  useEffect(()=>{
-
-     setFilteredArray( 
-      newArray.filter(function (newArray_el) {
-      return (courses.filter(function (courses_el) {
-          return courses_el.user == newArray_el.user && courses_el.courseoccasion==newArray_el.courseoccasion && courses_el.test==newArray_el.test
+  useEffect(() => {
+    let buttonDisableArray = newArray.filter(function (newArray_el) {
+      return (
+        courses.filter(function (courses_el) {
+          return (
+            courses_el.user == newArray_el.user &&
+            courses_el.courseoccasion == newArray_el.courseoccasion &&
+            courses_el.test == newArray_el.test
+          );
         }).length == 0
       );
-      
-    }));
+    });
 
-  },[newArray])
+    setFilteredArray(
+      buttonDisableArray.filter(function (element) {
+        if (element.test && element.courseoccasion) return element;
+      })
+    );
+  }, [newArray]);
 
   async function handleAddCourse() {
-    
-    // setNewArray(filteredArray);
-    
     setCourses(courses.concat(filteredArray));
+    setFilteredArray([]);
     setNewArray([]);
   }
   async function fetchUsers() {
@@ -286,9 +291,15 @@ const Overview = () => {
             </div>
           </div>
         </div>
-        <button className="button" onClick={handleAddCourse}>
-          Lägg till rad(er)
-        </button>
+        {filteredArray.length > 0 ? (
+          <button className="button" onClick={handleAddCourse}>
+            Lägg till rad(er)
+          </button>
+        ) : (
+          <button disabled={true} className="button" onClick={handleAddCourse}>
+            Lägg till rad(er)
+          </button>
+        )}
 
         <div className="overview-table-course">
           <div className="table-container">
