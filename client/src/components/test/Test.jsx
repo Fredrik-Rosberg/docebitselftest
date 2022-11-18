@@ -29,7 +29,7 @@ const Test = () => {
         skipEmptyLines: true,
         complete: function (results) {
           if (results.errors.length > 0) {
-            setStatus("Misslyckad inläsning");
+            setStatus("Fel filformat");
           } else {
             setFile(results.data);
           }
