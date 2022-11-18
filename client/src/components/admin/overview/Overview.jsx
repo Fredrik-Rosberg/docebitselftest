@@ -15,6 +15,7 @@ const Overview = () => {
   const [courses, setCourses] = useState([]);
   const [newCourse, setNewCourse] = useState({});
   const [newArray, setNewArray] = useState([]);
+  const [filteredArray, setFilteredArray]=useState([])
 
   const navigate = useNavigate();
 
@@ -34,9 +35,25 @@ const Overview = () => {
     updateState(id, fieldname);
     console.log(newArray);
   }
+
+  useEffect(()=>{
+
+     setFilteredArray( 
+      newArray.filter(function (newArray_el) {
+      return (courses.filter(function (courses_el) {
+          return courses_el.user == newArray_el.user && courses_el.courseoccasion==newArray_el.courseoccasion && courses_el.test==newArray_el.test
+        }).length == 0
+      );
+      
+    }));
+
+  },[newArray])
+
   async function handleAddCourse() {
     
-    setCourses(courses.concat(newArray));
+    // setNewArray(filteredArray);
+    
+    setCourses(courses.concat(filteredArray));
     setNewArray([]);
   }
   async function fetchUsers() {
@@ -51,7 +68,6 @@ const Overview = () => {
   async function fetchCourseOccassions() {
     let data = await getCourseOccasions();
     setCourseOccasion(data);
-    
   }
   useEffect(() => {
     fetchUsers();
