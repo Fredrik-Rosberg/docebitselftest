@@ -6,7 +6,8 @@ import SendResetMailComponent from "./components/passwordreset/SendResetMail";
 import "@fontsource/raleway";
 import NewPassword from "./components/passwordreset/NewPassword";
 import MainLayout from "./layout/MainLayout";
-import NavbarLayout from "./layout/NavbarLayout";
+import NavbarLayoutAdmin from "./layout/NavbarLayoutAdmin";
+import NavbarLayoutUser from "./layout/NavbarLayoutUser";
 import CreateCourseOccasion from "./components/createCourseOccasion/CreateCourseOccasion";
 import CreateAccount from "./components/admin/createAccount/CreateAccount";
 import AccountTable from "./components/tables/account-table/AccountTable";
@@ -27,7 +28,7 @@ function App() {
             <Route path="/reset" element={<SendResetMailComponent />} />
             <Route path="/reset/:id" element={<NewPassword />} />
           </Route>
-          <Route path="/admin" element={<NavbarLayout />}>
+          <Route path="/admin" element={<NavbarLayoutAdmin />}>
             <Route
               path="/admin/courseoccasion/create"
               element={<CreateCourseOccasion />}
@@ -45,8 +46,11 @@ function App() {
             <Route path="/admin/overview" element={<Overview />} />
           </Route>
           <Route>
-            <Route path="/user" element={<NavbarLayout />} />
-            <Route path="/user/test" element={<ChooseTest />} />
+            <Route path="/user" element={<NavbarLayoutUser />}>
+              {/* <Route path="/user/overview" element={<Overview />} /> */}
+              <Route path="/user/test" element={<ChooseTest />} />
+              <Route path="/user/myaccount" element={<MyAccount />} />
+            </Route>
           </Route>
         </Routes>
       </Router>
