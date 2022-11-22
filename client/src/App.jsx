@@ -15,6 +15,7 @@ import Overview from "./components/admin/overview/Overview";
 import EditAccount from "./components/admin/editAccount/EditAccount";
 import ChangePassword from "./components/admin/changePassword/ChangePassword";
 import Test from "./components/test/Test";
+import ChooseTest from "./components/user/chooseTest/chooseTest";
 import GlobalContextProvider from "./components/context/TableContext";
 function App() {
   return (
@@ -41,8 +42,11 @@ function App() {
               path="/admin/account/:id/changepassword"
               element={<ChangePassword />}
             />
-
             <Route path="/admin/overview" element={<Overview />} />
+          </Route>
+          <Route>
+            <Route path="/user" element={<NavbarLayout />} />
+            <Route path="/user/test" element={<ChooseTest />} />
           </Route>
         </Routes>
       </Router>
