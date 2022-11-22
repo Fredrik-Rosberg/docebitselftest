@@ -41,7 +41,7 @@ export const createCourses = async (coursesArray) => {
   coursesArray.map((course) =>
     courses.push({
       userid: course.user.id,
-      courseoccasionid: course.courseoccasion.id,
+      courseoccasionid: course.occasion.id,
       testid: course.test.id,
     })
   );
