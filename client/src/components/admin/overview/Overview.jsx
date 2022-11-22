@@ -1,295 +1,61 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  getUsers,
-  getCourseOccasions,
-  getTests,
-  createCourses,
-} from "./overview.service";
+import React, { useState, useEffect, useContext } from "react";
+import { createCourses } from "./overview.service";
 import "./overview.css";
+import AccountTable from "../../tables/account-table/AccountTable";
+import TestTable from "../../tables/test-table/TestTable";
+import CourseOccasionTable from "../../tables/courseoccasion-table/CourseOccasionTable";
+import { TableContext } from "../../context/TableContext";
 
 const Overview = () => {
-  const [users, setUsers] = useState([]);
-  const [tests, setTests] = useState([]);
-  const [courseoccasion, setCourseOccasion] = useState([]);
+  const [course, setCourse] = useContext(TableContext);
   const [courses, setCourses] = useState([]);
-  const [newCourse, setNewCourse] = useState({});
-  const [newArray, setNewArray] = useState([]);
   const [filteredArray, setFilteredArray] = useState([]);
 
-  const navigate = useNavigate();
-
-  const updateState = (id, fieldname) => {
-    const newState = newArray.map((obj) => {
-      return { ...obj, [fieldname]: id };
-    });
-
-    setNewArray(newState);
-  };
-
-  function handleDoubleClick(id) {
-    navigate(`/admin/account/${id}`);
-  }
-
-  async function handleAddToNewCourse(id, fieldname) {
-    updateState(id, fieldname);
-    console.log(newArray);
-  }
-
   useEffect(() => {
-    let buttonDisableArray = newArray.filter(function (newArray_el) {
+    let arrayToDisableButton = course.filter(function (course_el) {
       return (
         courses.filter(function (courses_el) {
           return (
-            courses_el.user == newArray_el.user &&
-            courses_el.courseoccasion == newArray_el.courseoccasion &&
-            courses_el.test == newArray_el.test
+            courses_el.user == course_el.user &&
+            courses_el.courseoccasion == course_el.occasion &&
+            courses_el.test == course_el.test
           );
         }).length == 0
       );
     });
 
-    setFilteredArray(
-      buttonDisableArray.filter(function (element) {
-        if (element.test && element.courseoccasion) return element;
-      })
-    );
-  }, [newArray]);
+    async function setFilterArray() {
+      setFilteredArray(
+        course.filter((element) => {
+          if (element.test && element.occasion) {
+            return element;
+          }
+        })
+      );
+    }
+    setFilterArray();
+  }, [course]);
 
   async function handleAddCourse() {
     setCourses(courses.concat(filteredArray));
     setFilteredArray([]);
-    setNewArray([]);
-  }
-  async function fetchUsers() {
-    let data = await getUsers();
-    setUsers(data);
-  }
-  async function fetchTests() {
-    let data = await getTests();
-    setTests(data);
+    setCourse([]);
   }
 
-  async function fetchCourseOccassions() {
-    let data = await getCourseOccasions();
-    setCourseOccasion(data);
-  }
-  useEffect(() => {
-    fetchUsers();
-    fetchTests();
-    fetchCourseOccassions();
-    courseoccasion.map((data) => console.log(data.enddate));
-  }, []);
+  const saveCourses = async () => {
+    console.log("hello");
 
-  async function saveCourses() {
     let response = await createCourses(courses);
     console.log(response);
     setCourses([]);
-    setNewCourse({});
-  }
+  };
   return (
     <>
       <div className="overview-main">
         <div className="overview-tables">
-          <div className="container">
-            <h2>Konto</h2>
-            <div className="table-container">
-              <table className="tables">
-                <thead className="thead">
-                  <tr>
-                    <th>Förnamn</th>
-                    <th>Efternamn</th>
-                    <th>Användarnamn</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user) => (
-                    <tr
-                      className="selected-row"
-                      key={user.id}
-                      onDoubleClick={(e) => {
-                        handleDoubleClick(user.id);
-                      }}
-                      onClick={(e) => {
-                        setNewArray((newArray) => [
-                          ...newArray,
-                          { user: user },
-                        ]);
-                      }}
-                    >
-                      <td>{user.firstname}</td>
-                      <td>{user.lastname}</td>
-                      <td>{user.email}</td>
-                    </tr>
-                  ))}
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="container">
-            <h2>Test</h2>
-            <div className="table-container">
-              <table className="tables">
-                <thead className="thead">
-                  <tr>
-                    <th>Test</th>
-                    <th>Uppladdningsdatum</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tests.map((test) => (
-                    <tr
-                      className="selected-row"
-                      key={test.id}
-                      onClick={(e) => {
-                        updateState(test, "test");
-                      }}
-                    >
-                      <td>{test.testname}</td>
-                      <td>
-                        {new Date(test.uploaddate).toLocaleDateString("se-SE")}
-                      </td>
-                    </tr>
-                  ))}
-                  <tr>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  {/* <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr> */}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="container">
-            <h2>Kurstillfälle</h2>
-            <div className="table-container">
-              <table className="tables">
-                <thead className="thead">
-                  <tr>
-                    <th>Kursanordnare</th>
-                    <th>Kursnamn</th>
-                    <th>Datum</th>
-                    <th>Datum</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {courseoccasion.map((occasion) => (
-                    <tr
-                      className="selected-row"
-                      key={occasion.id}
-                      onClick={(e) => {
-                        updateState(occasion, "courseoccasion");
-                      }}
-                    >
-                      <td>{occasion.courseorganizer}</td>
-                      <td>{occasion.name}</td>
-                      <td>
-                        {new Date(occasion.startdate).toLocaleDateString(
-                          "se-SE"
-                        )}
-                      </td>
-                      <td>
-                        {new Date(occasion.enddate).toLocaleDateString("se-SE")}
-                      </td>
-                    </tr>
-                  ))}
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <AccountTable />
+          <TestTable />
+          <CourseOccasionTable />
         </div>
         {filteredArray.length > 0 ? (
           <button className="button" onClick={handleAddCourse}>
@@ -320,63 +86,23 @@ const Overview = () => {
                     className="selected-row"
                     key={course.user.id + Math.random()}
                   >
-                    <td>{course.courseoccasion.courseorganizer}</td>
-                    <td>{course.courseoccasion.name}</td>
+                    <td>{course.occasion.courseorganizer}</td>
+                    <td>{course.occasion.name}</td>
                     <td>
-                      {new Date(
-                        course.courseoccasion.startdate
-                      ).toLocaleDateString("se-SE")}
+                      {new Date(course.occasion.startdate).toLocaleDateString(
+                        "se-SE"
+                      )}
                     </td>
                     <td>
-                      {new Date(
-                        course.courseoccasion.enddate
-                      ).toLocaleDateString("se-SE")}
+                      {new Date(course.occasion.enddate).toLocaleDateString(
+                        "se-SE"
+                      )}
                     </td>
                     <td>{course.test.testname}</td>
                     <td>{course.user.email}</td>
                   </tr>
                 ))}
               </tbody>
-              {/* <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>{" "}
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>{" "}
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>{" "}
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>{" "}
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr> */}
             </table>
           </div>
           <button className="button">Ta bort rad(er)</button>

@@ -12,6 +12,7 @@ const NavbarLayout = () => {
 
   async function handleSignOut() {
     localStorage.clear();
+  
     let response = await signOut();
     if (response.signedOut) {
       navigate("/");
