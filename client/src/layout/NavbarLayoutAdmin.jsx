@@ -6,7 +6,7 @@ import ModalComponent from "../components/modal/Modal";
 import { useState } from "react";
 import { signOut } from "../components/signIn/signin.service";
 
-const NavbarLayout = () => {
+const NavbarLayoutAdmin = () => {
   const [openModal, setOpenModal] = useState(false);
   let navigate = useNavigate(false);
 
@@ -74,4 +74,4 @@ const NavbarLayout = () => {
   );
 };
 
-export default NavbarLayout;
+export default NavbarLayoutAdmin;
