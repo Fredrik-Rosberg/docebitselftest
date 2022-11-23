@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import "./navbarLayout.css";
+import "./navbarLayoutUser.css";
 import { GrDocumentText } from "react-icons/gr";
 import ModalComponent from "../components/modal/Modal";
 import { useState } from "react";
@@ -23,14 +24,14 @@ const NavbarLayoutUser = () => {
 
   return (
     <>
-      <div className="main-navbar">
-        <div className="navbar">
+      <div className="main-navbar main-navbar-user">
+        <div className="navbar navbaruser">
           <img
             src="../../src/assets/cropped-DocebIT01-1-1.png"
             alt=""
             className="navbar-logo"
           />
-          <div className="navbar-links">
+          <div className="navbar-links addtopmargin">
             <Link className="navbar-link" to="/user/test">
               <GrDocumentText />
               Översikt
@@ -49,7 +50,7 @@ const NavbarLayoutUser = () => {
             Logga ut
           </button>
         </div>
-        <div className="navbar-body">
+        <div className="navbar-body-user">
           <Outlet />
         </div>
       </div>

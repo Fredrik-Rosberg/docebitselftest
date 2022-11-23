@@ -1,0 +1,51 @@
+    .choose-test-field {
+        width: 150px;
+        margin-bottom: 20px;
+    }
+
+    .timeselectform {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        margin-bottom: 20px;
+    }
+
+    .radiofield {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        height: 20px;
+    }
+
+    .radiofield>input {
+        width: 14px;
+        margin: 0;
+    }
+
+    .radiofield>label {
+        font-size: 14px;
+        align-self: center;
+    }
+
+    .buttondiv {
+        display: grid;
+        justify-items: flex-end;
+        
+    }
+    .choosetestmain{
+        width: 210px;
+    }
+    
+    .choosetestmain>:last-child>button {
+
+        border: 1px solid black;
+        font-size: 12px;
+        border-radius: 3px;
+        height: 27px;
+        width: auto;
+        box-shadow: rgba(0, 0, 0, 0.253) 1.95px 1.95px 2.6px;
+    }
+    .topsection>:first-child{
+        margin-bottom: 15px;
+    }
+    .midsection>:first-child{
+        margin-bottom: 10px;
+    }
