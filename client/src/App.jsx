@@ -18,7 +18,7 @@ import ChangePassword from "./components/admin/changePassword/ChangePassword";
 import Test from "./components/test/Test";
 import ChooseTest from "./components/user/chooseTest/ChooseTest";
 import GlobalContextProvider from "./components/context/TableContext";
-import Questions from "./components/user/runTest/Questions";
+import Questions from "./components/user/questionsform/Questions";
 function App() {
   return (
     <GlobalContextProvider>
@@ -52,6 +52,7 @@ function App() {
               <Route path="/user/test" element={<ChooseTest />} />
               <Route path="/user/myaccount" element={<MyAccount />} />
             </Route>
+            <Route path="/user/test/questionform" element={<Questions/>}/>
           </Route>
         </Routes>
       </Router>
