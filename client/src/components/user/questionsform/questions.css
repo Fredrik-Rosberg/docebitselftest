@@ -3,8 +3,6 @@
     grid-template-columns: 160px 1fr;
     grid-template-rows: 70px 1fr;
     height: 100vh;
-    margin-top: -120px;
-    margin-left:-330px;
     background-color:#ebf5fb;
 }
 .questionsblock{
@@ -22,7 +20,7 @@
 .questionsbuttons{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    padding-top: 10px;
+    padding-top: 20px;
     
     
 }

@@ -3,13 +3,10 @@ import "./questions.css";
 import { useTimer } from "react-timer-hook";
 import UseTimer from "./Timer";
 
-const Questions = (props) => {
-
-
-
-
+const Questions = () => {
   const time = new Date();
-  time.setSeconds(time.getSeconds() + props.testtime*60);
+  time.setSeconds(time.getSeconds() + 12 * 60);
+
   return (
     <>
       <div className="questionsmain">

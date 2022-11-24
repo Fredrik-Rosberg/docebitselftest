@@ -21,7 +21,9 @@
     margin-top: 40px;
     
 }
-
+.runtestmain>:nth-child(3){
+    text-decoration: none;
+}
 
 .runtestbutton>button {
     border: 1px solid black;

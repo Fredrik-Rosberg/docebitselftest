@@ -4,7 +4,8 @@ import "./overview.css";
 import AccountTable from "../../tables/account-table/AccountTable";
 import TestTable from "../../tables/test-table/TestTable";
 import CourseOccasionTable from "../../tables/courseoccasion-table/CourseOccasionTable";
-import { TableContext } from "../../context/TableContext";
+import { TableContext} from "../../context/TableContext";
+
 
 const Overview = () => {
   const [course, setCourse] = useContext(TableContext);
@@ -12,6 +13,8 @@ const Overview = () => {
   const [filteredArray, setFilteredArray] = useState([]);
 
   useEffect(() => {
+    
+    console.log(course)
     let arrayToDisableButton = course.filter(function (course_el) {
       return (
         courses.filter(function (courses_el) {
@@ -51,6 +54,7 @@ const Overview = () => {
   };
   return (
     <>
+      
       <div className="overview-main">
         <div className="overview-tables">
           <AccountTable />
