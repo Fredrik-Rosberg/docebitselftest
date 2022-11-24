@@ -44,43 +44,48 @@ const getTestById = async (req, res) => {
 const uploadTest = async (req, res) => {
   try {
     let data = req.body;
-    let questions = getQuestions(data.file);
-    let uploaded = new Date().toLocaleDateString("se-SE");
-    let testnameExist = await getTestByName(data.name);
+    let correctCsvFile = data.file.some((element) =>
+      Object.keys(element).includes("Fråga")
+    );
+    if (correctCsvFile) {
+      let questions = getQuestions(data.file);
+      let uploaded = new Date().toLocaleDateString("se-SE");
+      let testnameExist = await getTestByName(data.name);
 
-    if (!testnameExist.rows[0]) {
-      let sqlQuery =
-        "INSERT INTO test(testname, uploaddate, maxscore) VALUES ($1, $2, $3) RETURNING id";
-      let result = await db.query(sqlQuery, [
-        data.name,
-        uploaded,
-        questions.length,
-      ]);
-      if (!result.error) {
-        let id = result.rows[0].id;
-        let sqlQuery2 =
-          "INSERT INTO question(fråganr, fråga, frågealternativa, frågealternativb, frågealternativc, frågealternativd, frågealternative, frågealternativf, frågealternativg, frågealternativh, frågealternativi, frågealternativj, frågealternativk, svar, testid) VALUES ($1, $2, $3, $4,$5, $6, $7,$8,$9,$10,$11,$12,$13,$14, $15)";
-        questions.forEach((row) => {
-          row.testid = id;
-          db.query(sqlQuery2, Object.values(row), (err, res) => {
-            if (err) {
-              throw new Error(err);
-            } else {
-              console.log("inserted" + res.rowCount + " row", row);
-            }
+      if (!testnameExist.rows[0]) {
+        let sqlQuery =
+          "INSERT INTO test(testname, uploaddate, maxscore) VALUES ($1, $2, $3) RETURNING id";
+        let result = await db.query(sqlQuery, [
+          data.name,
+          uploaded,
+          questions.length,
+        ]);
+        if (!result.error) {
+          let id = result.rows[0].id;
+          let sqlQuery2 =
+            "INSERT INTO question(fråganr, fråga, frågealternativa, frågealternativb, frågealternativc, frågealternativd, frågealternative, frågealternativf, frågealternativg, frågealternativh, frågealternativi, frågealternativj, frågealternativk, svar, testid) VALUES ($1, $2, $3, $4,$5, $6, $7,$8,$9,$10,$11,$12,$13,$14, $15)";
+          questions.forEach((row) => {
+            row.testid = id;
+            db.query(sqlQuery2, Object.values(row), (err, res) => {
+              if (err) {
+                throw new Error(err);
+              } else {
+                console.log("Inserted" + res.rowCount + " row", row);
+              }
+            });
           });
-        });
-        res.json({ message: "Test tillagt" });
+          res.json({ message: "Test tillagt" });
+        }
+      } else {
+        throw "Angivet testnamn existerar redan";
       }
     } else {
-      throw "Test med det här namnet existerar redan";
+      throw "Fel på csv-filen";
     }
   } catch (error) {
     console.log({ Error: error });
     if (error.code == 23505) {
-      res
-        .status(400)
-        .json({ error: "Test med det här namnet existerar redan" });
+      res.status(400).json({ error: "Angivet testnamn existerar redan" });
     } else {
       res.status(400).json({ error: error });
     }
@@ -89,8 +94,6 @@ const uploadTest = async (req, res) => {
 //Lagt till cascade på foreignkey i table question
 //Error hantering behövs på backend
 
-const deleteTest = async (req, res) => {
-
-};
+const deleteTest = async (req, res) => {};
 
 module.exports = { uploadTest, deleteTest, getTestById, getTests };
