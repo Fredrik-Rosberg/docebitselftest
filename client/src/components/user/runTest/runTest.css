@@ -1,0 +1,34 @@
+.runtestmain{
+    width: 800px;
+}
+
+.runtestheader {
+    font-size: 26px;
+    text-align: center;
+    margin-right: 140px;
+}
+
+.runtestinfo {
+    font-size: 18px;
+    margin-right: 140px;
+
+}
+
+.runtestbutton {
+    display: grid;
+    justify-items: center;
+    margin-right: 140px;
+    margin-top: 40px;
+    
+}
+
+
+.runtestbutton>button {
+    border: 1px solid black;
+    font-size: 12px;
+    border-radius: 3px;
+    height: 27px;
+    width: auto;
+    box-shadow: rgba(0, 0, 0, 0.253) 1.95px 1.95px 2.6px;
+
+}

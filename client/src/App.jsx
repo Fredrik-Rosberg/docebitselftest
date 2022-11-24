@@ -16,8 +16,9 @@ import Overview from "./components/admin/overview/Overview";
 import EditAccount from "./components/admin/editAccount/EditAccount";
 import ChangePassword from "./components/admin/changePassword/ChangePassword";
 import Test from "./components/test/Test";
-import ChooseTest from "./components/user/chooseTest/chooseTest";
+import ChooseTest from "./components/user/chooseTest/ChooseTest";
 import GlobalContextProvider from "./components/context/TableContext";
+import Questions from "./components/user/runTest/Questions";
 function App() {
   return (
     <GlobalContextProvider>
