@@ -1,7 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { uploadCsv } = require("./testController");
+const {
+  uploadTest,
+  deleteTest,
+  getTestById,
+  getTests,
+} = require("./testController");
 
-router.post("/api/test", uploadCsv);
+router.get("/api/test", getTests);
+router.get("/api/test/:id", getTestById);
+router.post("/api/test", uploadTest);
+router.delete("/api/test/:id", deleteTest);
 
 module.exports = router;

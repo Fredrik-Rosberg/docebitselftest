@@ -75,19 +75,10 @@ const deleteCourse = async (req, res) => {
     res.status(400).json({ message: "Misslyckat" });
   }
 };
-const getTests = async (req, res) => {
-  const sqlQuery = "SELECT * FROM test";
-  let result = await db.query(sqlQuery);
-  if (result.rowCount > 0) {
-    res.status(200).json(result.rows);
-  } else {
-    res.status(400).json({ message: "Inga test funna" });
-  }
-};
+
 module.exports = {
   createCourses,
   getCourses,
   deleteCourse,
-  getCourse,
-  getTests,
+  getCourse
 };

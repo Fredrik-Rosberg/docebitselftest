@@ -1,0 +1,3 @@
+###
+//Get questionsbyid
+GET http://localhost:3001/api/test/210
