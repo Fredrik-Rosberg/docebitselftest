@@ -1,58 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useContext } from "react";
 import { getUsers } from "../../admin/overview/overview.service";
-import RowItem from "./RowItem";
 import { TableContext } from "../../context/TableContext";
-
+import { AgGridReact } from "ag-grid-react";
+import { useNavigate } from "react-router-dom";
+import "./accountTable.css"
+import "ag-grid-community/styles//ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 const AccountTable = () => {
-  const [users, setUsers] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useContext(TableContext);
+  const navigate = useNavigate();
+  const { users } = useContext(TableContext);
+  const [selectedUsers, setSelectedUsers] = users;
+  const [rowData, setRowData] = useState([
+    { firstname: "", lastname: "", email: "" },
+  ]);
 
-  //Hämtar valt konto från childcomponent, kollar om det är markerat och lägger till det till selectedUsers
-  //annars tas det bort från listan.
-  const addUser = (selectedUser) => {
-    if (selectedUser.remove) {
-      setSelectedUsers(() =>
-        selectedUsers.filter(
-          (element) => element.user.id !== selectedUser.remove
-        )
-      );
-    } else {
-      setSelectedUsers((selectedUsers) => [
-        ...selectedUsers,
-        { user: selectedUser.add },
-      ]);
-    }
-  };
+  const [columnDefs] = useState([
+    { field: "firstname", headerName: "Förnamn", width: 110 },
+    { field: "lastname", headerName: "Efternamn", width: 120 },
+    { field: "email", headerName: "Användarnamn", width: 150 },
+  ]);
 
-  //Hämtar alla konton
+  const defaultColDef = useMemo(
+    () => ({
+      sortable: true,
+      sortingOrder: ['asc', 'desc']
+    }),
+    []
+  );
+
   useEffect(() => {
     const getUser = async () => {
       let users = await getUsers();
-      setUsers(users);
+      setRowData(users);
     };
     getUser();
   }, []);
 
+  const rowSelectionType = "multiple";
+  const onSelectionChanged = (event) => {
+    setSelectedUsers(event.api.getSelectedRows());
+    // event.api.deselectAll()
+  };
+  const onCellDoubleClicked = (event) => {
+    let id = event.data.id;
+    navigate(`/admin/account/${id}`);
+  };
   return (
     <>
       <div className="container">
         <h2>Konto</h2>
-        <div className="table-container">
-          <table className="tables">
-            <thead className="thead">
-              <tr>
-                <th>Förnamn</th>
-                <th>Efternamn</th>
-                <th>Användarnamn</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <RowItem addUser={addUser} key={user.id} user={user} />
-              ))}
-            </tbody>
-          </table>
+        <div className="ag-theme-alpine" style={{ height: 210, width: 400 }}>
+          <AgGridReact
+            rowData={rowData}
+            columnDefs={columnDefs}
+            defaultColDef={defaultColDef}
+            rowSelection={rowSelectionType}
+            onSelectionChanged={onSelectionChanged}
+            rowMultiSelectWithClick={true}
+            onCellDoubleClicked={onCellDoubleClicked}
+            suppressCellFocus={true}
+          ></AgGridReact>
         </div>
       </div>
     </>

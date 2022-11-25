@@ -1,52 +1,94 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import { createCourses } from "./overview.service";
 import "./overview.css";
 import AccountTable from "../../tables/account-table/AccountTable";
 import TestTable from "../../tables/test-table/TestTable";
 import CourseOccasionTable from "../../tables/courseoccasion-table/CourseOccasionTable";
 import { TableContext } from "../../context/TableContext";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles//ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const Overview = () => {
-  const [course, setCourse] = useContext(TableContext);
+  const { course, users, tests, occasion } = useContext(TableContext);
+  const [selectedCourse, setSelectedCourse] = course;
+  const [selectedOccasion, setSelectedOccasion] = occasion;
+  const [selectedUsers, setSelectedUsers] = users;
+  const [selectedTests, setSelectedTests] = tests;
   const [courses, setCourses] = useState([]);
-  const [filteredArray, setFilteredArray] = useState([]);
+  const [rowData, setRowData] = useState([
+    {
+      user: {
+        email: "",
+      },
+      test: {
+        testname: "",
+      },
+      occasion: {
+        courseorganizer: "",
+        name: "",
+        startdate: "",
+        enddate: "",
+      },
+    },
+  ]);
+
+  const [columnDefs] = useState([
+    {
+      field: "occasion.courseorganizer",
+      headerName: "Kursanordnare",
+      width: 150,
+    },
+    { field: "occasion.name", headerName: "Kursnamn", width: 120 },
+    { field: "occasion.startdate", headerName: "Datum start", width: 120 },
+    { field: "occasion.enddate", headerName: "Datum slut", width: 120 },
+    { field: "test.testname", headerName: "Test", width: 120 },
+    { field: "user.email", headerName: "Användarnamn", width: 180 },
+  ]);
+
+  const defaultColDef = useMemo(
+    () => ({
+      sortable: true,
+      sortingOrder: ["asc", "desc"],
+    }),
+    []
+  );
 
   useEffect(() => {
-    let arrayToDisableButton = course.filter(function (course_el) {
-      return (
-        courses.filter(function (courses_el) {
-          return (
-            courses_el.user == course_el.user &&
-            courses_el.courseoccasion == course_el.occasion &&
-            courses_el.test == course_el.test
-          );
-        }).length == 0
-      );
-    });
+    console.log(courses);
+    console.log(rowData);
+  }, [courses]);
 
-    async function setFilterArray() {
-      setFilteredArray(
-        course.filter((element) => {
-          if (element.test && element.occasion) {
-            return element;
-          }
-        })
-      );
-    }
-    setFilterArray();
-  }, [course]);
-
+  // useEffect(() => {
+  //   let result = course.filter(function (course_el) {
+  //     return (
+  //       courses.filter(function (courses_el) {
+  //         if (
+  //           courses_el.user == course_el.user &&
+  //           courses_el.courseoccasion == course_el.occasion &&
+  //           courses_el.test == course_el.test
+  //         )
+  //           return course_el;
+  //       }).length == 0
+  //     );
+  //   });
+  //   console.log(result);
+  // }, [courses]);
+  const rowSelectionType = "multiple";
+  const onSelectionChanged = (event) => {
+    //Ska ta bort från courses
+  };
   async function handleAddCourse() {
-    setCourses(courses.concat(filteredArray));
-    setFilteredArray([]);
-    setCourse([]);
+    setCourses(courses.concat(selectedCourse));
+
+    setSelectedCourse([]);
+    setSelectedTests({});
+    setSelectedUsers({});
+    setSelectedOccasion({});
   }
 
   const saveCourses = async () => {
-    console.log("hello");
-
-    let response = await createCourses(courses);
-    console.log(response);
+    await createCourses(courses);
     setCourses([]);
   };
   return (
@@ -57,7 +99,7 @@ const Overview = () => {
           <TestTable />
           <CourseOccasionTable />
         </div>
-        {filteredArray.length > 0 ? (
+        {selectedCourse.length > 0 ? (
           <button className="button" onClick={handleAddCourse}>
             Lägg till rad(er)
           </button>
@@ -66,44 +108,17 @@ const Overview = () => {
             Lägg till rad(er)
           </button>
         )}
-
         <div className="overview-table-course">
-          <div className="table-container">
-            <table className="tables">
-              <thead className="thead">
-                <tr>
-                  <td>Kursanordnare</td>
-                  <td>Kursnamn</td>
-                  <td>Kursstart</td>
-                  <td>Kursslut</td>
-                  <td>Test</td>
-                  <td>Användarnamn</td>
-                </tr>
-              </thead>
-              <tbody>
-                {courses.map((course) => (
-                  <tr
-                    className="selected-row"
-                    key={course.user.id + Math.random()}
-                  >
-                    <td>{course.occasion.courseorganizer}</td>
-                    <td>{course.occasion.name}</td>
-                    <td>
-                      {new Date(course.occasion.startdate).toLocaleDateString(
-                        "se-SE"
-                      )}
-                    </td>
-                    <td>
-                      {new Date(course.occasion.enddate).toLocaleDateString(
-                        "se-SE"
-                      )}
-                    </td>
-                    <td>{course.test.testname}</td>
-                    <td>{course.user.email}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="ag-theme-alpine" style={{ height: 210, width: 700 }}>
+            <AgGridReact
+              rowData={courses}
+              columnDefs={columnDefs}
+              defaultColDef={defaultColDef}
+              rowSelection={rowSelectionType}
+              onSelectionChanged={onSelectionChanged}
+              rowMultiSelectWithClick={true}
+              suppressCellFocus={true}
+            ></AgGridReact>
           </div>
           <button className="button">Ta bort rad(er)</button>
         </div>

@@ -23,3 +23,11 @@ h2 {
 button:hover {
   cursor: pointer;
 }
+
+.ag-root ::-webkit-scrollbar {
+  display: none;
+}
+.ag-center-cols-container,
+.ag-header-row {
+  width: 100%;
+}
