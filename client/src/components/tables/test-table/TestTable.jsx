@@ -8,9 +8,12 @@ import { TableContext } from "../../context/TableContext";
 
 const TestTable = () => {
   // const [course, setCourse] = useContext(TableContext);
-  const { tests } = useContext(TableContext);
+  const { tests, deselect } = useContext(TableContext);
   const [rowData, setRowData] = useState([{ testname: "", uploaddate: "" }]);
   const [selectedTests, setSelectedTests] = tests;
+  const [deselectAll, setDeselectAll] = deselect;
+  const [event, setEvent] = useState({});
+
   const [columnDefs] = useState([
     { field: "testname", headerName: "Test", width: 110 },
     { field: "uploaddate", headerName: "Uppladdningsdatum", width: 120 },
@@ -38,8 +41,19 @@ const TestTable = () => {
   }, []);
 
   const rowSelectionType = "single";
+  useEffect(() => {
+    const onSelectionChanged = (event) => {
+      if (deselectAll) {
+        event.api.deselectAll();
+
+        setDeselectAll(false);
+      }
+    };
+    onSelectionChanged(event);
+  }, [deselectAll]);
   const onSelectionChanged = (event) => {
     setSelectedTests(event.api.getSelectedRows()[0]);
+    setEvent(event);
   };
 
   return (
@@ -53,8 +67,9 @@ const TestTable = () => {
             defaultColDef={defaultColDef}
             rowSelection={rowSelectionType}
             onSelectionChanged={onSelectionChanged}
-            rowMultiSelectWithClick={true}
             suppressCellFocus={true}
+            rowMultiSelectWithClick={true}
+
           ></AgGridReact>
         </div>
       </div>

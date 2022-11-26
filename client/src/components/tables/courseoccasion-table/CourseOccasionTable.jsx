@@ -6,9 +6,10 @@ import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const CourseOccasionTable = () => {
-  const { occasion } = useContext(TableContext);
-  // const [course, setCourse] = useContext(TableContext);
+  const { occasion, deselect } = useContext(TableContext);
   const [selectedOccasion, setSelectedOccasion] = occasion;
+  const [deselectAll, setDeselectAll] = deselect;
+  const [event, setEvent] = useState({});
   const [rowData, setRowData] = useState([
     { courseorganizer: "", name: "", startdate: "", enddate: "" },
   ]);
@@ -44,23 +45,38 @@ const CourseOccasionTable = () => {
     fetchCourseOccassions();
   }, []);
   const rowSelectionType = "single";
+  useEffect(() => {
+    const onSelectionChanged = (event) => {
+      if (deselectAll) {
+        event.api.deselectAll();
+
+        setDeselectAll(false);
+      }
+    };
+    onSelectionChanged(event);
+  }, [deselectAll]);
   const onSelectionChanged = (event) => {
     setSelectedOccasion(event.api.getSelectedRows()[0]);
+    setEvent(event);
   };
 
   return (
     <>
       <div className="container">
         <h2>Kurstillfälle</h2>
-        <div className="ag-theme-alpine" style={{ height: 210, width: 450 }}>
+        <div
+          className="ag-theme-alpine"
+          style={{ height: 210, width: 450, fontFamily: "Raleway" }}
+        >
           <AgGridReact
             rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             rowSelection={rowSelectionType}
             onSelectionChanged={onSelectionChanged}
-            rowMultiSelectWithClick={true}
             suppressCellFocus={true}
+            rowMultiSelectWithClick={true}
+
           ></AgGridReact>
         </div>
       </div>

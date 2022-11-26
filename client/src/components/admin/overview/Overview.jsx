@@ -10,10 +10,11 @@ import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const Overview = () => {
-  const { course, users, tests, occasion } = useContext(TableContext);
+  const { course, users, tests, occasion, deselect } = useContext(TableContext);
   const [selectedCourse, setSelectedCourse] = course;
-  const [selectedOccasion, setSelectedOccasion] = occasion;
+  const [deselectAll, setDeselectAll] = deselect;
   const [selectedUsers, setSelectedUsers] = users;
+  const [selectedOccasion, setSelectedOccasion] = occasion;
   const [selectedTests, setSelectedTests] = tests;
   const [courses, setCourses] = useState([]);
   const [rowData, setRowData] = useState([
@@ -55,8 +56,7 @@ const Overview = () => {
   );
 
   useEffect(() => {
-    console.log(courses);
-    console.log(rowData);
+    setDeselectAll(false);
   }, [courses]);
 
   // useEffect(() => {
@@ -81,10 +81,11 @@ const Overview = () => {
   async function handleAddCourse() {
     setCourses(courses.concat(selectedCourse));
 
+    setDeselectAll(true);
     setSelectedCourse([]);
     setSelectedTests({});
-    setSelectedUsers({});
     setSelectedOccasion({});
+    setSelectedUsers([]);
   }
 
   const saveCourses = async () => {
@@ -109,7 +110,10 @@ const Overview = () => {
           </button>
         )}
         <div className="overview-table-course">
-          <div className="ag-theme-alpine" style={{ height: 210, width: 700 }}>
+          <div
+            className="ag-theme-alpine"
+            style={{ height: 210, width: 830, fontFamily: "Raleway" }}
+          >
             <AgGridReact
               rowData={courses}
               columnDefs={columnDefs}

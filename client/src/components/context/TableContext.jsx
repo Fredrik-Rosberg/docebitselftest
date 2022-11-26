@@ -7,13 +7,14 @@ export default function GlobalContextProvider(props) {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedTests, setSelectedTests] = useState({});
   const [selectedOccasion, setSelectedOccasion] = useState({});
-
+  const [deselectAll, setDeselectAll] = useState(false);
   useEffect(() => {
     if (
-      Object.keys(selectedTests).length !== 0 &&
-      Object.keys(selectedOccasion).length !== 0 &&
+      Object.keys(selectedTests || {}).length !== 0 &&
+      Object.keys(selectedOccasion || {}).length !== 0 &&
       selectedUsers.length > 0
     ) {
+      setCourse([]);
       selectedUsers.map((element) =>
         setCourse((course) => [
           ...course,
@@ -24,14 +25,14 @@ export default function GlobalContextProvider(props) {
           },
         ])
       );
-    }else{
-      setCourse([])
+    } else {
+      setCourse([]);
     }
   }, [selectedUsers, selectedTests, selectedOccasion]);
 
-  // useEffect(() => {
-  //   console.log(course);
-  // }, [course]);
+  //Lägga till i listan om man unselectar
+
+
   return (
     <TableContext.Provider
       value={{
@@ -39,6 +40,7 @@ export default function GlobalContextProvider(props) {
         users: [selectedUsers, setSelectedUsers],
         tests: [selectedTests, setSelectedTests],
         occasion: [selectedOccasion, setSelectedOccasion],
+        deselect: [deselectAll, setDeselectAll],
       }}
     >
       {props.children}
