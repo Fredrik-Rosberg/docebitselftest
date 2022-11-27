@@ -56,7 +56,7 @@ const Questions = () => {
                 {alphabetArray.map((item, index) =>
                   question["frågealternativ" + item] != "" ? (
                     <div key={index} className="questiongrid">
-                      <input onChange={changeChecked} type="checkbox"></input>
+                      <input  type="checkbox"></input>
                       <label>{question["frågealternativ" + item]}</label>
                     </div>
                   ) : (
