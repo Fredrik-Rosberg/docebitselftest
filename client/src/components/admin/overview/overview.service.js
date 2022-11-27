@@ -45,7 +45,6 @@ export const createCourses = async (coursesArray) => {
       testid: course.test.id,
     })
   );
-
   let dataResponse = await fetch("/api/course", {
     method: "post",
     headers: { "Content-Type": "application/json" },

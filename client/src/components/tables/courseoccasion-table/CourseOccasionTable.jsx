@@ -17,8 +17,8 @@ const CourseOccasionTable = () => {
   const [columnDefs] = useState([
     { field: "courseorganizer", headerName: "Kursanordnare", width: 110 },
     { field: "name", headerName: "Kursnamn", width: 100 },
-    { field: "startdate", headerName: "Datum", width: 100 },
-    { field: "enddate", headerName: "Datum", width: 100 },
+    { field: "startdate", headerName: "Startdatum", width: 100 },
+    { field: "enddate", headerName: "Slutdatum", width: 100 },
   ]);
 
   const defaultColDef = useMemo(
@@ -49,8 +49,8 @@ const CourseOccasionTable = () => {
     const onSelectionChanged = (event) => {
       if (deselectAll) {
         event.api.deselectAll();
-
         setDeselectAll(false);
+        setSelectedOccasion({});
       }
     };
     onSelectionChanged(event);
@@ -76,7 +76,6 @@ const CourseOccasionTable = () => {
             onSelectionChanged={onSelectionChanged}
             suppressCellFocus={true}
             rowMultiSelectWithClick={true}
-
           ></AgGridReact>
         </div>
       </div>

@@ -45,8 +45,8 @@ const TestTable = () => {
     const onSelectionChanged = (event) => {
       if (deselectAll) {
         event.api.deselectAll();
-
         setDeselectAll(false);
+        setSelectedTests({});
       }
     };
     onSelectionChanged(event);
@@ -69,7 +69,6 @@ const TestTable = () => {
             onSelectionChanged={onSelectionChanged}
             suppressCellFocus={true}
             rowMultiSelectWithClick={true}
-
           ></AgGridReact>
         </div>
       </div>

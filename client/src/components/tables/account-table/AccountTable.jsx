@@ -43,10 +43,10 @@ const AccountTable = () => {
   const rowSelectionType = "multiple";
   useEffect(() => {
     const onSelectionChanged = (event) => {
-      console.log(deselectAll);
       if (deselectAll) {
         event.api.deselectAll();
         setDeselectAll(false);
+        setSelectedUsers([]);
       }
     };
     onSelectionChanged(event);
