@@ -18,8 +18,15 @@ const RunTest = (props) => {
       SetQuestions(questions);
     }
     getQuestions()
+    
 
   }, []);
+
+  function handleSubmit(){
+    
+    questions.map((items)=>(localStorage.setItem(items.id, JSON.stringify(items), console.log(items))))
+    
+  }
 
   console.log(questions)
 
@@ -48,7 +55,7 @@ const RunTest = (props) => {
 
         <Link to={`/user/test/questionform/`}>
           <div className="runtestbutton">
-            <button>Starta test</button>
+            <button onClick={handleSubmit}>Starta test</button>
           </div>
         </Link>
       </div>
