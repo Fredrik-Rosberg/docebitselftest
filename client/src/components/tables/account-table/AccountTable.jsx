@@ -27,7 +27,8 @@ const AccountTable = () => {
   const defaultColDef = useMemo(
     () => ({
       sortable: true,
-      sortingOrder: ["asc", "desc"],
+      sortingOrder: ["asc", "desc", "null"],
+
     }),
     []
   );

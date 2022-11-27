@@ -24,6 +24,8 @@ const CourseOccasionTable = () => {
   const defaultColDef = useMemo(
     () => ({
       sortable: true,
+      sortingOrder: ["asc", "desc", "null"],
+
     }),
     []
   );

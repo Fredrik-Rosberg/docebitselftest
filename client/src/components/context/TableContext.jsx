@@ -19,6 +19,8 @@ export default function GlobalContextProvider(props) {
         setCourse((course) => [
           ...course,
           {
+            id: element.id + selectedTests.id + selectedOccasion.id,
+
             user: element,
             test: selectedTests,
             occasion: selectedOccasion,
@@ -31,7 +33,6 @@ export default function GlobalContextProvider(props) {
   }, [selectedUsers, selectedTests, selectedOccasion]);
 
   //Lägga till i listan om man unselectar
-
 
   return (
     <TableContext.Provider

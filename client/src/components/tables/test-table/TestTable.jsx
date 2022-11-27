@@ -22,6 +22,7 @@ const TestTable = () => {
   const defaultColDef = useMemo(
     () => ({
       sortable: true,
+      sortingOrder: ["asc", "desc", "null"],
     }),
     []
   );

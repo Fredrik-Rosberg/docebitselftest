@@ -21,7 +21,7 @@ const Overview = () => {
   const [selectedCourse, setSelectedCourse] = course;
   const [deselectAll, setDeselectAll] = deselect;
   const [courses, setCourses] = useState([]);
-  const result = [...new Set([...courses, ...selectedCourse])]
+  const result = [...new Set([...courses, ...selectedCourse])];
   const [rowData, setRowData] = useState([
     {
       user: {
@@ -56,7 +56,7 @@ const Overview = () => {
   const defaultColDef = useMemo(
     () => ({
       sortable: true,
-      sortingOrder: ["asc", "desc"],
+      sortingOrder: ["asc", "desc", "null"],
     }),
     []
   );
@@ -99,8 +99,18 @@ const Overview = () => {
     //     }).length == 0
     //   );
     // });
-  
-    setCourses(result);
+    const uniqueIds = new Set();
+    let concatenatedArray = courses.concat(selectedCourse);
+    const unique = concatenatedArray.filter((element) => {
+      const isDuplicate = uniqueIds.has(element.id);
+      uniqueIds.add(element.id);
+      if (!isDuplicate) {
+        return true;
+      }
+      return false;
+    });
+
+    setCourses(unique);
     setDeselectAll(true);
     setSelectedCourse([]);
   }
@@ -108,6 +118,7 @@ const Overview = () => {
     const selectedData = gridRef.current.api.getSelectedRows();
     const res = gridRef.current.api.applyTransaction({ remove: selectedData });
   }, []);
+
   const saveCourses = async () => {
     await createCourses(courses);
     setCourses([]);

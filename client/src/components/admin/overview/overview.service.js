@@ -51,6 +51,7 @@ export const createCourses = async (coursesArray) => {
     body: JSON.stringify(courses),
   });
   let data = await dataResponse.json();
+  console.log(data);
   if (dataResponse.ok) {
     return data;
   } else {
