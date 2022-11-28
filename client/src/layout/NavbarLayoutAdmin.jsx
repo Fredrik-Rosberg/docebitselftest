@@ -47,7 +47,7 @@ const NavbarLayoutAdmin = () => {
               <GrDocumentText />
               Kurstillfälle
             </Link>
-            <Link className="navbar-link" to="/admin/overview">
+            <Link className="navbar-link" to="/admin/course">
               <GrDocumentText />
               Kurs
             </Link>

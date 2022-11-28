@@ -22,22 +22,6 @@ const Overview = () => {
   const [deselectAll, setDeselectAll] = deselect;
   const [courses, setCourses] = useState([]);
   const result = [...new Set([...courses, ...selectedCourse])];
-  const [rowData, setRowData] = useState([
-    {
-      user: {
-        email: "",
-      },
-      test: {
-        testname: "",
-      },
-      occasion: {
-        courseorganizer: "",
-        name: "",
-        startdate: "",
-        enddate: "",
-      },
-    },
-  ]);
   const gridRef = useRef();
   const [columnDefs] = useState([
     {
@@ -51,7 +35,6 @@ const Overview = () => {
     { field: "test.testname", headerName: "Test", width: 120 },
     { field: "user.email", headerName: "Användarnamn", width: 180 },
   ]);
-  const uniqueValuesSet = new Set();
 
   const defaultColDef = useMemo(
     () => ({
@@ -65,40 +48,9 @@ const Overview = () => {
     setDeselectAll(false);
   }, [courses]);
 
-  useEffect(() => {}, [course]);
-
   const rowSelectionType = "multiple";
-  const onSelectionChanged = (event) => {
-    //Ska ta bort från courses
-  };
 
-  // const filteredArr = courses.filter((obj) => {
-  //   // check if name property value is already in the set
-  //   const isPresentInSet = uniqueValuesSet.has(obj.user && obj.test && obj.occasion);
-
-  //   // add name property value to Set
-  //   uniqueValuesSet.add(obj);
-
-  //   // return the negated value of
-  //   // isPresentInSet variable
-  //   return !isPresentInSet;
-  // });
   async function handleAddCourse() {
-    // filteredArr;
-    // console.log(uniqueValuesSet)
-    // let res =courses.concat(selectedCourse)
-    // let result = res.filter(function (course_el) {
-    //   return (
-    //     selectedCourse.filter(function (courses_el) {
-    //       if (
-    //         !courses_el.user.id == course_el.user.id &&
-    //         courses_el.courseoccasion.id !== course_el.occasion.id &&
-    //         courses_el.test.id !== course_el.test.id
-    //       )
-    //         return course_el;
-    //     }).length == 0
-    //   );
-    // });
     const uniqueIds = new Set();
     let concatenatedArray = courses.concat(selectedCourse);
     const unique = concatenatedArray.filter((element) => {
@@ -151,7 +103,6 @@ const Overview = () => {
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
               rowSelection={rowSelectionType}
-              onSelectionChanged={onSelectionChanged}
               rowMultiSelectWithClick={true}
               suppressCellFocus={true}
             ></AgGridReact>

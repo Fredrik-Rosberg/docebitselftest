@@ -16,6 +16,26 @@ uploaddate date NOT NULL,
 maxscore int NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS question(
+id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+testid int NOT NULL,
+questionnr int NOT NULL,
+question varchar(100) NOT NULL,
+alternativea varchar(100) NOT NULL,
+alternativeb varchar(100) NOT NULL,
+alternativec varchar(100), 
+alternatived varchar(100),
+alternativee varchar(100),
+alternativef varchar(100),
+alternativeg varchar(100),
+alternativeh varchar(100),
+alternativei varchar(100),
+alternativej varchar(100),
+alternativek varchar(100),
+answer varchar(55) NOT NULL,
+FOREIGN KEY (testid) REFERENCES test(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS courseoccasion(
 id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 name varchar(55) NOT NULL,

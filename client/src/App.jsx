@@ -13,6 +13,8 @@ import CreateAccount from "./components/admin/createAccount/CreateAccount";
 import AccountTable from "./components/tables/account-table/AccountTable";
 import MyAccount from "./components/Account/MyAccount";
 import Overview from "./components/admin/overview/Overview";
+import Course from "./components/course/CreateCourse";
+
 import EditAccount from "./components/admin/editAccount/EditAccount";
 import ChangePassword from "./components/admin/changePassword/ChangePassword";
 import Test from "./components/test/Test";
@@ -45,6 +47,8 @@ function App() {
               element={<ChangePassword />}
             />
             <Route path="/admin/overview" element={<Overview />} />
+            <Route path="/admin/course" element={<Course />} />
+
           </Route>
           <Route>
             <Route path="/user" element={<NavbarLayoutUser />}>

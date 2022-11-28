@@ -63,7 +63,7 @@ const uploadTest = async (req, res) => {
         if (!result.error) {
           let id = result.rows[0].id;
           let sqlQuery2 =
-            "INSERT INTO question(fråganr, fråga, frågealternativa, frågealternativb, frågealternativc, frågealternativd, frågealternative, frågealternativf, frågealternativg, frågealternativh, frågealternativi, frågealternativj, frågealternativk, svar, testid) VALUES ($1, $2, $3, $4,$5, $6, $7,$8,$9,$10,$11,$12,$13,$14, $15)";
+            "INSERT INTO question(questionnr, question, alternativea, alternativeb, alternativec, alternatived, alternativee, alternativef, alternativeg, alternativeh, alternativei, alternativej, alternativek, answer, testid) VALUES ($1, $2, $3, $4,$5, $6, $7,$8,$9,$10,$11,$12,$13,$14, $15)";
           questions.forEach((row) => {
             row.testid = id;
             db.query(sqlQuery2, Object.values(row), (err, res) => {
