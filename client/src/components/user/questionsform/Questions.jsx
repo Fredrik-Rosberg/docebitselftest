@@ -7,33 +7,51 @@ const Questions = () => {
   const time = new Date();
   time.setSeconds(time.getSeconds() + 12 * 60);
   const [question, SetQuestion] = useState(JSON.parse(localStorage.getItem(1)));
-  const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"];
-  const [checked, SetChecked] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
- 
+  const alpha = Array.from(Array(11)).map((e, i) => i + 65);
+  const alphabet = alpha.map((x) => String.fromCharCode(x).toLowerCase());
+  const [checked, SetChecked] = useState([]);
+  const [counter, SetCounter]=useState(0)
+
+  useEffect(() => {
+   let count=0;
+    alphabet.map((item) =>
+    question["frågealternativ" + item] != "" ? (count=count+1)  : ("")
+      
+    );
+    SetCounter(count)
+  },[question]);
 
   function handleNext() {
     SetQuestion(JSON.parse(localStorage.getItem(question.id + 1)));
-    console.log(localStorage.length);
+    sessionStorage.setItem(question.id, checked);
   }
 
   function handlePrevious() {
     SetQuestion(JSON.parse(localStorage.getItem(question.id - 1)));
+    let arrayFalse=Array(counter).fill(false)
+    const getFromSession=sessionStorage.getItem(question.id -1 )
+    let test=getFromSession.split(",")
+    test.map((item)=>item=="true"? arrayFalse[item.index]=true:arrayFalse[item.index]=false)
+
+
+
+    console.log(test)
+    console.log(arrayFalse) 
+    console.log(getFromSession)
   }
 
   function handleAbort() {}
   function handleFinishTest() {}
+
+  function handleChecked(index, item) {
+    let array = [...checked];
+    array[index] = item
+    SetChecked(array);
+  }
+
+  useEffect(() => {
+    console.log(checked);
+  });
 
   return (
     <>
@@ -53,10 +71,14 @@ const Questions = () => {
                 Välj ett eller flera av svaren nedan
               </div>
               <div className="questionscrollcontainer setfontsize">
-                {alphabetArray.map((item, index) =>
+                {alphabet.map((item, index) =>
                   question["frågealternativ" + item] != "" ? (
                     <div key={index} className="questiongrid">
-                      <input  type="checkbox"></input>
+                      <input
+                      value={item}
+                        onChange={() => handleChecked(index, item)}
+                        type="checkbox"
+                      ></input>
                       <label>{question["frågealternativ" + item]}</label>
                     </div>
                   ) : (
