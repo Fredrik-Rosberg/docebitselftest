@@ -19,7 +19,7 @@ export default function GlobalContextProvider(props) {
         setCourse((course) => [
           ...course,
           {
-            id: element.id + selectedTests.id + selectedOccasion.id,
+            id: element.id + "" + selectedTests.id + "" + selectedOccasion.id,
 
             user: element,
             test: selectedTests,
