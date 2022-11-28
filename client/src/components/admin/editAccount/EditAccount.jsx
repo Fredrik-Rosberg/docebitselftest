@@ -52,7 +52,7 @@ function EditAccount() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="editaccountform">
+      <form className="editaccountform">
         <div className="editaccountinput">
           <div></div>
           <h2>Ändra kontouppgifter</h2>
@@ -117,7 +117,9 @@ function EditAccount() {
               <Link to="/admin/overview">Tillbaka</Link>
             </button>
 
-            <button className="editaccountbutton">Spara</button>
+            <button className="editaccountbutton" onClick={handleSubmit}>
+              Spara
+            </button>
           </div>
         </div>
         <div>
