@@ -3,31 +3,45 @@
     grid-template-columns: 160px 1fr;
     grid-template-rows: 70px 1fr;
     height: 100vh;
-    margin-top: -120px;
-    margin-left:-330px;
     background-color:#ebf5fb;
 }
 .questionsblock{
-    width: 350px;
-    height: 400px;
+    
+    width: 540px;
+    height: 490px;
     background-color: white;
-    justify-content: end;
+    display: grid;
+    grid-template-rows: 40px 1fr;
+
+
+}
+.questionsblockinner{
+    display: grid;
+    grid-template-rows: 70px 70px 40px 280px;
+    width: 420px;
+    height: 450px;
+    margin-left: 60px;
+    
+    
+    
 }
 .questionscontainer{
-    /* align-self: center; */
+
     justify-self: center;
-    margin-right: 180px;
+    margin-right: 200px;
     
 }
 .questionsbuttons{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    padding-top: 10px;
+    padding-top: 20px;
+    
     
     
 }
 .questionsbuttons>:nth-child(2){
     justify-self: center;
+    
     
 }
 .questionsbuttons>:last-child{
@@ -49,8 +63,8 @@ border-top-left-radius: 20px;
     
 }
 .questionsbuttons>div>button{
-border: 1px solid black;
-    font-size: 12px;
+    border: 1px solid black;
+    font-size: 13px;
     border-radius: 3px;
     height: 27px;
     width: auto;
@@ -60,5 +74,41 @@ border: 1px solid black;
 }
 .timershow>span{
     /* font-family:Arial, Helvetica, sans-serif ; */ /*sätt typsnitt för klocka*/
+    
+}
+.questionanswers{
+    background-color: blue;
+
+}
+.questionscrollcontainer{
+    height: 230px; 
+    overflow-x: hidden;
+    overflow-y: auto;
+    
+    
+
+}
+.setfontsize{
+    font-size: 14px;
+    
+    
+    
+}
+.questiongrid{
+    display: grid;
+    grid-template-columns: 8% 90%;
+    margin-bottom: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+
+}
+.questiongrid>input{
+    height: 15px;
+    justify-self: start;
+    margin: none;
+}
+.question{
+    font-family: 'Montserrat', sans-serif;
+    
     
 }

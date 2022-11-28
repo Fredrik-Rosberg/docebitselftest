@@ -25,6 +25,7 @@ const ChooseTest = () => {
   
 
   console.log(choice);
+  console.log(tests);
 
   return (
     <>

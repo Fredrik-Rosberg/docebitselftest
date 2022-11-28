@@ -11,10 +11,12 @@ import "./overview.css";
 import AccountTable from "../../tables/account-table/AccountTable";
 import TestTable from "../../tables/test-table/TestTable";
 import CourseOccasionTable from "../../tables/courseoccasion-table/CourseOccasionTable";
+
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+
 
 const Overview = () => {
   const { course, deselect } = useContext(TableContext);
@@ -45,6 +47,7 @@ const Overview = () => {
   );
 
   useEffect(() => {
+
     setDeselectAll(false);
   }, [courses]);
 
@@ -77,6 +80,7 @@ const Overview = () => {
   };
   return (
     <>
+      
       <div className="overview-main">
         <div className="overview-tables">
           <AccountTable />
