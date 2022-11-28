@@ -1,56 +1,76 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useContext } from "react";
 import { getTests } from "../../admin/overview/overview.service";
-
-import TestRowItem from "./TestRowItem";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles//ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import { TableContext } from "../../context/TableContext";
 
 const TestTable = () => {
-  const [course, setCourse] = useContext(TableContext);
-  const [tests, setTests] = useState([]);
+  // const [course, setCourse] = useContext(TableContext);
+  const { tests, deselect } = useContext(TableContext);
+  const [rowData, setRowData] = useState([{ testname: "", uploaddate: "" }]);
+  const [selectedTests, setSelectedTests] = tests;
+  const [deselectAll, setDeselectAll] = deselect;
+  const [event, setEvent] = useState({});
 
-  //Hämtar valt test från childcomponent, kollar om det är markerat och lägger till selectedUsers
-  //annars tas det bort från listan.
-  const addTest = (selectedTest) => {
-    if (selectedTest.remove) {
-      course.forEach((object) => delete object["test"]);
-      setCourse(course);
-    } else {
-      setCourse(() =>
-        course.map((object) => {
-          return { ...object, test: selectedTest.add };
-        })
-      );
-    }
+  const [columnDefs] = useState([
+    { field: "testname", headerName: "Test", width: 110 },
+    { field: "uploaddate", headerName: "Uppladdningsdatum", width: 120 },
+  ]);
+
+  const defaultColDef = useMemo(
+    () => ({
+      sortable: true,
+      sortingOrder: ["asc", "desc", "null"],
+    }),
+    []
+  );
+  const setDateFormatOnArray = (data) => {
+    data.map((obj) => {
+      obj.uploaddate = new Date(obj.uploaddate).toLocaleDateString("se-SE");
+    });
+    return data;
   };
-
-  //Hämtar alla test
   useEffect(() => {
     async function fetchTests() {
       let data = await getTests();
-      setTests(data);
+      data = setDateFormatOnArray(data);
+      setRowData(data);
     }
     fetchTests();
   }, []);
+
+  const rowSelectionType = "single";
+  useEffect(() => {
+    const onSelectionChanged = (event) => {
+      if (deselectAll) {
+        event.api.deselectAll();
+        setDeselectAll(false);
+        setSelectedTests({});
+      }
+    };
+    onSelectionChanged(event);
+  }, [deselectAll]);
+  const onSelectionChanged = (event) => {
+    setSelectedTests(event.api.getSelectedRows()[0]);
+    setEvent(event);
+  };
 
   return (
     <>
       <div className="container">
         <h2>Test</h2>
-        <div className="table-container">
-          <table className="tables">
-            <thead className="thead">
-              <tr>
-                <th>Test</th>
-                <th>Uppladdningsdatum</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tests.map((test) => (
-                <TestRowItem addTest={addTest} key={test.id} test={test} />
-              ))}
-            </tbody>
-          </table>
+        <div className="ag-theme-alpine" style={{ height: 210, width: 250 }}>
+          <AgGridReact
+            rowData={rowData}
+            columnDefs={columnDefs}
+            defaultColDef={defaultColDef}
+            rowSelection={rowSelectionType}
+            onSelectionChanged={onSelectionChanged}
+            suppressCellFocus={true}
+            rowMultiSelectWithClick={true}
+          ></AgGridReact>
         </div>
       </div>
     </>
