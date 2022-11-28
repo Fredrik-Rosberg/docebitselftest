@@ -24,7 +24,7 @@ const RunTest = (props) => {
 
   function handleSubmit(){
     
-    questions.map((items)=>(localStorage.setItem(items.id, JSON.stringify(items), console.log(items))))
+    questions.map((items)=>(localStorage.setItem(items.fråganr, JSON.stringify(items), console.log(items))))
     
   }
 

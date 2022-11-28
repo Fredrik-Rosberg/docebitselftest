@@ -22,14 +22,14 @@ const Questions = () => {
   },[question]);
 
   function handleNext() {
-    SetQuestion(JSON.parse(localStorage.getItem(question.id + 1)));
-    sessionStorage.setItem(question.id, checked);
+    SetQuestion(JSON.parse(localStorage.getItem(question.fråganr + 1)));
+    sessionStorage.setItem(question.fråganr, checked);
   }
 
   function handlePrevious() {
-    SetQuestion(JSON.parse(localStorage.getItem(question.id - 1)));
+    SetQuestion(JSON.parse(localStorage.getItem(question.fråganr - 1)));
     let arrayFalse=Array(counter).fill(false)
-    const getFromSession=sessionStorage.getItem(question.id -1 )
+    const getFromSession=sessionStorage.getItem(question.fråganr -1 )
     let test=getFromSession.split(",")
     test.map((item)=>item=="true"? arrayFalse[item.index]=true:arrayFalse[item.index]=false)
 
@@ -65,7 +65,7 @@ const Questions = () => {
           <div className="questionsblock">
             <div>star</div>
             <div className="questionsblockinner">
-              <h3 className="questionnumber">Fråga {question.id}</h3>
+              <h3 className="questionnumber">Fråga {question.fråganr}</h3>
               <div className="question setfontsize">{question.fråga}</div>
               <div className="setfontsize">
                 Välj ett eller flera av svaren nedan
