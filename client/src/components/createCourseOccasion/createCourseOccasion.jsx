@@ -90,7 +90,7 @@ const CreateCourseOccasion = () => {
           />
         </div>
         <div className="courseoccasioninput">
-          <label htmlFor="giltigfrom">Kursstart:</label>
+          <label htmlFor="giltigfrom">Startdatum:</label>
           <input
             value={newCourseOccasion.startdate}
             min={new Date().toLocaleDateString("sv-SE")}
@@ -108,7 +108,7 @@ const CreateCourseOccasion = () => {
           />
         </div>
         <div className="courseoccasioninput">
-          <label htmlFor="giltigtom">Kursslut:</label>
+          <label htmlFor="giltigtom">Slutdatum:</label>
           <input
             value={newCourseOccasion.enddate}
             min={
