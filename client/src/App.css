@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: "Raleway";
   background-color: #ebf5fb;
+  scrollbar-width: thin;
 }
 
 button:active {
@@ -14,10 +15,20 @@ input {
   padding: 0;
   padding-left: 5px;
   padding-right: 5px;
+  font-size: 12px;
 }
-
+select {
+  font-size: 12px;
+}
+label {
+  font-weight: 500;
+}
 h2 {
   font-size: 14px;
+}
+.h2-styled {
+  padding-left: 120px;
+  padding-bottom: 20px;
 }
 
 button:hover {
@@ -27,7 +38,6 @@ button:hover {
 .ag-root ::-webkit-scrollbar {
   display: none;
 }
-.ag-center-cols-container,
-.ag-header-row {
-  width: 100%;
+button {
+  font-size: 12px;
 }
