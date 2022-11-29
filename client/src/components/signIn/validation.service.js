@@ -9,7 +9,7 @@ export const validatePassword = (password) => {
   } else if (
     !new RegExp(
       /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]/
-    ).test(password) ||
+    ).test(password.trim()) ||
     password.length < 8 ||
     password.length > 50
   ) {
@@ -24,7 +24,9 @@ export const validateEmail = (email) => {
   if (!email) {
     return "Vänligen fyll i samtliga uppgifter";
   } else if (
-    !new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i).test(email) ||
+    !new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i).test(
+      email.trim()
+    ) ||
     email.length > 50
   ) {
     return "Kontrollera att du angivit en giltig email";
@@ -37,7 +39,7 @@ export const validateName = (name, maxLength) => {
   if (!name) {
     return "Vänligen fyll i samtliga uppgifter";
   } else if (
-    !new RegExp(/^[A-Öa-ö\s]*$/).test(name) ||
+    !new RegExp(/^[A-Öa-ö\s]*$/).test(name.trim()) ||
     name.length > maxLength
   ) {
     return `Får endast innehålla bokstäver och vara max ${maxLength} tecken långt`;

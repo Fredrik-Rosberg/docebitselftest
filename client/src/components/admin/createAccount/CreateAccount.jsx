@@ -81,7 +81,7 @@ function CreateAccount() {
             onChange={(e) => {
               setNewUser({
                 ...newUser,
-                firstname: e.target.value.trim(),
+                firstname: e.target.value,
               }),
                 setMessage(""),
                 () => validateInput();
@@ -98,7 +98,7 @@ function CreateAccount() {
             onChange={(e) => {
               setNewUser({
                 ...newUser,
-                lastname: e.target.value.trim(),
+                lastname: e.target.value,
               }),
                 setMessage(""),
                 () => validateInput();
@@ -115,7 +115,7 @@ function CreateAccount() {
             onChange={(e) => {
               setNewUser({
                 ...newUser,
-                email: e.target.value.trim().toLowerCase(),
+                email: e.target.value,
               }),
                 setMessage(""),
                 () => validateInput();
@@ -130,7 +130,7 @@ function CreateAccount() {
             name="password"
             value={newUser.password}
             onChange={(e) => {
-              setNewUser({ ...newUser, password: e.target.value.trim() }),
+              setNewUser({ ...newUser, password: e.target.value }),
                 setMessage(""),
                 () => validateInput();
             }}
