@@ -7,6 +7,11 @@ export const focusOnEmptyInputField = (inputEl) => {
     inputEl.current.focus();
   }
 };
+export const focusOnWrongInput = (inputEl) => {
+  if (!new RegExp(/^[A-Öa-ö\s]*$/).test(inputEl.current.value.trim())) {
+    inputEl.current.focus();
+  }
+};
 function CreateAccount() {
   const inputFirstNameEl = useRef(null);
   const inputLastNameEl = useRef(null);
@@ -27,6 +32,7 @@ function CreateAccount() {
 
   useEffect(() => {
     const error = validateInputsCreateAccount(newUser);
+
     setErrorMessage(error);
     setShowErrorMessages(false);
   }, [newUser]);
@@ -50,7 +56,10 @@ function CreateAccount() {
     focusOnEmptyInputField(inputEmailEl);
     focusOnEmptyInputField(inputLastNameEl);
     focusOnEmptyInputField(inputFirstNameEl);
-
+    if (errorMessage != "") {
+      focusOnWrongInput(inputLastNameEl);
+      focusOnWrongInput(inputFirstNameEl);
+    }
     if (errorMessage == "") {
       let result = await createAccount(newUser);
       if (result.error) {

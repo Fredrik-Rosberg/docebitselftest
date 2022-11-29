@@ -42,7 +42,7 @@ export const validateName = (name, maxLength) => {
     !new RegExp(/^[A-Öa-ö\s]*$/).test(name.trim()) ||
     name.length > maxLength
   ) {
-    return `Får endast innehålla bokstäver och vara max ${maxLength} tecken långt`;
+    return `Namn får endast innehålla bokstäver och vara max ${maxLength} tecken långt`;
   }
   return "";
 };
