@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import "./changePassword.css";
 import { changePassword, checkCurrentPassword } from "./changePassword.service";
 import { validatePassword } from "../../signIn/validation.service";
 import UpdatePasswordModal from "../../modal/UpdatedPassWordModal";
@@ -55,12 +54,12 @@ function ChangePassword() {
 
   return (
     <>
-      <form className="changepasswordform" onSubmit={handleSubmit}>
-        <h2 className="changepasswordheader">
-          <div></div> Ändra lösenord
-        </h2>
-
-        <div className="changepasswordinput">
+      <h2 className="form-h2">Ändra lösenord</h2>
+      <form
+        className="form-container change-password-form"
+        onSubmit={handleSubmit}
+      >
+        <div className="form-row-item">
           <label htmlFor="password" className="labelspace">
             Nuvarande lösenord:
           </label>
@@ -72,7 +71,7 @@ function ChangePassword() {
           />
         </div>
 
-        <div className="changepasswordinput">
+        <div className="form-row-item">
           <label htmlFor="password" className="labelspace">
             Nytt lösenord:
           </label>
@@ -93,7 +92,7 @@ function ChangePassword() {
           />
         </div>
 
-        <div className="changepasswordinput">
+        <div className="form-row-item">
           <label htmlFor="confirmpassword" className="labelspace">
             Upprepa nytt lösenord:
           </label>
@@ -104,25 +103,19 @@ function ChangePassword() {
             }}
           />
         </div>
-        <div></div>
-        <div className="changepasswordbuttoncontainer">
-          <div></div>
-          <div>
-            <Link to="/admin/myaccount">
-              <button type="button" className="changepasswordbutton">
-                Tillbaka
-              </button>
-            </Link>
-            <button type="submit" className="changepasswordbutton">
-              Spara
+        <div className="form-buttons-container">
+          <Link className="form-link" to="/admin/myaccount">
+            <button type="button" className="form-button">
+              Tillbaka
             </button>
-          </div>
+          </Link>
+          <button type="submit" className="form-button">
+            Spara
+          </button>
         </div>
-        {showMessage ? (
-          <p className="signinerrormessage">{errorMessage}</p>
-        ) : (
-          ""
-        )}
+        <div className="messages">
+          {showMessage && <p className="error-message">{errorMessage}</p>}
+        </div>
       </form>
     </>
   );

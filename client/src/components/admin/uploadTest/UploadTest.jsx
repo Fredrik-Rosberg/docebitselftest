@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
-import { uploadCsv } from "./test.service";
-import "./test.css";
-const Test = () => {
+import { uploadCsv } from "./uploadtest.service";
+import "./uploadtest.css";
+const UploadTest = () => {
   const [file, setFile] = useState();
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
@@ -65,12 +65,9 @@ const Test = () => {
   };
   return (
     <>
-      <form className="testform">
-        <div className="myaccountinput">
-          <div></div>
-          <h2>Ladda upp test</h2>
-        </div>
-        <div className="testinput">
+      <h2 className="form-h2">Ladda upp test</h2>
+      <form className="form-container test-form">
+        <div className="form-row-item">
           <label htmlFor="name">Namn på test:</label>
           <input
             type="text"
@@ -78,10 +75,10 @@ const Test = () => {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div className="testinput">
-          <p>Ladda fil:</p>
+        <div className="form-row-item">
+          <label htmlFor="load-file">Ladda fil:</label>
           <input
-            className="test-csv-input"
+            className="form-load-file-input"
             type={"file"}
             id={"csvFileInput"}
             accept={".csv"}
@@ -90,11 +87,13 @@ const Test = () => {
           />
         </div>
 
-        <div className="test-status-row">
-          <p>Status:</p>
+        <div className="form-status-row">
+          <label className="form-label" htmlFor="status">
+            Status:
+          </label>
           <p className="test-status">{status}</p>
           <button
-            className="testbutton"
+            className="form-button"
             onClick={(e) => {
               handleOnSubmit(e);
             }}
@@ -103,12 +102,11 @@ const Test = () => {
           </button>
         </div>
       </form>
-      <div>
-        {" "}
-        {showMessage ? <p className="signinerrormessage">{error}</p> : ""}
+      <div className="messages">
+        {showMessage && <p className="error-message">{error}</p>}
       </div>
     </>
   );
 };
 
-export default Test;
+export default UploadTest;

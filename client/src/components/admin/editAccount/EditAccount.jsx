@@ -1,4 +1,3 @@
-import "./editAccount.css";
 import React, { useState, useEffect } from "react";
 import { validateInputsCreateAccount } from "../../signIn/validation.service.js";
 import { editAccount } from "./editAccount.service";
@@ -52,12 +51,9 @@ function EditAccount() {
 
   return (
     <>
-      <form className="editaccountform">
-        <div className="editaccountinput">
-          <div></div>
-          <h2>Ändra kontouppgifter</h2>
-        </div>
-        <div className="editaccountinput">
+      <h2 className="form-h2">Ändra kontouppgifter</h2>
+      <form className="form-container edit-account-form">
+        <div className="form-row-item">
           <label htmlFor="firstname">Förnamn:</label>
           <input
             type="text"
@@ -68,7 +64,7 @@ function EditAccount() {
             }}
           />
         </div>
-        <div className="editaccountinput">
+        <div className="form-row-item">
           <label htmlFor="lastname">Efternamn:</label>
           <input
             type="text"
@@ -79,7 +75,7 @@ function EditAccount() {
             }}
           />
         </div>
-        <div className="editaccountinput">
+        <div className="form-row-item">
           <label htmlFor="email">E-postadress:</label>
           <input
             type="text"
@@ -90,7 +86,7 @@ function EditAccount() {
             }}
           />
         </div>
-        <div className="editaccountinput">
+        <div className="form-row-item">
           <label htmlFor="password">Lösenord:</label>
           <input
             type="password"
@@ -100,9 +96,10 @@ function EditAccount() {
             }}
           />
         </div>
-        <div className="editaccountinput">
+        <div className="form-row-item">
           <label htmlFor="account">Konto:</label>
           <select
+            className="form-select"
             value={user.role}
             onChange={(e) => setUser({ ...user, role: e.target.value })}
           >
@@ -110,32 +107,20 @@ function EditAccount() {
             <option value="admin">Administratör</option>
           </select>
         </div>
-        <div className="editaccountinput">
-          <div></div>
-          <div className="editaccountbuttons">
-            <button className="editaccountbutton">
-              <Link to="/admin/overview">Tillbaka</Link>
-            </button>
-
-            <button className="editaccountbutton" onClick={handleSubmit}>
-              Spara
-            </button>
-          </div>
+        <div className="form-buttons-container">
+          <Link className="form-link" to="/admin/overview">
+            <button className="form-button">Tillbaka</button>
+          </Link>
+          <button className="form-button" onClick={handleSubmit}>
+            Spara
+          </button>
         </div>
-        <div>
-          {showMessages ? (
-            message == "" && validationMessage == "" ? (
-              ""
-            ) : (
-              <>
-                <p className="editaccountmessage">{message}</p>
-                <p className="editaccountvalidationmessage">
-                  {validationMessage}
-                </p>
-              </>
-            )
-          ) : (
-            ""
+        <div className="messages">
+          {showMessages && (
+            <>
+              <p className="success-message">{message}</p>
+              <p className="error-message">{validationMessage}</p>
+            </>
           )}
         </div>
       </form>

@@ -1,0 +1,101 @@
+.form-container {
+  display: grid;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.form-row-item {
+  font-size: 13px;
+  display: grid;
+  grid-template-columns: 140px 180px;
+  align-items: center;
+}
+
+.form-label {
+  text-align: start;
+  font-weight: 500;
+}
+
+.form-select {
+  width: 110px;
+  padding: 3px;
+}
+
+.form-dateinput {
+  width: 100px;
+  height: 27px;
+}
+
+.form-h2 {
+  padding-left: 120px;
+  padding-bottom: 20px;
+}
+
+.form-button {
+  border: 1px solid black;
+  border-radius: 3px;
+  height: 27px;
+  width: auto;
+  box-shadow: rgba(0, 0, 0, 0.253) 1.95px 1.95px 2.6px;
+  justify-self: flex-end;
+  align-self: center;
+  font-size: 12px;
+}
+
+.form-link {
+  justify-self: flex-end;
+  align-self: center;
+}
+
+.form-load-file-input {
+  padding: 0;
+}
+.messages {
+  width: 295px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.error-message {
+  color: rgb(255, 99, 99);
+}
+
+.success-message {
+  color: rgb(1, 152, 1);
+}
+
+.form-buttons-container {
+  display: grid;
+  grid-template-columns: 195px 1fr;
+}
+.form-status-row {
+  display: grid;
+  grid-template-columns: 120px 150px 120px;
+  align-items: center;
+}
+
+/* Styles for Components form containers */
+
+.create-account-form {
+  grid-template-rows: repeat(5, 45px) 80px;
+}
+
+.create-courseoccasion-form {
+  grid-template-rows: repeat(4, 45px) 80px;
+}
+
+.my-account-form {
+  grid-template-rows: repeat(3, 45px) 80px;
+}
+
+.edit-account-form {
+  grid-template-rows: repeat(5, 45px) 80px;
+}
+.change-password-form {
+  grid-template-rows: repeat(3, 45px) 80px;
+}
+
+.test-form {
+  grid-template-rows: repeat(2, 45px) 100px;
+}

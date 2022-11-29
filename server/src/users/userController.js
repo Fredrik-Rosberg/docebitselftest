@@ -63,7 +63,10 @@ const createAccount = async (req, res) => {
         res.json({ message: "Konto skapat", result: true });
       }
     } else {
-      res.json({ error: "Användare finns redan", result: false });
+      res.json({
+        error: "Konto med angiven e-postadress finns redan",
+        result: false,
+      });
     }
   } catch (error) {
     console.error(error);

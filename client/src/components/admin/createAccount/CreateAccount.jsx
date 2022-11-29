@@ -1,4 +1,3 @@
-import "./createAccount.css";
 import React, { useState, useEffect, useRef } from "react";
 import { validateInputsCreateAccount } from "../../signIn/validation.service.js";
 import { createAccount } from "./createAccount.service";
@@ -77,10 +76,13 @@ function CreateAccount() {
 
   return (
     <>
-      <h2 className="h2-styled">Nytt konto</h2>
+      <h2 className="form-h2">Nytt konto</h2>
 
-      <form onSubmit={handleSubmit} className="createaccountform">
-        <div className="createaccountinput">
+      <form
+        onSubmit={handleSubmit}
+        className="form-container create-account-form "
+      >
+        <div className="form-row-item">
           <label htmlFor="firstname">Förnamn:</label>
           <input
             ref={inputFirstNameEl}
@@ -97,7 +99,7 @@ function CreateAccount() {
             }}
           />
         </div>
-        <div className="createaccountinput">
+        <div className="form-row-item">
           <label htmlFor="lastname">Efternamn:</label>
           <input
             ref={inputLastNameEl}
@@ -114,7 +116,7 @@ function CreateAccount() {
             }}
           />
         </div>
-        <div className="createaccountinput">
+        <div className="form-row-item">
           <label htmlFor="email">E-postadress:</label>
           <input
             ref={inputEmailEl}
@@ -131,7 +133,7 @@ function CreateAccount() {
             }}
           />
         </div>
-        <div className="createaccountinput">
+        <div className="form-row-item">
           <label htmlFor="password">Lösenord:</label>
           <input
             ref={inputPasswordEl}
@@ -145,10 +147,10 @@ function CreateAccount() {
             }}
           />
         </div>
-        <div className="createaccountinput">
+        <div className="form-row-item">
           <label htmlFor="account">Konto:</label>
           <select
-            className="create-account-select"
+            className="form-select"
             value={newUser.role}
             onChange={(e) =>
               setNewUser({ ...newUser, role: e.target.value }, () =>
@@ -156,24 +158,20 @@ function CreateAccount() {
               )
             }
           >
-            <option className="create-account-option" value="user">
-              Kursdeltagare
-            </option>
-            <option className="create-account-option" value="admin">
-              Administratör
-            </option>
+            <option value="user">Kursdeltagare</option>
+            <option value="admin">Administratör</option>
           </select>
         </div>
-        <button className="createaccountbutton">Skapa konto</button>
-        <div className="create-account-messages">
+        <button className="form-button">Skapa konto</button>
+        <div className="messages">
           {showMessages && (
             <>
-              <p className="createaccountmessage">{message}</p>
+              <p className="success-message">{message}</p>
             </>
           )}
           {showErrorMessages && (
             <>
-              <p className="createaccounterrormessage">{errorMessage}</p>
+              <p className="error-message">{errorMessage}</p>
             </>
           )}
         </div>
