@@ -24,7 +24,7 @@ export const validateEmail = (email) => {
   if (!email) {
     return "Vänligen fyll i samtliga uppgifter";
   } else if (
-    !new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i).test(
+    !new RegExp(/^[A-Ö0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i).test(
       email.trim()
     ) ||
     email.length > 50

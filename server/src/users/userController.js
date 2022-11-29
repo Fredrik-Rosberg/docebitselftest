@@ -4,7 +4,7 @@ const encrypt = require("../../config/encryption");
 const getUserByEmail = async (email) => {
   try {
     let sqlQuery = "SELECT id, email FROM users WHERE email=$1";
-    const userExists = await db.query(sqlQuery, [email]);
+    const userExists = await db.query(sqlQuery, [email.trim().toLowerCase()]);
 
     if (userExists.rowCount) {
       return userExists.rows[0];
@@ -51,11 +51,11 @@ const createAccount = async (req, res) => {
     let sqlQuery =
       "INSERT INTO users (firstname, lastname, email, hashedpassword, role) VALUES ($1,$2,$3,$4,$5 )";
     const userExists = await getUserByEmail(req.body.email);
-    if (userExists == null) {
+    if (!userExists) {
       let result = await db.query(sqlQuery, [
-        req.body.firstname,
-        req.body.lastname,
-        req.body.email,
+        req.body.firstname.trim(),
+        req.body.lastname.trim(),
+        req.body.email.trim().toLowerCase(),
         encryptedPassword,
         req.body.role,
       ]);
@@ -63,7 +63,7 @@ const createAccount = async (req, res) => {
         res.json({ message: "Konto skapat", result: true });
       }
     } else {
-      res.json({ message: "Användare finns redan", result: false });
+      res.json({ error: "Användare finns redan", result: false });
     }
   } catch (error) {
     console.error(error);
@@ -96,7 +96,7 @@ const editUser = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-  console.log(req.body.password)
+  console.log(req.body.password);
   const encryptedPassword = encrypt(req.body.password);
 
   try {
@@ -104,7 +104,7 @@ const changePassword = async (req, res) => {
     let result = await db.query(sqlQuery, [encryptedPassword, req.body.id]);
     console.log(result);
     if (result.rowCount) {
-      res.status(200).json({ message: "Lösenord ändrat", result:true });
+      res.status(200).json({ message: "Lösenord ändrat", result: true });
     } else {
       res.status(400).json({ message: "Misslyckad ändring", result: false });
     }
@@ -115,20 +115,20 @@ const changePassword = async (req, res) => {
 
 const checkCurrentPassword = async (req, res) => {
   let hashedpassword = encrypt(req.body.currentpassword);
-  
+
   try {
     let getCurrentPassword = await db.query(
       "SELECT hashedpassword FROM users WHERE id =$1 and hashedpassword=$2",
       [req.params.id, hashedpassword]
     );
-    console.log(getCurrentPassword)
+    console.log(getCurrentPassword);
     if (getCurrentPassword.rowCount) {
       res.status(200).json({ message: "correct password", result: true });
     } else {
       res.status(400).json({ message: "wrong password", result: false });
     }
   } catch (error) {
-    res.status(400).json({message:"nublevdefel"})
+    res.status(400).json({ message: "nublevdefel" });
     console.log(error);
   }
 };
