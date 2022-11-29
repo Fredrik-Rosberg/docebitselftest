@@ -8,7 +8,7 @@ export const validatePassword = (password) => {
     return "Vänligen fyll i samtliga uppgifter";
   } else if (
     !new RegExp(
-      /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]/
+      /(?=.*[a-ö])(?=.*[A-ö])(?=.*\d)(?=.*[@$!%*?&#])[A-öa-ö\d@$!%*?&#]/
     ).test(password.trim()) ||
     password.length < 8 ||
     password.length > 50
