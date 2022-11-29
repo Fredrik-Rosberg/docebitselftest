@@ -11,7 +11,7 @@ export const createAccount = async (data) => {
     });
     let response = await dataResponse.json();
 
-    return response.message;
+    return response;
   } catch (error) {
     console.error(error);
   }
