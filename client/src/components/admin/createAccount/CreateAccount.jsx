@@ -2,7 +2,11 @@ import "./createAccount.css";
 import React, { useState, useEffect, useRef } from "react";
 import { validateInputsCreateAccount } from "../../signIn/validation.service.js";
 import { createAccount } from "./createAccount.service";
-
+export const focusOnEmptyInputField = (inputEl) => {
+  if (inputEl.current.value == "") {
+    inputEl.current.focus();
+  }
+};
 function CreateAccount() {
   const inputFirstNameEl = useRef(null);
   const inputLastNameEl = useRef(null);
@@ -37,12 +41,6 @@ function CreateAccount() {
     });
     setShowMessages(true);
   }, [message]);
-
-  const focusOnEmptyInputField = (inputEl) => {
-    if (inputEl.current.value == "") {
-      inputEl.current.focus();
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
