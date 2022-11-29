@@ -18,11 +18,9 @@ const MyAccount = () => {
   }, []);
   return (
     <>
+      <h2 className="h2-styled">Mitt konto</h2>
+
       <form className="myaccountform">
-        <div className="myaccountinput">
-          <div></div>
-          <h2>Mitt konto</h2>
-        </div>
         <div className="myaccountinput">
           <label htmlFor="firstname">Förnamn:</label>
           <input type="text" name="firstname" disabled value={user.firstname} />
