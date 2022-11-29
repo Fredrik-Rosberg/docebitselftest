@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./createCourseOccasion.css";
 import { validateInputsCourseOccasion } from "../signIn/validation.service.js";
 import { createCourseOccasion } from "./createCourseOccasion.service";
+import { focusOnEmptyInputField } from "../admin/createAccount/CreateAccount";
 
 const CreateCourseOccasion = () => {
+  const inputNameEl = useRef(null);
+  const inputOrganizerEl = useRef(null);
+
   const [newCourseOccasion, setNewCourseOccasion] = useState({
     name: "",
     startdate: "",
@@ -12,22 +16,24 @@ const CreateCourseOccasion = () => {
   });
   const [message, setMessage] = useState("");
   const [validationMessage, setValidationMessage] = useState("");
+  const [showErrorMessages, setShowErrorMessages] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
+  useEffect(() => {
+    setNewCourseOccasion({
+      name: "",
+      startdate: "",
+      enddate: "",
+      courseorganizer: "",
+    });
+  }, [message]);
 
   useEffect(() => {
-    let validatedName = validateInputsCourseOccasion(newCourseOccasion);
-
-    if (validatedName != "") {
-      setValidationMessage(validatedName);
-    }
-
+    let result = validateInputsCourseOccasion(newCourseOccasion);
+    setValidationMessage(result);
     if (newCourseOccasion.startdate == "" || newCourseOccasion.enddate == "") {
-      setValidationMessage(
-        "Vänligen fyll i samtliga uppgifter för att skapa kurstillfälle"
-      );
+      setValidationMessage("Vänligen fyll i samtliga uppgifter");
     }
-
-    setShowMessages(false);
+    setShowErrorMessages(false);
   }, [
     newCourseOccasion.name,
     newCourseOccasion.courseorganizer,
@@ -37,29 +43,30 @@ const CreateCourseOccasion = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    focusOnEmptyInputField(inputOrganizerEl);
+    focusOnEmptyInputField(inputNameEl);
     if (validationMessage == "") {
       let result = await createCourseOccasion(newCourseOccasion);
       if (result == "Kurstillfälle skapat") {
         setMessage(result);
+        setShowMessages(true);
       } else {
         setMessage("");
         setValidationMessage(result);
       }
     }
 
-    setShowMessages(true);
+    setShowErrorMessages(true);
   };
 
   return (
     <>
+      <h2 className="h2-styled">Skapa kurstillfälle</h2>
       <form onSubmit={handleSubmit} className="createcourseoccasionform">
-        <div className="courseoccasioninput">
-          <div></div>
-          <h2>Skapa kurstillfälle</h2>
-        </div>
         <div className="courseoccasioninput">
           <label htmlFor="kursnamn">Kursnamn:</label>
           <input
+            ref={inputNameEl}
             value={newCourseOccasion.name}
             type="text"
             className="nameinput"
@@ -76,6 +83,7 @@ const CreateCourseOccasion = () => {
         <div className="courseoccasioninput">
           <label htmlFor="kursanordnare">Kursanordnare:</label>
           <input
+            ref={inputOrganizerEl}
             value={newCourseOccasion.courseorganizer}
             type="text"
             className="nameinput"
@@ -128,20 +136,19 @@ const CreateCourseOccasion = () => {
             }}
           />
         </div>
-        <div className="courseoccasioninput">
-          <div></div>
-          <button>Spara</button>
-        </div>
-        <div>
-          {showMessages ? (
+        <button className="course-occasion-button">Spara kurstillfälle</button>
+        <div className="messages">
+          {showMessages && (
             <>
               <p className="courseoccasionmessage">{message}</p>
+            </>
+          )}
+          {showErrorMessages && (
+            <>
               <p className="courseoccasionvalidationmessage">
                 {validationMessage}
               </p>
             </>
-          ) : (
-            ""
           )}
         </div>
       </form>

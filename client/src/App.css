@@ -41,3 +41,8 @@ button:hover {
 button {
   font-size: 12px;
 }
+
+.messages {
+  width: 295px;
+  text-align: center;
+}

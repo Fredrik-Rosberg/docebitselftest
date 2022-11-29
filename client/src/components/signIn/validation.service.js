@@ -33,11 +33,14 @@ export const validateEmail = (email) => {
 };
 
 //Kollar så att name fyller kriterierna.
-export const validateName = (name) => {
+export const validateName = (name, maxLength) => {
   if (!name) {
     return "Vänligen fyll i samtliga uppgifter";
-  } else if (!new RegExp(/^[A-Öa-ö\s]*$/).test(name) || name.length > 50) {
-    return "Får endast innehålla bokstäver och vara max 50 tecken långt";
+  } else if (
+    !new RegExp(/^[A-Öa-ö\s]*$/).test(name) ||
+    name.length > maxLength
+  ) {
+    return `Får endast innehålla bokstäver och vara max ${maxLength} tecken långt`;
   }
   return "";
 };
@@ -61,8 +64,9 @@ export const validateInputsSignIn = (userInput) => {
 // Kollar CourseOccasion så att det fyller kraven och sätter meddelande
 
 export const validateInputsCourseOccasion = (userInput) => {
-  const nameError = validateName(userInput.name);
-  const courseOrganizerError = validateName(userInput.courseorganizer);
+  const nameError = validateName(userInput.name, 100);
+
+  const courseOrganizerError = validateName(userInput.courseorganizer, 100);
   if (nameError == "" && courseOrganizerError == "") {
     return "";
   }
@@ -77,8 +81,8 @@ export const validateInputsCourseOccasion = (userInput) => {
 // Kollar CreateAccount så att det fyller kraven och sätter meddelande
 
 export const validateInputsCreateAccount = (userinputs) => {
-  const firstNameError = validateName(userinputs.firstname);
-  const lastNameError = validateName(userinputs.lastname);
+  const firstNameError = validateName(userinputs.firstname, 50);
+  const lastNameError = validateName(userinputs.lastname, 50);
   const emailError = validateEmail(userinputs.email);
   const passwordError = validatePassword(userinputs.password);
   if (
