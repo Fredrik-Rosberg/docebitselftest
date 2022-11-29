@@ -8,10 +8,10 @@ import React, {
 } from "react";
 import { createCourses } from "./createCourse.service.js";
 import "./createCourse.css";
-import AccountTable from "../tables/account-table/AccountTable.jsx";
-import TestTable from "../tables/test-table/TestTable";
-import CourseOccasionTable from "../tables/courseoccasion-table/CourseOccasionTable";
-import { TableContext } from "../context/TableContext";
+import AccountTable from "../../tables/account-table/AccountTable.jsx";
+import TestTable from "../../tables/test-table/TestTable";
+import CourseOccasionTable from "../../tables/courseoccasion-table/CourseOccasionTable";
+import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";

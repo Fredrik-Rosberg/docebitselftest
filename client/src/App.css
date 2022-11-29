@@ -26,10 +26,7 @@ label {
 h2 {
   font-size: 14px;
 }
-.h2-styled {
-  padding-left: 120px;
-  padding-bottom: 20px;
-}
+
 
 button:hover {
   cursor: pointer;
@@ -38,11 +35,4 @@ button:hover {
 .ag-root ::-webkit-scrollbar {
   display: none;
 }
-button {
-  font-size: 12px;
-}
 
-.messages {
-  width: 295px;
-  text-align: center;
-}

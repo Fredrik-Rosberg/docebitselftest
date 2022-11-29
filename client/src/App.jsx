@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
+import "./Forms.css";
 import SignInComponent from "./components/signIn/SignIn";
 import SendResetMailComponent from "./components/passwordreset/SendResetMail";
 import "@fontsource/raleway";
@@ -8,16 +9,16 @@ import NewPassword from "./components/passwordreset/NewPassword";
 import MainLayout from "./layout/MainLayout";
 import NavbarLayoutAdmin from "./layout/NavbarLayoutAdmin";
 import NavbarLayoutUser from "./layout/NavbarLayoutUser";
-import CreateCourseOccasion from "./components/createCourseOccasion/CreateCourseOccasion";
+import CreateCourseOccasion from "./components/admin/createCourseOccasion/CreateCourseOccasion";
 import CreateAccount from "./components/admin/createAccount/CreateAccount";
 import AccountTable from "./components/tables/account-table/AccountTable";
 import MyAccount from "./components/Account/MyAccount";
 import Overview from "./components/admin/overview/Overview";
-import Course from "./components/course/CreateCourse";
+import Course from "./components/admin/createCourse/CreateCourse";
 
 import EditAccount from "./components/admin/editAccount/EditAccount";
 import ChangePassword from "./components/admin/changePassword/ChangePassword";
-import Test from "./components/test/Test";
+import Test from "./components/admin/uploadTest/UploadTest";
 import ChooseTest from "./components/user/chooseTest/ChooseTest";
 import GlobalContextProvider from "./components/context/TableContext";
 import Questions from "./components/user/questionsform/Questions";
@@ -48,7 +49,6 @@ function App() {
             />
             <Route path="/admin/overview" element={<Overview />} />
             <Route path="/admin/course" element={<Course />} />
-
           </Route>
           <Route>
             <Route path="/user" element={<NavbarLayoutUser />}>
@@ -56,7 +56,7 @@ function App() {
               <Route path="/user/test" element={<ChooseTest />} />
               <Route path="/user/myaccount" element={<MyAccount />} />
             </Route>
-            <Route path="/user/test/questionform" element={<Questions/>}/>
+            <Route path="/user/test/questionform" element={<Questions />} />
           </Route>
         </Routes>
       </Router>

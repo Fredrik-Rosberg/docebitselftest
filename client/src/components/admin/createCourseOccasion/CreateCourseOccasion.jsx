@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./createCourseOccasion.css";
-import { validateInputsCourseOccasion } from "../signIn/validation.service.js";
+import { validateInputsCourseOccasion } from "../../signIn/validation.service";
 import { createCourseOccasion } from "./createCourseOccasion.service";
-import { focusOnEmptyInputField } from "../admin/createAccount/CreateAccount";
+import {
+  focusOnEmptyInputField,
+  focusOnWrongInput,
+} from "../../admin/createAccount/CreateAccount";
 
 const CreateCourseOccasion = () => {
   const inputNameEl = useRef(null);
@@ -43,8 +45,13 @@ const CreateCourseOccasion = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowMessages(false);
     focusOnEmptyInputField(inputOrganizerEl);
     focusOnEmptyInputField(inputNameEl);
+    if (validationMessage != "") {
+      focusOnWrongInput(inputOrganizerEl);
+      focusOnWrongInput(inputNameEl);
+    }
     if (validationMessage == "") {
       let result = await createCourseOccasion(newCourseOccasion);
       if (result == "Kurstillfälle skapat") {
@@ -61,10 +68,13 @@ const CreateCourseOccasion = () => {
 
   return (
     <>
-      <h2 className="h2-styled">Skapa kurstillfälle</h2>
-      <form onSubmit={handleSubmit} className="createcourseoccasionform">
-        <div className="courseoccasioninput">
-          <label htmlFor="kursnamn">Kursnamn:</label>
+      <h2 className="form-h2">Skapa kurstillfälle</h2>
+      <form
+        onSubmit={handleSubmit}
+        className="form-container create-courseoccasion-form"
+      >
+        <div className="form-row-item">
+          <label htmlFor="courseoccasion-name">Kursnamn:</label>
           <input
             ref={inputNameEl}
             value={newCourseOccasion.name}
@@ -80,8 +90,8 @@ const CreateCourseOccasion = () => {
             }}
           />
         </div>
-        <div className="courseoccasioninput">
-          <label htmlFor="kursanordnare">Kursanordnare:</label>
+        <div className="form-row-item">
+          <label htmlFor="courseoccasion-organizer">Kursanordnare:</label>
           <input
             ref={inputOrganizerEl}
             value={newCourseOccasion.courseorganizer}
@@ -97,14 +107,14 @@ const CreateCourseOccasion = () => {
             }}
           />
         </div>
-        <div className="courseoccasioninput">
-          <label htmlFor="giltigfrom">Startdatum:</label>
+        <div className="form-row-item">
+          <label htmlFor="courseoccasion-startdate">Startdatum:</label>
           <input
+            className="form-dateinput"
             value={newCourseOccasion.startdate}
             min={new Date().toLocaleDateString("sv-SE")}
             max={newCourseOccasion.enddate}
             type="date"
-            className="dateinput"
             onChange={(e) => {
               setNewCourseOccasion({
                 ...newCourseOccasion,
@@ -115,9 +125,10 @@ const CreateCourseOccasion = () => {
             }}
           />
         </div>
-        <div className="courseoccasioninput">
-          <label htmlFor="giltigtom">Slutdatum:</label>
+        <div className="form-row-item">
+          <label htmlFor="courseoccasion-enddate">Slutdatum:</label>
           <input
+            className="form-dateinput"
             value={newCourseOccasion.enddate}
             min={
               newCourseOccasion.startdate == ""
@@ -125,7 +136,6 @@ const CreateCourseOccasion = () => {
                 : newCourseOccasion.startdate
             }
             type="date"
-            className="dateinput"
             onChange={(e) => {
               setNewCourseOccasion({
                 ...newCourseOccasion,
@@ -136,18 +146,16 @@ const CreateCourseOccasion = () => {
             }}
           />
         </div>
-        <button className="course-occasion-button">Spara kurstillfälle</button>
+        <button className="form-button">Spara kurstillfälle</button>
         <div className="messages">
           {showMessages && (
             <>
-              <p className="courseoccasionmessage">{message}</p>
+              <p className="success-message">{message}</p>
             </>
           )}
           {showErrorMessages && (
             <>
-              <p className="courseoccasionvalidationmessage">
-                {validationMessage}
-              </p>
+              <p className="error-message">{validationMessage}</p>
             </>
           )}
         </div>
