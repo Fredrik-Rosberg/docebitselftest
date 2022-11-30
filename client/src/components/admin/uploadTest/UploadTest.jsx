@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Papa from "papaparse";
 import { uploadCsv } from "./uploadtest.service";
 const UploadTest = () => {
+  const inputEl = useRef(null)
   const [file, setFile] = useState();
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
@@ -44,6 +45,7 @@ const UploadTest = () => {
         "Namn får endast innehålla bokstäver och siffror och vara max 100 tecken långt"
       );
       setShowMessage(true);
+      inputEl.current.focus()
     } else {
       if (file) {
         let csvFile = { name: name, file: file };
@@ -69,6 +71,7 @@ const UploadTest = () => {
         <div className="form-row-item">
           <label htmlFor="name">Namn på test:</label>
           <input
+          ref={inputEl}
             type="text"
             name="name"
             onChange={(e) => setName(e.target.value)}

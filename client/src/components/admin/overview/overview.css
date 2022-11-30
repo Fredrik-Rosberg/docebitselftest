@@ -12,6 +12,10 @@ table {
 }
 .overview-tables {
   display: grid;
+  grid-template-columns: 420px 300px 500px;
+}
+.overview-buttons{
+  display: grid;
   grid-template-columns: auto auto auto;
 }
 .container {

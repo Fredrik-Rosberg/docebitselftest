@@ -17,7 +17,6 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
-
 const Overview = () => {
   const { course, deselect } = useContext(TableContext);
   const [selectedCourse, setSelectedCourse] = course;
@@ -47,7 +46,6 @@ const Overview = () => {
   );
 
   useEffect(() => {
-
     setDeselectAll(false);
   }, [courses]);
 
@@ -80,22 +78,23 @@ const Overview = () => {
   };
   return (
     <>
-      
       <div className="overview-main">
         <div className="overview-tables">
           <AccountTable />
           <TestTable />
           <CourseOccasionTable />
         </div>
-        {selectedCourse.length > 0 ? (
-          <button className="button" onClick={handleAddCourse}>
-            Lägg till rad(er)
+        <div className='overview-buttons'>
+          <button className="button" onClick={onRemoveSelected}>
+            Ta bort konto(n)
+          </button>{" "}
+          <button className="button" onClick={onRemoveSelected}>
+            Ta bort test
+          </button>{" "}
+          <button className="button" onClick={onRemoveSelected}>
+            Ta bort kurstillfälle
           </button>
-        ) : (
-          <button disabled={true} className="button" onClick={handleAddCourse}>
-            Lägg till rad(er)
-          </button>
-        )}
+        </div>
         <div className="overview-table-course">
           <div
             className="ag-theme-alpine"
@@ -111,12 +110,9 @@ const Overview = () => {
               suppressCellFocus={true}
             ></AgGridReact>
           </div>
-          <button className="button" onClick={onRemoveSelected}>
-            Ta bort rad(er)
-          </button>
         </div>
         <button onClick={saveCourses} className="button">
-          Spara kurser
+          Ta bort kurs
         </button>
       </div>
     </>
