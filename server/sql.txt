@@ -6,14 +6,16 @@ email varchar(55) NOT NULL,
 hashedpassword varchar(255) NOT NULL, 
 role varchar(55) NOT NULL,
 resetid varchar,
-resetexpire varchar
+resetexpire varchar,
+UNIQUE (email)
 );
 
 CREATE TABLE IF NOT EXISTS test(
 id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 testname varchar(55) NOT NULL,
 uploaddate date NOT NULL,
-maxscore int NOT NULL
+maxscore int NOT NULL,
+UNIQUE (testname)
 );
 
 CREATE TABLE IF NOT EXISTS question(
