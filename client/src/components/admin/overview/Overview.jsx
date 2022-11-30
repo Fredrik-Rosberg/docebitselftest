@@ -120,6 +120,7 @@ const Overview = () => {
               rowMultiSelectWithClick={true}
               suppressCellFocus={true}
               gridOptions={gridOptions}
+              overlayNoRowsTemplate={"Inga kurser funna"}
             ></AgGridReact>
           </div>
         </div>
