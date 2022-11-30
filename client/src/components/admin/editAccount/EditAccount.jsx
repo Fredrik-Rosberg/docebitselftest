@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { validateInputsCreateAccount } from "../../signIn/validation.service.js";
 import { editAccount } from "./editAccount.service";
 import { useParams, Link } from "react-router-dom";
 import { getUserById } from "../../Account/MyAccount.service";
+import { focusOnEmptyInputField } from "../../admin/createAccount/CreateAccount";
 
 function EditAccount() {
+  const inputPasswordEl = useRef(null);
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
@@ -35,7 +37,7 @@ function EditAccount() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    focusOnEmptyInputField(inputPasswordEl);
     if (validationMessage == "") {
       let result = await editAccount(user);
       if (result == "Något gick fel") {
@@ -89,6 +91,7 @@ function EditAccount() {
         <div className="form-row-item">
           <label htmlFor="password">Lösenord:</label>
           <input
+            ref={inputPasswordEl}
             type="password"
             name="password"
             onChange={(e) => {
@@ -129,8 +132,3 @@ function EditAccount() {
 }
 
 export default EditAccount;
-
-// Lagt till valideringsmeddelande för email o lösenord
-// + meddelande för att konto skapats eller användare finns redan
-// Om newUser.role är en tom sträng så sätts valideringsmeddelandet till vänligen fyll i alla uppgifter
-// Tagit bort console log
