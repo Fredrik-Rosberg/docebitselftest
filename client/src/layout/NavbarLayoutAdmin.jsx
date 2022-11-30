@@ -31,7 +31,7 @@ const NavbarLayoutAdmin = () => {
             className="navbar-logo"
           />
           <div className="navbar-links">
-            <Link className="navbar-link" to="/admin/overview">
+            <Link className="navbar-link" to="/admin">
               <GrDocumentText />
               Översikt
             </Link>

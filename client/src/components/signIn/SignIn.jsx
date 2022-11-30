@@ -31,7 +31,7 @@ function SignIn() {
         setErrorMessage("Kontrollera att du angivit rätt E-post och lösenord");
       }
       if (response.loggedIn) {
-        navigate("/admin/overview");
+        navigate("/admin");
       }
     }
     setShowMessages(true);

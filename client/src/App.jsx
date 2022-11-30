@@ -47,7 +47,7 @@ function App() {
               path="/admin/account/:id/changepassword"
               element={<ChangePassword />}
             />
-            <Route path="/admin/overview" element={<Overview />} />
+            <Route path="/admin" element={<Overview />} />
             <Route path="/admin/course" element={<Course />} />
 
           </Route>
