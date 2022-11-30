@@ -13,51 +13,54 @@ const Questions = () => {
   const [question, SetQuestion] = useState(JSON.parse(localStorage.getItem(1)));
   const alpha = Array.from(Array(11)).map((e, i) => i + 65);
   const alphabet = alpha.map((x) => String.fromCharCode(x).toLowerCase());
-  const [checked, SetChecked] = useState([]);
+  const [checked, SetChecked] = useState(Array(11).fill(false));
   const [counter, SetCounter] = useState(0);
   const [star, setStar] = useState(false);
 
   useEffect(() => {
-    let count = 0;
-    alphabet.map((item) =>
-      question["frågealternativ" + item] != "" ? (count = count + 1) : ""
-    );
-    SetCounter(count);
-  }, [question]);
+   getFromSession(-question.fråganr+1)
+  }, []);
 
   function handleNext() {
+    let array = Array(11).fill(false);
+    SetChecked(array);
+    getFromSession(1);
     SetQuestion(JSON.parse(localStorage.getItem(question.fråganr + 1)));
     sessionStorage.setItem(question.fråganr, checked);
   }
+  
 
   function handlePrevious() {
+    let array = Array(11).fill(false);
+    SetChecked(array);
+    getFromSession(-1);
     SetQuestion(JSON.parse(localStorage.getItem(question.fråganr - 1)));
-    let arrayFalse = Array(counter).fill(false);
-    const getFromSession = sessionStorage.getItem(question.fråganr - 1);
-    let test = getFromSession.split(",");
-    test.map((item) =>
-      item == "true"
-        ? (arrayFalse[item.index] = true)
-        : (arrayFalse[item.index] = false)
-    );
-
-    console.log(test);
-    console.log(arrayFalse);
-    console.log(getFromSession);
+    sessionStorage.setItem(question.fråganr, checked);
   }
+
+function getFromSession(corr) {
+    if (sessionStorage.getItem(question.fråganr + corr) != null) {
+      const getFromSession = sessionStorage.getItem(question.fråganr + corr);
+      const arr = getFromSession.split(",");
+      const boolarr = arr.map((item) =>
+        item == "true" ? (item = true) : (item = false)
+      );
+      SetChecked(boolarr);
+    }
+  }
+
 
   function handleAbort() {}
   function handleFinishTest() {}
 
-  function handleChecked(index, item) {
+  function handleChecked(index) {
     let array = [...checked];
-    array[index] = item;
+    array[index] = !array[index];
+    array.map((item) =>
+      item != true || item != false ? (item = false) : (item = item)
+    );
     SetChecked(array);
   }
-
-  useEffect(() => {
-    console.log(checked);
-  });
 
   const handleStar = () => {
     setStar((star) => !star);
@@ -89,8 +92,9 @@ const Questions = () => {
                   question["frågealternativ" + item] != "" ? (
                     <div key={index} className="questiongrid">
                       <input
+                        checked={checked[index]}
                         value={item}
-                        onChange={() => handleChecked(index, item)}
+                        onChange={() => handleChecked(index)}
                         type="checkbox"
                       ></input>
                       <label>{question["frågealternativ" + item]}</label>
@@ -112,7 +116,7 @@ const Questions = () => {
               )}
             </div>
             <div>
-              <button onClick={handleAbort}>avbryt</button>
+              <button onClick={handleAbort}>Avbryt</button>
             </div>
 
             <div>
