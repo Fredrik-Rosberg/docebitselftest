@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import { uploadCsv } from "./uploadtest.service";
-import "./uploadtest.css";
 const UploadTest = () => {
   const [file, setFile] = useState();
   const [status, setStatus] = useState("");
