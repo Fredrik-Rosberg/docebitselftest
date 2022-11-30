@@ -45,13 +45,13 @@ export const createCourses = async (coursesArray) => {
       testid: course.test.id,
     })
   );
+
   let dataResponse = await fetch("/api/course", {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(courses),
   });
   let data = await dataResponse.json();
-  console.log(data);
   if (dataResponse.ok) {
     return data;
   } else {

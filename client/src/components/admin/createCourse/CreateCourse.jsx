@@ -6,11 +6,11 @@ import React, {
   useRef,
   useCallback,
 } from "react";
+import '../tables/tables.css'
 import { createCourses } from "./createCourse.service.js";
-import "./createCourse.css";
-import AccountTable from "../../tables/account-table/AccountTable.jsx";
-import TestTable from "../../tables/test-table/TestTable";
-import CourseOccasionTable from "../../tables/courseoccasion-table/CourseOccasionTable";
+import AccountTable from "../tables/AccountTable.jsx";
+import TestTable from "../tables/TestTable";
+import CourseOccasionTable from "../tables/CourseOccasionTable";
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
@@ -77,22 +77,22 @@ const Course = () => {
   };
   return (
     <>
-      <div className="course-main">
-        <div className="course-tables">
+      <div className="overview-main">
+        <div className="overview-tables">
           <AccountTable />
           <TestTable />
           <CourseOccasionTable />
         </div>
         {selectedCourse.length > 0 ? (
-          <button className="button" onClick={handleAddCourse}>
+          <button className="form-button" onClick={handleAddCourse}>
             Lägg till rad(er)
           </button>
         ) : (
-          <button disabled={true} className="button" onClick={handleAddCourse}>
+          <button disabled={true} className="form-button" onClick={handleAddCourse}>
             Lägg till rad(er)
           </button>
         )}
-        <div className="course-table-course">
+        <div className="course-table">
           <div
             className="ag-theme-alpine"
             style={{ height: 210, width: 830, fontFamily: "Raleway" }}
@@ -108,11 +108,11 @@ const Course = () => {
               overlayNoRowsTemplate={"Lägg till kurser"}
             ></AgGridReact>
           </div>
-          <button className="button" onClick={onRemoveSelected}>
+          <button className="form-button" onClick={onRemoveSelected}>
             Ta bort rad(er)
           </button>
         </div>
-        <button onClick={saveCourses} className="button">
+        <button onClick={saveCourses} className="form-button">
           Spara kurser
         </button>
       </div>

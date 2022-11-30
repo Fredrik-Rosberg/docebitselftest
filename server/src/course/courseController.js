@@ -25,11 +25,11 @@ const createCourses = async (req, res) => {
     if (iteration == dataArray.length) {
       if (responseArray.length > 0) {
         res.status(400).json({
-          message: dataArray.length-responseArray.length +" Kurs(er) tillagda",
+          message:
+            dataArray.length - responseArray.length + " Kurs(er) tillagda",
           errorcount: responseArray.length,
           errormessage: "Kurs(er) existerar redan",
           error: responseArray,
-          
         });
       } else {
         res
@@ -55,7 +55,7 @@ const getCourse = async (req, res) => {
 
 const getCourses = async (req, res) => {
   const sqlQuery =
-    "SELECT course.id, courseoccasion.courseorganizer, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, test.testname, users.email FROM course INNER JOIN courseoccasion ON course.courseid = courseoccasion.id INNER JOIN users ON users.id = course.userid INNER JOIN test ON test.id = courseoccasion.testid";
+    "SELECT course.id, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, test.testname, users.email FROM course INNER JOIN courseoccasion ON course.courseoccasionid = courseoccasion.id INNER JOIN users ON users.id = course.userid INNER JOIN test ON test.id = course.testid";
   let result = await db.query(sqlQuery);
   if (result.rowCount > 0) {
     res.status(200).json(result.rows);
@@ -80,5 +80,5 @@ module.exports = {
   createCourses,
   getCourses,
   deleteCourse,
-  getCourse
+  getCourse,
 };

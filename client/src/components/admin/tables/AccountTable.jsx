@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useContext } from "react";
-import { getUsers } from "../../admin/overview/overview.service";
+import { getUsers } from "../overview/overview.service";
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import { useNavigate } from "react-router-dom";
@@ -20,15 +20,16 @@ const AccountTable = () => {
 
   const [columnDefs] = useState([
     { field: "firstname", headerName: "Förnamn", width: 100 },
-    { field: "lastname", headerName: "Efternamn", width: 110 },
-    { field: "email", headerName: "Användarnamn", width: 188 },
+    { field: "lastname", headerName: "Efternamn", width: 100 },
+    { field: "email", headerName: "Användarnamn", width: 300 },
   ]);
 
   const defaultColDef = useMemo(
     () => ({
+      resizable: true,
+
       sortable: true,
       sortingOrder: ["asc", "desc", "null"],
-
     }),
     []
   );
@@ -65,11 +66,11 @@ const AccountTable = () => {
   const onRowSelected = (node) => {};
   return (
     <>
-      <div className="container">
+      <div className="table-container">
         <h2>Konto</h2>
         <div
           className="ag-theme-alpine"
-          style={{ height: 210, width: 400, fontFamily: "Raleway" }}
+          style={{ height: 210, width: 385, fontFamily: "Raleway" }}
         >
           <AgGridReact
             rowData={rowData}

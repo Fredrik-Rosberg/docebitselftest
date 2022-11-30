@@ -7,10 +7,10 @@ import React, {
   useCallback,
 } from "react";
 import { createCourses } from "./overview.service";
-import "./overview.css";
-import AccountTable from "../../tables/account-table/AccountTable";
-import TestTable from "../../tables/test-table/TestTable";
-import CourseOccasionTable from "../../tables/courseoccasion-table/CourseOccasionTable";
+import '../tables/tables.css'
+import AccountTable from "../tables/AccountTable";
+import TestTable from "../tables/TestTable";
+import CourseOccasionTable from "../tables/CourseOccasionTable";
 
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
@@ -96,18 +96,27 @@ const Overview = () => {
           <TestTable />
           <CourseOccasionTable />
         </div>
-        <div className='overview-buttons'>
-          <button className="button" onClick={onRemoveSelected}>
+        <div className="overview-buttons">
+          <button
+            className="form-button admin-main-button"
+            onClick={onRemoveSelected}
+          >
             Ta bort konto(n)
           </button>{" "}
-          <button className="button" onClick={onRemoveSelected}>
+          <button
+            className="form-button admin-main-button"
+            onClick={onRemoveSelected}
+          >
             Ta bort test
           </button>{" "}
-          <button className="button" onClick={onRemoveSelected}>
+          <button
+            className="form-button admin-main-button"
+            onClick={onRemoveSelected}
+          >
             Ta bort kurstillfälle
           </button>
         </div>
-        <div className="overview-table-course">
+        <div className="course-table">
           <div
             className="ag-theme-alpine"
             style={{ height: 210, width: 800, fontFamily: "Raleway" }}
@@ -122,11 +131,11 @@ const Overview = () => {
               gridOptions={gridOptions}
               overlayNoRowsTemplate={"Inga kurser funna"}
             ></AgGridReact>
-          </div>
+          </div>{" "}
+          <button onClick={saveCourses} className="form-button">
+            Ta bort kurs
+          </button>
         </div>
-        <button onClick={saveCourses} className="button">
-          Ta bort kurs
-        </button>
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
-import { getCourseOccasions } from "../../admin/overview/overview.service";
+import { getCourseOccasions } from "../overview/overview.service";
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
@@ -23,9 +23,9 @@ const CourseOccasionTable = () => {
 
   const defaultColDef = useMemo(
     () => ({
+      resizable: true,
       sortable: true,
       sortingOrder: ["asc", "desc", "null"],
-
     }),
     []
   );
@@ -64,8 +64,8 @@ const CourseOccasionTable = () => {
 
   return (
     <>
-      <div className="container">
-        <h2 >Kurstillfälle</h2>
+      <div className="table-container">
+        <h2>Kurstillfälle</h2>
         <div
           className="ag-theme-alpine"
           style={{ height: 210, width: 488, fontFamily: "Raleway" }}
