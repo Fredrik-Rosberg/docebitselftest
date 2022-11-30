@@ -15,8 +15,8 @@ const TestTable = () => {
   const [event, setEvent] = useState({});
 
   const [columnDefs] = useState([
-    { field: "testname", headerName: "Test", width: 110 },
-    { field: "uploaddate", headerName: "Uppladdningsdatum", width: 120 },
+    { field: "testname", headerName: "Test", width: 86 },
+    { field: "uploaddate", headerName: "Uppladdningsdatum", width: 162 },
   ]);
 
   const defaultColDef = useMemo(
@@ -60,7 +60,7 @@ const TestTable = () => {
   return (
     <>
       <div className="container">
-        <h2>Test</h2>
+        <h2 >Test</h2>
         <div className="ag-theme-alpine" style={{ height: 210, width: 250 }}>
           <AgGridReact
             rowData={rowData}

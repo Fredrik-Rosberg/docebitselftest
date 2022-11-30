@@ -76,8 +76,8 @@ tr {
   overflow-y: auto;
   width: 100%;
 } */
-tr:nth-child(even) {
-  background-color: #ececec;
+.ag-row-even {
+  background-color: #eaeaea;
 }
 
 .selected-row:active {

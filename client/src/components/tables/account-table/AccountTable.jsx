@@ -4,7 +4,7 @@ import { getUsers } from "../../admin/overview/overview.service";
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import { useNavigate } from "react-router-dom";
-import "./accountTable.css";
+
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 const AccountTable = () => {
@@ -19,9 +19,9 @@ const AccountTable = () => {
   ]);
 
   const [columnDefs] = useState([
-    { field: "firstname", headerName: "Förnamn", width: 110 },
-    { field: "lastname", headerName: "Efternamn", width: 120 },
-    { field: "email", headerName: "Användarnamn", width: 150 },
+    { field: "firstname", headerName: "Förnamn", width: 100 },
+    { field: "lastname", headerName: "Efternamn", width: 110 },
+    { field: "email", headerName: "Användarnamn", width: 188 },
   ]);
 
   const defaultColDef = useMemo(

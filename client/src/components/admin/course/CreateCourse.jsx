@@ -6,18 +6,17 @@ import React, {
   useRef,
   useCallback,
 } from "react";
-import { createCourses } from "./overview.service";
-import "./overview.css";
-import AccountTable from "../../tables/account-table/AccountTable";
+import { createCourses } from "./createCourse.service.js";
+import "./createCourse.css";
+import AccountTable from "../../tables/account-table/AccountTable.jsx";
 import TestTable from "../../tables/test-table/TestTable";
 import CourseOccasionTable from "../../tables/courseoccasion-table/CourseOccasionTable";
-
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
-const Overview = () => {
+const Course = () => {
   const { course, deselect } = useContext(TableContext);
   const [selectedCourse, setSelectedCourse] = course;
   const [deselectAll, setDeselectAll] = deselect;
@@ -30,17 +29,15 @@ const Overview = () => {
       headerName: "Kursanordnare",
       width: 150,
     },
-    { field: "occasion.name", headerName: "Kursnamn", initalWidth: 120 },
-    { field: "occasion.startdate", headerName: "Startdatum", initalWidth: 120 },
-    { field: "occasion.enddate", headerName: "Slutdatum", initalWidth: 120 },
-    { field: "test.testname", headerName: "Test", initalWidth: 120 },
-    { field: "user.email", headerName: "Användarnamn", initalWidth: 180 },
+    { field: "occasion.name", headerName: "Kursnamn", width: 120 },
+    { field: "occasion.startdate", headerName: "Startdatum", width: 120 },
+    { field: "occasion.enddate", headerName: "Slutdatum", width: 120 },
+    { field: "test.testname", headerName: "Test", width: 120 },
+    { field: "user.email", headerName: "Användarnamn", width: 180 },
   ]);
 
   const defaultColDef = useMemo(
     () => ({
-      resizable: true,
-
       sortable: true,
       sortingOrder: ["asc", "desc", "null"],
     }),
@@ -78,56 +75,47 @@ const Overview = () => {
     await createCourses(courses);
     setCourses([]);
   };
-
-  let gridOptions = {
-    rowData: courses,
-    rowClassRules: {
-      "even-row": function (params) {
-        return params.data.testname == "Test1";
-      },
-    },
-  };
-
   return (
     <>
-      <div className="overview-main">
-        <div className="overview-tables">
+      <div className="course-main">
+        <div className="course-tables">
           <AccountTable />
           <TestTable />
           <CourseOccasionTable />
         </div>
-        <div className='overview-buttons'>
-          <button className="button" onClick={onRemoveSelected}>
-            Ta bort konto(n)
-          </button>{" "}
-          <button className="button" onClick={onRemoveSelected}>
-            Ta bort test
-          </button>{" "}
-          <button className="button" onClick={onRemoveSelected}>
-            Ta bort kurstillfälle
+        {selectedCourse.length > 0 ? (
+          <button className="button" onClick={handleAddCourse}>
+            Lägg till rad(er)
           </button>
-        </div>
-        <div className="overview-table-course">
+        ) : (
+          <button disabled={true} className="button" onClick={handleAddCourse}>
+            Lägg till rad(er)
+          </button>
+        )}
+        <div className="course-table-course">
           <div
             className="ag-theme-alpine"
-            style={{ height: 210, width: 800, fontFamily: "Raleway" }}
+            style={{ height: 210, width: 830, fontFamily: "Raleway" }}
           >
             <AgGridReact
               ref={gridRef}
+              rowData={courses}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
               rowSelection={rowSelectionType}
               rowMultiSelectWithClick={true}
               suppressCellFocus={true}
-              gridOptions={gridOptions}
             ></AgGridReact>
           </div>
+          <button className="button" onClick={onRemoveSelected}>
+            Ta bort rad(er)
+          </button>
         </div>
         <button onClick={saveCourses} className="button">
-          Ta bort kurs
+          Spara kurser
         </button>
       </div>
     </>
   );
 };
-export default Overview;
+export default Course;
