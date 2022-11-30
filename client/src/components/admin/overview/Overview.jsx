@@ -30,11 +30,11 @@ const Overview = () => {
       headerName: "Kursanordnare",
       width: 150,
     },
-    { field: "occasion.name", headerName: "Kursnamn", initalWidth: 120 },
-    { field: "occasion.startdate", headerName: "Startdatum", initalWidth: 120 },
-    { field: "occasion.enddate", headerName: "Slutdatum", initalWidth: 120 },
-    { field: "test.testname", headerName: "Test", initalWidth: 120 },
-    { field: "user.email", headerName: "Användarnamn", initalWidth: 180 },
+    { field: "occasion.name", headerName: "Kursnamn", width: 120 },
+    { field: "occasion.startdate", headerName: "Startdatum", width: 120 },
+    { field: "occasion.enddate", headerName: "Slutdatum", width: 120 },
+    { field: "test.testname", headerName: "Test", width: 120 },
+    { field: "user.email", headerName: "Användarnamn", width: 180 },
   ]);
 
   const defaultColDef = useMemo(

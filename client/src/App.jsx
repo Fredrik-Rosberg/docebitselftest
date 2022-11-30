@@ -9,7 +9,7 @@ import NewPassword from "./components/passwordreset/NewPassword";
 import MainLayout from "./layout/MainLayout";
 import NavbarLayoutAdmin from "./layout/NavbarLayoutAdmin";
 import NavbarLayoutUser from "./layout/NavbarLayoutUser";
-import CreateCou
+import CreateCourseOccasion from './components/admin/createCourseOccasion/CreateCourseOccasion'
 import CreateAccount from "./components/admin/createAccount/CreateAccount";
 import AccountTable from "./components/tables/account-table/AccountTable";
 import MyAccount from "./components/Account/MyAccount";
