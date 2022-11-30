@@ -76,9 +76,7 @@ tr {
   overflow-y: auto;
   width: 100%;
 } */
-.ag-row-even {
-  background-color: #eaeaea;
-}
+
 
 .selected-row:active {
   background-color: rgb(148, 184, 231);
