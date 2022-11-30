@@ -16,31 +16,34 @@ const Questions = () => {
   const [checked, SetChecked] = useState(Array(11).fill(false));
   const [counter, SetCounter] = useState(0);
   const [star, setStar] = useState(false);
+  const localStorageCount = Array.from({ length: localStorage.length }, (v, i) => i);
+  const [starInDropDown, setStarInDropDown] = useState(Array(localStorage.length).fill(false));
 
   useEffect(() => {
-   getFromSession(-question.fråganr+1)
-  }, []);
+    getFromSession(-question.fråganr + 1);
+    console.log(localStorageCount);
+    console.log(starInDropDown);
+  }, [starInDropDown]);
 
   function handleNext() {
     let array = Array(11).fill(false);
     SetChecked(array);
-    getFromSession(1);
+    getFromSession(question.fråganr +1);
     SetQuestion(JSON.parse(localStorage.getItem(question.fråganr + 1)));
     sessionStorage.setItem(question.fråganr, checked);
   }
-  
 
   function handlePrevious() {
     let array = Array(11).fill(false);
     SetChecked(array);
-    getFromSession(-1);
+    getFromSession(question.fråganr -1);
     SetQuestion(JSON.parse(localStorage.getItem(question.fråganr - 1)));
     sessionStorage.setItem(question.fråganr, checked);
   }
 
-function getFromSession(corr) {
-    if (sessionStorage.getItem(question.fråganr + corr) != null) {
-      const getFromSession = sessionStorage.getItem(question.fråganr + corr);
+  function getFromSession(index) {
+    if (sessionStorage.getItem(index) != null) {
+      const getFromSession = sessionStorage.getItem(index);
       const arr = getFromSession.split(",");
       const boolarr = arr.map((item) =>
         item == "true" ? (item = true) : (item = false)
@@ -49,6 +52,24 @@ function getFromSession(corr) {
     }
   }
 
+  function handleQuestionChoice(choice){
+     let array = Array(11).fill(false);
+     SetChecked(array);
+    getFromSession(choice)
+    SetQuestion(JSON.parse(localStorage.getItem(choice)));
+    sessionStorage.setItem(question.fråganr, checked);
+
+
+
+    // let array=[...starInDropDown]
+    // array[choice]=!array[choice]
+    //  array.map((item) =>
+    //    item != true || item != false ? (item = false) : (item = item)
+    //  );
+    
+    // setStarInDropDown(array)
+    // console.log(choice)
+  }
 
   function handleAbort() {}
   function handleFinishTest() {}
@@ -72,14 +93,17 @@ function getFromSession(corr) {
         <p>1</p>
         <p>{useTimer.onExpire}</p>
         <div>
+          <select onChange={(e)=>handleQuestionChoice(e.target.value)} >{localStorageCount.map((item)=><option key={item+1} value={item+1}>Fråga {item+1}</option>)}
+            
+          </select>
           <UseTimer expiryTimestamp={time} />
         </div>
         <div className="questionscontainer">
           <div className="questionsblock">
             {star ? (
-              <BsStarFill onClick={handleStar} />
+              <BsStarFill className="handlestar" onClick={handleStar} />
             ) : (
-              <BsStar onClick={handleStar} />
+              <BsStar className="handlestar" onClick={handleStar} />
             )}
             <div className="questionsblockinner">
               <h3 className="questionnumber">Fråga {question.fråganr}</h3>
@@ -131,6 +155,6 @@ function getFromSession(corr) {
       </div>
     </>
   );
-};
+};;
 
 export default Questions;

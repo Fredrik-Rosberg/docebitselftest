@@ -109,3 +109,11 @@ border-top-left-radius: 20px;
     
     
 }
+.handlestar{
+    align-self: flex-end;
+    justify-self: flex-end;
+    height: 24px;
+    width: auto;
+    padding-right: 25px;
+}
+
