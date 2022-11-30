@@ -15,10 +15,10 @@ const CourseOccasionTable = () => {
   ]);
 
   const [columnDefs] = useState([
-    { field: "courseorganizer", headerName: "Kursanordnare", width: 110 },
-    { field: "name", headerName: "Kursnamn", width: 100 },
-    { field: "startdate", headerName: "Startdatum", width: 100 },
-    { field: "enddate", headerName: "Slutdatum", width: 100 },
+    { field: "courseorganizer", headerName: "Kursanordnare", width: 126 },
+    { field: "name", headerName: "Kursnamn", width: 120 },
+    { field: "startdate", headerName: "Startdatum", width: 120 },
+    { field: "enddate", headerName: "Slutdatum", width: 120 },
   ]);
 
   const defaultColDef = useMemo(
@@ -65,10 +65,10 @@ const CourseOccasionTable = () => {
   return (
     <>
       <div className="container">
-        <h2>Kurstillfälle</h2>
+        <h2 >Kurstillfälle</h2>
         <div
           className="ag-theme-alpine"
-          style={{ height: 210, width: 450, fontFamily: "Raleway" }}
+          style={{ height: 210, width: 488, fontFamily: "Raleway" }}
         >
           <AgGridReact
             rowData={rowData}

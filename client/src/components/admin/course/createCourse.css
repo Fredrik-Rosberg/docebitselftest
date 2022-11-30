@@ -72,7 +72,9 @@
     overflow-y: auto;
     width: 100%;
   } */
-
+  tr:nth-child(even) {
+    background-color: #ececec;
+  }
   
   .selected-row:active {
     background-color: rgb(148, 184, 231);

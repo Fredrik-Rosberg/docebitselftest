@@ -33,7 +33,7 @@ const Course = () => {
     { field: "occasion.startdate", headerName: "Startdatum", width: 120 },
     { field: "occasion.enddate", headerName: "Slutdatum", width: 120 },
     { field: "test.testname", headerName: "Test", width: 120 },
-    { field: "user.email", headerName: "Användarnamn", width: 200 },
+    { field: "user.email", headerName: "Användarnamn", width: 180 },
   ]);
 
   const defaultColDef = useMemo(
@@ -105,7 +105,6 @@ const Course = () => {
               rowSelection={rowSelectionType}
               rowMultiSelectWithClick={true}
               suppressCellFocus={true}
-              overlayNoRowsTemplate={"Lägg till kurser"}
             ></AgGridReact>
           </div>
           <button className="button" onClick={onRemoveSelected}>

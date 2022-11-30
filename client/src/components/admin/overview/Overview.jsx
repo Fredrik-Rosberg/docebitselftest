@@ -39,6 +39,8 @@ const Overview = () => {
 
   const defaultColDef = useMemo(
     () => ({
+      resizable: true,
+
       sortable: true,
       sortingOrder: ["asc", "desc", "null"],
     }),
@@ -76,6 +78,16 @@ const Overview = () => {
     await createCourses(courses);
     setCourses([]);
   };
+
+  let gridOptions = {
+    rowData: courses,
+    rowClassRules: {
+      "even-row": function (params) {
+        return params.data.testname == "Test1";
+      },
+    },
+  };
+
   return (
     <>
       <div className="overview-main">
@@ -98,16 +110,17 @@ const Overview = () => {
         <div className="overview-table-course">
           <div
             className="ag-theme-alpine"
-            style={{ height: 210, width: 830, fontFamily: "Raleway" }}
+            style={{ height: 210, width: 800, fontFamily: "Raleway" }}
           >
             <AgGridReact
               ref={gridRef}
-              rowData={courses}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
               rowSelection={rowSelectionType}
               rowMultiSelectWithClick={true}
               suppressCellFocus={true}
+              gridOptions={gridOptions}
+              overlayNoRowsTemplate={"Inga kurser funna"}
             ></AgGridReact>
           </div>
         </div>
