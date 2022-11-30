@@ -50,11 +50,16 @@
 .form-load-file-input {
   padding: 0;
 }
+
 .messages {
   width: 295px;
   text-align: center;
   font-size: 12px;
   font-weight: 500;
+}
+
+.form-test-messages {
+  padding-left: 30px;
 }
 
 .error-message {
@@ -69,9 +74,10 @@
   display: grid;
   grid-template-columns: 195px 1fr;
 }
+
 .form-status-row {
   display: grid;
-  grid-template-columns: 150px 150px 120px;
+  grid-template-columns: 143px 140px 120px;
   align-items: center;
 }
 

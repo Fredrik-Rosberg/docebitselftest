@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { changePassword, checkCurrentPassword } from "./changePassword.service";
 import { validatePassword } from "../../signIn/validation.service";
 import UpdatePasswordModal from "../../modal/UpdatedPassWordModal";
+import { focusOnEmptyInputField } from "../../admin/createAccount/CreateAccount";
 
 function ChangePassword() {
+  const inputCurrentPassword = useRef(null);
+  const inputNewPassword = useRef(null);
+  const inputConfirmNewPassword = useRef(null);
   const [openModal, setOpenModal] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [passwordOne, setPasswordOne] = useState();
-  const [passwordTwo, setPasswordTwo] = useState();
+  const [passwordOne, setPasswordOne] = useState("");
+  const [passwordTwo, setPasswordTwo] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState();
   const [showMessage, setShowMessage] = useState(false);
@@ -33,17 +37,22 @@ function ChangePassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    focusOnEmptyInputField(inputConfirmNewPassword);
+    focusOnEmptyInputField(inputNewPassword);
+    focusOnEmptyInputField(inputCurrentPassword);
+    let checkedPassword = false;
+    if (errorMessage == "success") {
+      checkedPassword = await checkCurrentPassword(currentPassword, params.id);
+    }
 
-    let checkedPassword = await checkCurrentPassword(
-      currentPassword,
-      params.id
-    );
-
-    if (errorMessage == "success" && checkedPassword) {
+    if (checkedPassword) {
       setSuccess(true);
       setOpenModal(true);
       let resp = await changePassword(passwordOne, params.id);
       console.log(resp.result);
+      setPasswordOne("");
+      setPasswordTwo("");
+      setCurrentPassword("");
     } else if (errorMessage == "success" && !checkedPassword) {
       setErrorMessage("Kontrollera ditt nuvarande lösenord");
       setShowMessage(true);
@@ -64,6 +73,8 @@ function ChangePassword() {
             Nuvarande lösenord:
           </label>
           <input
+            value={currentPassword}
+            ref={inputCurrentPassword}
             type="password"
             onChange={(e) => {
               setCurrentPassword(e.target.value);
@@ -85,6 +96,8 @@ function ChangePassword() {
             ""
           )}
           <input
+            value={passwordOne}
+            ref={inputNewPassword}
             type="password"
             onChange={(e) => {
               setPasswordOne(e.target.value);
@@ -97,6 +110,8 @@ function ChangePassword() {
             Upprepa nytt lösenord:
           </label>
           <input
+            value={passwordTwo}
+            ref={inputConfirmNewPassword}
             type="password"
             onChange={(e) => {
               setPasswordTwo(e.target.value);
