@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import useFetch from "../../../hooks/useFetch";
 import { useContext } from "react";
 import { getUsers } from "../overview/overview.service";
 import { TableContext } from "../../context/TableContext";
@@ -7,16 +8,14 @@ import { useNavigate } from "react-router-dom";
 
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-const AccountTable = () => {
+const AccountTable = (props) => {
   const navigate = useNavigate();
   const { users, deselect } = useContext(TableContext);
   const [selectedUsers, setSelectedUsers] = users;
   const [deselectAll, setDeselectAll] = deselect;
   const [event, setEvent] = useState({});
-
-  const [rowData, setRowData] = useState([
-    { firstname: "", lastname: "", email: "" },
-  ]);
+  const { data, loading, error } = useFetch("/api/user");
+  const [rowData, setRowData] = useState([]);
 
   const [columnDefs] = useState([
     { field: "firstname", headerName: "Förnamn", width: 100 },
@@ -24,23 +23,18 @@ const AccountTable = () => {
     { field: "email", headerName: "Användarnamn", width: 300 },
   ]);
 
+  useEffect(() => {
+      setRowData(data);
+  }, [data]);
+
   const defaultColDef = useMemo(
     () => ({
       resizable: true,
-
       sortable: true,
       sortingOrder: ["asc", "desc", "null"],
     }),
     []
   );
-
-  useEffect(() => {
-    const getUser = async () => {
-      let users = await getUsers();
-      setRowData(users);
-    };
-    getUser();
-  }, []);
 
   const rowSelectionType = "multiple";
   useEffect(() => {
@@ -63,7 +57,6 @@ const AccountTable = () => {
     navigate(`/admin/account/${id}`);
   };
 
-  const onRowSelected = (node) => {};
   return (
     <>
       <div className="table-container">
@@ -77,11 +70,12 @@ const AccountTable = () => {
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             rowSelection={rowSelectionType}
-            onRowSelected={onRowSelected}
+            // onRowSelected={onRowSelected}
             onSelectionChanged={onSelectionChanged}
             rowMultiSelectWithClick={true}
             onCellDoubleClicked={onCellDoubleClicked}
             suppressCellFocus={true}
+            overlayNoRowsTemplate={"Inga konto funna"}
           ></AgGridReact>
         </div>
       </div>

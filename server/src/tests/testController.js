@@ -20,9 +20,12 @@ const getTests = async (req, res) => {
   const sqlQuery = "SELECT * FROM test";
   let result = await db.query(sqlQuery);
   if (result.rowCount > 0) {
+    result.rows?.map((obj) => {
+      obj.uploaddate = new Date(obj.uploaddate).toLocaleDateString("se-SE");
+    });
     res.status(200).json(result.rows);
   } else {
-    res.status(400).json({ message: "Inga test funna" });
+    res.status(404).json({ error: "Inga test funna" });
   }
 };
 

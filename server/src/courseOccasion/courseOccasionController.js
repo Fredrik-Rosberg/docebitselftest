@@ -30,9 +30,13 @@ const getCourseOccasions = async (req, res) => {
     const sqlQuery = "SELECT * FROM courseoccasion";
     let result = await db.query(sqlQuery);
     if (result.rowCount > 0) {
+      result.rows.map((obj) => {
+        obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
+        obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
+      });
       res.json(result.rows);
     } else {
-      res.status(404).json({ message: "Inga kurstillfälle funna" });
+      res.status(404).json({ error: "Inga kurstillfälle funna" });
     }
   } catch (error) {
     console.log(error);

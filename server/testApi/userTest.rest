@@ -57,3 +57,6 @@ Content-Type: application/json
     
    
 }
+
+###
+DELETE http://localhost:3001/api/user/6 HTTP/1.1
