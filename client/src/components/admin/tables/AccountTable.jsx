@@ -1,30 +1,56 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, {
+  forwardRef,
+  useState,
+  useImperativeHandle,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import useFetch from "../../../hooks/useFetch";
 import { useContext } from "react";
-import { getUsers } from "../overview/overview.service";
+import { deleteAccount } from "../overview/overview.service";
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import { useNavigate } from "react-router-dom";
 
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-const AccountTable = (props) => {
+const AccountTable = forwardRef((props, ref) => {
+  useImperativeHandle(ref, () => ({
+    removeFromArray() {
+      if (selectedUsers.length > 0) {
+        selectedUsers.map(async (obj) => {
+          let result = await deleteAccount(obj);
+          if (!result) {
+            setErrors((current) => [current, obj]);
+            console.log(errors.length + "geg");
+          }
+        });
+        if (errors.length <= 0) {
+          const selectedData = gridRef.current.api.getSelectedRows();
+          console.log(selectedData);
+          gridRef.current.api.applyTransaction({ remove: selectedData });
+        }
+      }
+    },
+  }));
   const navigate = useNavigate();
+  const [errors, setErrors] = useState([]);
   const { users, deselect } = useContext(TableContext);
   const [selectedUsers, setSelectedUsers] = users;
   const [deselectAll, setDeselectAll] = deselect;
   const [event, setEvent] = useState({});
   const { data, loading, error } = useFetch("/api/user");
   const [rowData, setRowData] = useState([]);
-
+  const gridRef = useRef();
   const [columnDefs] = useState([
     { field: "firstname", headerName: "Förnamn", width: 100 },
     { field: "lastname", headerName: "Efternamn", width: 100 },
-    { field: "email", headerName: "Användarnamn", width: 300 },
+    { field: "email", headerName: "Användarnamn", width: 183 },
   ]);
 
   useEffect(() => {
-      setRowData(data);
+    setRowData(data);
   }, [data]);
 
   const defaultColDef = useMemo(
@@ -66,6 +92,7 @@ const AccountTable = (props) => {
           style={{ height: 210, width: 385, fontFamily: "Raleway" }}
         >
           <AgGridReact
+            ref={gridRef}
             rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
@@ -81,6 +108,6 @@ const AccountTable = (props) => {
       </div>
     </>
   );
-};
+});
 
 export default AccountTable;

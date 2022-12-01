@@ -1,5 +1,5 @@
 const db = require("../../db");
-
+const { getCoursesByFKId } = require("../course/courseController");
 const createCourseOccasion = async (req, res) => {
   try {
     const sqlQuery =
@@ -10,8 +10,6 @@ const createCourseOccasion = async (req, res) => {
       req.body.enddate,
       req.body.courseorganizer,
     ]);
-
-    console.log(result);
     if (result.rowCount) {
       res.status(200).json({ message: "Kurstillfälle skapat" });
     } else {
@@ -44,4 +42,23 @@ const getCourseOccasions = async (req, res) => {
   }
 };
 
-module.exports = { createCourseOccasion, getCourseOccasions };
+const deleteCourseOccasion = async (req, res) => {
+  try {
+    let resp = await getCoursesByFKId(req.params.id, "courseoccasion");
+    if (resp.rowCount) {
+      throw "Ta bort kurstillfälle från kurs först";
+    } else {
+      let sqlQuery = "DELETE FROM courseoccasion WHERE id=$1";
+      let result = await db.query(sqlQuery, [req.params.id]);
+      res.json({ message: "Kurstillfälle borttaget" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error });
+  }
+};
+
+module.exports = {
+  createCourseOccasion,
+  getCourseOccasions,
+  deleteCourseOccasion,
+};

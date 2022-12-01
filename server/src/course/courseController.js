@@ -79,8 +79,8 @@ const deleteCourse = async (req, res) => {
   }
 };
 
-const getCoursesByFKId = async (id) => {
-  let sqlQuery = "SELECT * FROM course WHERE userid=$1";
+const getCoursesByFKId = async (id, table) => {
+  let sqlQuery = `SELECT * FROM course WHERE ${table + "id"}=$1`;
   let result = await db.query(sqlQuery, [id]);
   return result;
 };

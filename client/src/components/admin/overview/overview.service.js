@@ -36,88 +36,35 @@ export const getCourseOccasions = async () => {
   }
 };
 
-export const createCourses = async (coursesArray) => {
-  let courses = [];
-  coursesArray.map((course) =>
-    courses.push({
-      userid: course.user.id,
-      courseoccasionid: course.occasion.id,
-      testid: course.test.id,
-    })
-  );
-
-  let dataResponse = await fetch(`/api/user/:${data.id}`, {
-    method: "delete",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(courses),
-  });
-  let data = await dataResponse.json();
-  console.log(data);
-  if (dataResponse.ok) {
-    return data;
-  } else {
-    return data;
-  }
-};
-
 export const deleteCourseOccasion = async (data) => {
-  let dataResponse = await fetch(`/api/courseoccasion/:${data.id}`, {
-    method: "delete",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  dataResponse = await dataResponse.json();
-  console.log(dataResponse);
-
-  if (dataResponse.ok) {
-    return dataResponse.message;
-  } else {
-    return dataResponse.error;
-  }
+  return await deleteFetch(`/api/courseoccasion/${data.id}`, data);
 };
 
 export const deleteAccount = async (data) => {
-  let dataResponse = await fetch(`/api/user/:${data.id}`, {
-    method: "delete",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  dataResponse = await dataResponse.json();
-  console.log(dataResponse);
+  return await deleteFetch(`/api/user/${data.id}`, data);
+};
 
-  if (dataResponse.ok) {
-    return dataResponse.message;
-  } else {
-    return dataResponse.error;
-  }
-};
 export const deleteTest = async (data) => {
-  let dataResponse = await fetch(`/api/user/:${data.id}`, {
-    method: "delete",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  dataResponse = await dataResponse.json();
-  console.log(dataResponse);
-  if (dataResponse.ok) {
-    return dataResponse.message;
-  } else {
-    return dataResponse.error;
-  }
+  return await deleteFetch(`/api/test/${data.id}`, data);
 };
+
 export const deleteCourse = async (data) => {
   data = data[0];
+  return await deleteFetch(`/api/course/${data.id}`, data);
+};
 
-  let dataResponse = await fetch(`/api/course/${data.id}`, {
+const deleteFetch = async (url, data) => {
+  let dataResponse = await fetch(url, {
     method: "delete",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  dataResponse = await dataResponse.json();
-  console.log(dataResponse);
+  let result = await dataResponse.json();
+
   if (dataResponse.ok) {
-    return dataResponse.message;
+    console.log(result);
+    return result;
   } else {
-    return dataResponse.error;
+    return null;
   }
 };
