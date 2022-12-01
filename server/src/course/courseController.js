@@ -1,5 +1,13 @@
 const db = require("../../db");
-
+const getCourseById = async (data) => {
+  let sqlQuery =
+    "SELECT * FROM course WHERE userid=$1 AND courseoccasionid=$2 AND testid=$3";
+  return await db.query(sqlQuery, [
+    data.userid,
+    data.courseoccasionid,
+    data.testid,
+  ]);
+};
 const createCourses = async (req, res) => {
   let responseArray = [];
   let dataArray = req.body;
@@ -7,36 +15,64 @@ const createCourses = async (req, res) => {
     "INSERT INTO course(courseoccasionid, userid, testid) VALUES ($1, $2, $3)";
 
   let iteration = 1;
-
-  dataArray.forEach(async (data) => {
-    try {
-      await db.query(sqlQuery, [
-        data.courseoccasionid,
-        data.userid,
-        data.testid,
-      ]);
-    } catch (error) {
-      responseArray.push(error.detail);
-    }
-    if (iteration == dataArray.length) {
-      if (responseArray.length > 0) {
-        res.status(400).json({
-          message:
-            dataArray.length - responseArray.length + " Kurs(er) tillagda",
-          errorcount: responseArray.length,
-          errormessage: "Kurs(er) existerar redan",
-          error: responseArray,
-        });
-      } else {
-        res
-          .status(200)
-          .json({ addcount: dataArray.length, message: "Kurs(er) tillagda" });
+  try {
+    dataArray.forEach(async (data) => {
+      let result = await getCourseById(data);
+      if ((await result).rows[0]) {
+        responseArray.push(result.rows[0]);
       }
-    }
-    iteration++;
-  });
+
+      if (iteration == dataArray.length) {
+        if (responseArray.length > 0) {
+          res
+            .status(400)
+            .json({ data: responseArray, error: "Kurs(er) existerar redan" });
+        } else {
+          try {
+            await db.query(sqlQuery, [
+              data.courseoccasionid,
+              data.userid,
+              data.testid,
+            ]);
+            res.status(200).json({
+              addcount: dataArray.length,
+              message: "Kurs(er) tillagda",
+            });
+          } catch (error) {
+            res.status(404).json(error);
+          }
+        }
+      }
+      iteration++;
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
+// let dataArray = req.body;
+// let sqlQuery =
+//   "INSERT INTO course(courseoccasionid, userid, testid) VALUES ($1, $2, $3)";
+// let iteration = 0;
+// let responseArray = [];
+
+// dataArray.forEach(async (data) => {
+//   try {
+
+//   } catch (error) {
+//     res.json(error);
+//   }
+//   return responseArray;
+// });
+// if (iteration == dataArray.length) {
+//   if (responseArray.length > 0) {
+//     res.status(400).json(responseArray);
+//   } else {
+//     res.json("sasa");
+//   }
+//   iteration++;
+// }
+// res.send("some");
 const getCourse = async (req, res) => {
   const sqlQuery = "SELECT * FROM course WHERE id=$1";
 

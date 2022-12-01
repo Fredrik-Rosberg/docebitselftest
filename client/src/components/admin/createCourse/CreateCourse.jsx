@@ -6,7 +6,7 @@ import React, {
   useRef,
   useCallback,
 } from "react";
-import '../tables/tables.css'
+import "../tables/tables.css";
 import { createCourses } from "./createCourse.service.js";
 import AccountTable from "../tables/AccountTable.jsx";
 import TestTable from "../tables/TestTable";
@@ -22,6 +22,10 @@ const Course = () => {
   const [deselectAll, setDeselectAll] = deselect;
   const [courses, setCourses] = useState([]);
   const result = [...new Set([...courses, ...selectedCourse])];
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showErrorMessages, setShowErrorMessages] = useState(false);
+  const [showMessages, setShowMessages] = useState(false);
   const gridRef = useRef();
   const [columnDefs] = useState([
     {
@@ -70,16 +74,26 @@ const Course = () => {
     const selectedData = gridRef.current.api.getSelectedRows();
     const res = gridRef.current.api.applyTransaction({ remove: selectedData });
   }, []);
-
+  const getRowId = useMemo(() => {
+    return (params) => params.data.userid && params.data.testid && params.data.coursceoccasionid;
+  }, []);
   const saveCourses = async () => {
-    await createCourses(courses);
-    setCourses([]);
+    let result = await createCourses(courses);
+    if (result.message) {
+      setMessage(result.message);
+      setShowMessages(true);
+      setCourses([]);
+    } else if (result.error) {
+      console.log(result.error);
+      setErrorMessage(result.error);
+      setShowErrorMessages(true);
+    }
   };
   return (
     <>
       <div className="overview-main">
         <div className="overview-tables">
-          <AccountTable rowSelectionType={'multiple'} />
+          <AccountTable rowSelectionType={"multiple"} />
           <TestTable />
           <CourseOccasionTable />
         </div>
@@ -88,7 +102,11 @@ const Course = () => {
             Lägg till rad(er)
           </button>
         ) : (
-          <button disabled={true} className="form-button" onClick={handleAddCourse}>
+          <button
+            disabled={true}
+            className="form-button"
+            onClick={handleAddCourse}
+          >
             Lägg till rad(er)
           </button>
         )}
@@ -98,6 +116,7 @@ const Course = () => {
             style={{ height: 220, width: 832, fontFamily: "Raleway" }}
           >
             <AgGridReact
+            getRowId={getRowId}
               ref={gridRef}
               rowData={courses}
               columnDefs={columnDefs}
@@ -112,9 +131,23 @@ const Course = () => {
             Ta bort rad(er)
           </button>
         </div>
-        <button onClick={saveCourses} className="form-button">
-          Spara kurser
-        </button>
+        <div>
+          <button onClick={saveCourses} className="form-button">
+            Spara kurser
+          </button>
+          <div className="messages">
+            {showMessages && (
+              <>
+                <p className="success-message">{message}</p>
+              </>
+            )}
+            {showErrorMessages && (
+              <>
+                <p className="error-message">{errorMessage}</p>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );
