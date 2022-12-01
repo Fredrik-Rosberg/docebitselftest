@@ -9,9 +9,9 @@ import NewPassword from "./components/passwordreset/NewPassword";
 import MainLayout from "./layout/MainLayout";
 import NavbarLayoutAdmin from "./layout/NavbarLayoutAdmin";
 import NavbarLayoutUser from "./layout/NavbarLayoutUser";
-import CreateCourseOccasion from './components/admin/createCourseOccasion/CreateCourseOccasion'
+import CreateCourseOccasion from "./components/admin/createCourseOccasion/CreateCourseOccasion";
 import CreateAccount from "./components/admin/createAccount/CreateAccount";
-import AccountTable from "./components/tables/account-table/AccountTable";
+import AccountTable from "./components/admin/tables/AccountTable";
 import MyAccount from "./components/Account/MyAccount";
 import Overview from "./components/admin/overview/Overview";
 import Course from "./components/admin/createCourse/CreateCourse";
@@ -49,7 +49,6 @@ function App() {
             />
             <Route path="/admin" element={<Overview />} />
             <Route path="/admin/course" element={<Course />} />
-
           </Route>
           <Route>
             <Route path="/user" element={<NavbarLayoutUser />}>
@@ -57,7 +56,7 @@ function App() {
               <Route path="/user/test" element={<ChooseTest />} />
               <Route path="/user/myaccount" element={<MyAccount />} />
             </Route>
-            <Route path="/user/test/questionform" element={<Questions/>}/>
+            <Route path="/user/test/questionform" element={<Questions />} />
           </Route>
         </Routes>
       </Router>

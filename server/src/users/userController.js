@@ -1,5 +1,6 @@
 const db = require("../../db");
 const encrypt = require("../../config/encryption");
+const { getCoursesByFKId } = require("../course/courseController");
 
 const getUserByEmail = async (email) => {
   try {
@@ -23,7 +24,7 @@ const getUsers = async (req, res) => {
     if (users.rowCount != 0) {
       res.status(200).json(users.rows);
     } else {
-      res.status(200).json({ message: "Inga användare funna" });
+      res.status(404).json({ error: "Inga användare funna" });
     }
   } catch (error) {
     res.status(400).json({ message: error });
@@ -135,6 +136,21 @@ const checkCurrentPassword = async (req, res) => {
     console.log(error);
   }
 };
+const deleteUser = async (req, res) => {
+  let resp = await getCoursesByFKId(req.params.id);
+  console.log(resp.rowCount);
+  if (resp.rowCount) {
+    res.status(400).json({ error: "Ta bort konto från kurs först" });
+  } else {
+    try {
+      let sqlQuery = "DELETE FROM users WHERE id=$1";
+      let result = await db.query(sqlQuery, [req.params.id]);
+        res.json({ message: "Konto borttagen" });
+    } catch (error) {
+      res.status(400).json({ error: error });
+    }
+  }
+};
 
 module.exports = {
   getUserByEmail,
@@ -144,4 +160,5 @@ module.exports = {
   getUserById,
   editUser,
   checkCurrentPassword,
+  deleteUser,
 };

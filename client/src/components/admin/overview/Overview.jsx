@@ -6,36 +6,47 @@ import React, {
   useRef,
   useCallback,
 } from "react";
-import { createCourses } from "./overview.service";
-import "./overview.css";
-import AccountTable from "../../tables/account-table/AccountTable";
-import TestTable from "../../tables/test-table/TestTable";
-import CourseOccasionTable from "../../tables/courseoccasion-table/CourseOccasionTable";
-
+import { deleteCourse } from "./overview.service";
+import "../tables/tables.css";
+import AccountTable from "../tables/AccountTable";
+import TestTable from "../tables/TestTable";
+import CourseOccasionTable from "../tables/CourseOccasionTable";
+import { getCourses } from "./overview.service";
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+// import { setDateFormatOnArray } from "../tables/CourseOccasionTable";
 
 const Overview = () => {
-  const { course, deselect } = useContext(TableContext);
-  const [selectedCourse, setSelectedCourse] = course;
+  const { deselect } = useContext(TableContext);
   const [deselectAll, setDeselectAll] = deselect;
   const [courses, setCourses] = useState([]);
-  const result = [...new Set([...courses, ...selectedCourse])];
   const gridRef = useRef();
+
+  const [rowData, setRowData] = useState([]);
+
   const [columnDefs] = useState([
     {
-      field: "occasion.courseorganizer",
+      field: "courseorganizer",
       headerName: "Kursanordnare",
       width: 150,
     },
-    { field: "occasion.name", headerName: "Kursnamn", width: 120 },
-    { field: "occasion.startdate", headerName: "Startdatum", width: 120 },
-    { field: "occasion.enddate", headerName: "Slutdatum", width: 120 },
-    { field: "test.testname", headerName: "Test", width: 120 },
-    { field: "user.email", headerName: "Användarnamn", width: 180 },
+    { field: "name", headerName: "Kursnamn", width: 120 },
+    { field: "startdate", headerName: "Startdatum", width: 120 },
+    { field: "enddate", headerName: "Slutdatum", width: 120 },
+    { field: "testname", headerName: "Test", width: 120 },
+    { field: "email", headerName: "Användarnamn", width: 180 },
   ]);
+  useEffect(() => {
+    const getCours = async () => {
+      let data = await getCourses();
+      if (!data.message) {
+        setRowData(data);
+      }
+    };
+    getCours();
+  }, []);
 
   const defaultColDef = useMemo(
     () => ({
@@ -53,40 +64,15 @@ const Overview = () => {
 
   const rowSelectionType = "multiple";
 
-  async function handleAddCourse() {
-    const uniqueIds = new Set();
-    let concatenatedArray = courses.concat(selectedCourse);
-    const unique = concatenatedArray.filter((element) => {
-      const isDuplicate = uniqueIds.has(element.id);
-      uniqueIds.add(element.id);
-      if (!isDuplicate) {
-        return true;
-      }
-      return false;
-    });
-
-    setCourses(unique);
-    setDeselectAll(true);
-    setSelectedCourse([]);
-  }
   const onRemoveSelected = useCallback(() => {
+    const deleteCourseFromTable = async (data) => {
+      let result = await deleteCourse(data);
+      return result;
+    };
     const selectedData = gridRef.current.api.getSelectedRows();
-    const res = gridRef.current.api.applyTransaction({ remove: selectedData });
+    let result = deleteCourseFromTable(selectedData);
+    gridRef.current.api.applyTransaction({ remove: selectedData });
   }, []);
-
-  const saveCourses = async () => {
-    await createCourses(courses);
-    setCourses([]);
-  };
-
-  let gridOptions = {
-    rowData: courses,
-    rowClassRules: {
-      "even-row": function (params) {
-        return params.data.testname == "Test1";
-      },
-    },
-  };
 
   return (
     <>
@@ -96,37 +82,46 @@ const Overview = () => {
           <TestTable />
           <CourseOccasionTable />
         </div>
-        <div className='overview-buttons'>
-          <button className="button" onClick={onRemoveSelected}>
+        <div className="overview-buttons">
+          <button
+            className="form-button admin-main-button"
+            onClick={onRemoveSelected}
+          >
             Ta bort konto(n)
           </button>{" "}
-          <button className="button" onClick={onRemoveSelected}>
+          <button
+            className="form-button admin-main-button"
+            onClick={onRemoveSelected}
+          >
             Ta bort test
           </button>{" "}
-          <button className="button" onClick={onRemoveSelected}>
+          <button
+            className="form-button admin-main-button"
+            onClick={onRemoveSelected}
+          >
             Ta bort kurstillfälle
           </button>
         </div>
-        <div className="overview-table-course">
+        <div className="course-table">
           <div
             className="ag-theme-alpine"
             style={{ height: 210, width: 800, fontFamily: "Raleway" }}
           >
             <AgGridReact
               ref={gridRef}
+              rowData={rowData}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
               rowSelection={rowSelectionType}
-              rowMultiSelectWithClick={true}
               suppressCellFocus={true}
-              gridOptions={gridOptions}
               overlayNoRowsTemplate={"Inga kurser funna"}
+              overlayLoadingTemplate={'loading'}
             ></AgGridReact>
-          </div>
+          </div>{" "}
+          <button onClick={onRemoveSelected} className="form-button">
+            Ta bort kurs
+          </button>
         </div>
-        <button onClick={saveCourses} className="button">
-          Ta bort kurs
-        </button>
       </div>
     </>
   );

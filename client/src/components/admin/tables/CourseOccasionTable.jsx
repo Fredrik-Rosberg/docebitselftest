@@ -1,18 +1,20 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { getCourseOccasions } from "../../admin/overview/overview.service";
+import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
+import useFetch from "../../../hooks/useFetch";
+import { getCourseOccasions } from "../overview/overview.service";
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const CourseOccasionTable = () => {
+  const gridRef = useRef();
+
   const { occasion, deselect } = useContext(TableContext);
   const [selectedOccasion, setSelectedOccasion] = occasion;
   const [deselectAll, setDeselectAll] = deselect;
   const [event, setEvent] = useState({});
-  const [rowData, setRowData] = useState([
-    { courseorganizer: "", name: "", startdate: "", enddate: "" },
-  ]);
+  const [rowData, setRowData] = useState([]);
+  const { data, error } = useFetch("/api/courseoccasion");
 
   const [columnDefs] = useState([
     { field: "courseorganizer", headerName: "Kursanordnare", width: 126 },
@@ -23,29 +25,17 @@ const CourseOccasionTable = () => {
 
   const defaultColDef = useMemo(
     () => ({
+      resizable: true,
       sortable: true,
       sortingOrder: ["asc", "desc", "null"],
-
     }),
     []
   );
 
-  const setDateFormatOnArray = (data) => {
-    data.map((obj) => {
-      obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
-      obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
-    });
-    return data;
-  };
-
   useEffect(() => {
-    async function fetchCourseOccassions() {
-      let data = await getCourseOccasions();
-      data = await setDateFormatOnArray(data);
-      setRowData(data);
-    }
-    fetchCourseOccassions();
-  }, []);
+    setRowData(data);
+  }, [data]);
+
   const rowSelectionType = "single";
   useEffect(() => {
     const onSelectionChanged = (event) => {
@@ -64,13 +54,14 @@ const CourseOccasionTable = () => {
 
   return (
     <>
-      <div className="container">
-        <h2 >Kurstillfälle</h2>
+      <div className="table-container">
+        <h2>Kurstillfälle</h2>
         <div
           className="ag-theme-alpine"
           style={{ height: 210, width: 488, fontFamily: "Raleway" }}
         >
           <AgGridReact
+            ref={gridRef}
             rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
@@ -78,6 +69,7 @@ const CourseOccasionTable = () => {
             onSelectionChanged={onSelectionChanged}
             suppressCellFocus={true}
             rowMultiSelectWithClick={true}
+            overlayNoRowsTemplate={"Inga kurstillfälle funna"}
           ></AgGridReact>
         </div>
       </div>

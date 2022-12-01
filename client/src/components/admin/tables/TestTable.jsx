@@ -1,45 +1,40 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import useFetch from "../../../hooks/useFetch";
 import { useContext } from "react";
-import { getTests } from "../../admin/overview/overview.service";
+import { getTests } from "../overview/overview.service";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { TableContext } from "../../context/TableContext";
+import "./tables.css";
 
 const TestTable = () => {
   // const [course, setCourse] = useContext(TableContext);
+  const gridRef = useRef();
+
   const { tests, deselect } = useContext(TableContext);
-  const [rowData, setRowData] = useState([{ testname: "", uploaddate: "" }]);
+  const [rowData, setRowData] = useState([]);
   const [selectedTests, setSelectedTests] = tests;
   const [deselectAll, setDeselectAll] = deselect;
   const [event, setEvent] = useState({});
-
+  const { data, error } = useFetch("/api/test");
   const [columnDefs] = useState([
-    { field: "testname", headerName: "Test", width: 86 },
-    { field: "uploaddate", headerName: "Uppladdningsdatum", width: 162 },
+    { field: "testname", headerName: "Test", width: 100 },
+    { field: "uploaddate", headerName: "Uppladdningsdatum", width: 300 },
   ]);
 
   const defaultColDef = useMemo(
     () => ({
+      resizable: true,
       sortable: true,
       sortingOrder: ["asc", "desc", "null"],
     }),
     []
   );
-  const setDateFormatOnArray = (data) => {
-    data.map((obj) => {
-      obj.uploaddate = new Date(obj.uploaddate).toLocaleDateString("se-SE");
-    });
-    return data;
-  };
+
   useEffect(() => {
-    async function fetchTests() {
-      let data = await getTests();
-      data = setDateFormatOnArray(data);
-      setRowData(data);
-    }
-    fetchTests();
-  }, []);
+        setRowData(data);
+  }, [data]);
 
   const rowSelectionType = "single";
   useEffect(() => {
@@ -59,10 +54,14 @@ const TestTable = () => {
 
   return (
     <>
-      <div className="container">
-        <h2 >Test</h2>
-        <div className="ag-theme-alpine" style={{ height: 210, width: 250 }}>
+      <div className="table-container">
+        <h2>Test</h2>
+        <div
+          className="ag-theme-alpine"
+          style={{ height: 210, width: 250, fontFamily: "Raleway" }}
+        >
           <AgGridReact
+            // ref={gridRef}
             rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
@@ -70,6 +69,7 @@ const TestTable = () => {
             onSelectionChanged={onSelectionChanged}
             suppressCellFocus={true}
             rowMultiSelectWithClick={true}
+            overlayNoRowsTemplate={"Inga test funna"}
           ></AgGridReact>
         </div>
       </div>
