@@ -59,17 +59,15 @@ const Questions = () => {
     sessionStorage.setItem(question.fråganr, checked);
   }
 
-  async function handleLastQuestion(){
+  async function handleLastQuestion() {
     let array = Array(11).fill(false);
     SetChecked(array);
     sessionStorage.setItem(question.fråganr, checked);
-
   }
 
   function handleAbort() {}
 
   async function handleFinishTest() {
-    
     await handleLastQuestion();
 
     //get all results unfinished
@@ -96,25 +94,41 @@ const Questions = () => {
     let cleanUpArr = array2.map((item) =>
       item.map((item2) => item2.filter(Boolean))
     );
-    
-    console.log(cleanUpArr);
 
+    console.log(cleanUpArr);
 
     //get all questions
     let questionArray = localStorageCount.map((item) =>
       JSON.parse(localStorage.getItem(item + 1))
     );
     console.log(questionArray);
-    questionArray.map((index) =>
-      alphabet.map((letter) =>
-        index["frågealternativ" + letter] != ""
-          ? console.log("x")
-          : console.log("y")
-      )
-    );
 
-    questionArray.map((item) => console.log(item.svar));
+    let correctAnswerArray = questionArray.map((item) => [item.svar]);
+    console.log(correctAnswerArray);
+
+    let correctAnswerArray2 = correctAnswerArray.map((item) =>
+      item.map((item) => item.split(","))
+    );
+    console.log(correctAnswerArray2);
+
+    //Jämföra rätt svar med angivna svar
+    let correctAnswerCount = 0;
+
+    localStorageCount.map((index) =>
+      JSON.stringify(cleanUpArr[index]) ===
+      JSON.stringify(correctAnswerArray2[index])
+        ? (correctAnswerCount += 1)
+        : (correctAnswerCount = correctAnswerCount)
+    );
+    console.log(correctAnswerCount);
   }
+
+
+
+
+
+
+  
 
   function handleChecked(index) {
     SetChecked(Array().fill(false));
