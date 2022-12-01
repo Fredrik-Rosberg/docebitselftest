@@ -40,7 +40,11 @@ const UploadTest = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    if (!new RegExp(/^[A-Öa-ö\d]+$/).test(name) || name.length > 100) {
+
+    if (!name) {
+      setError("Vänligen fyll i samtliga uppgifter");
+      setShowMessage(true);
+    } else if (!new RegExp(/^[A-Öa-ö\d]+$/).test(name) || name.length > 100) {
       setError(
         "Namn får endast innehålla bokstäver och siffror och vara max 100 tecken långt"
       );
