@@ -32,8 +32,8 @@ const Course = () => {
     { field: "occasion.name", headerName: "Kursnamn", width: 120 },
     { field: "occasion.startdate", headerName: "Startdatum", width: 120 },
     { field: "occasion.enddate", headerName: "Slutdatum", width: 120 },
-    { field: "test.testname", headerName: "Test", width: 120 },
-    { field: "user.email", headerName: "Användarnamn", width: 200 },
+    { field: "test.testname", headerName: "Test", width: 130 },
+    { field: "user.email", headerName: "Användarnamn", width: 214 },
   ]);
 
   const defaultColDef = useMemo(
@@ -79,7 +79,7 @@ const Course = () => {
     <>
       <div className="overview-main">
         <div className="overview-tables">
-          <AccountTable />
+          <AccountTable rowSelectionType={'multiple'} />
           <TestTable />
           <CourseOccasionTable />
         </div>
@@ -95,7 +95,7 @@ const Course = () => {
         <div className="course-table">
           <div
             className="ag-theme-alpine"
-            style={{ height: 210, width: 830, fontFamily: "Raleway" }}
+            style={{ height: 220, width: 832, fontFamily: "Raleway" }}
           >
             <AgGridReact
               ref={gridRef}

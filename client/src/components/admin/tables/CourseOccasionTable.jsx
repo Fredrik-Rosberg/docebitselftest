@@ -42,10 +42,10 @@ const CourseOccasionTable = forwardRef((props, ref) => {
   const { data, error } = useFetch("/api/courseoccasion");
 
   const [columnDefs] = useState([
-    { field: "courseorganizer", headerName: "Kursanordnare", width: 126 },
-    { field: "name", headerName: "Kursnamn", width: 120 },
-    { field: "startdate", headerName: "Startdatum", width: 120 },
-    { field: "enddate", headerName: "Slutdatum", width: 120 },
+    { field: "courseorganizer", headerName: "Kursanordnare", width: 115 },
+    { field: "name", headerName: "Kursnamn", width: 100 },
+    { field: "startdate", headerName: "Startdatum", width: 90 },
+    { field: "enddate", headerName: "Slutdatum", width:90 },
   ]);
 
   const defaultColDef = useMemo(
@@ -88,7 +88,7 @@ const CourseOccasionTable = forwardRef((props, ref) => {
         ></UpdatePasswordModal>
         <div
           className="ag-theme-alpine"
-          style={{ height: 210, width: 488, fontFamily: "Raleway" }}
+          style={{ height: 220, width: 396, fontFamily: "Raleway" }}
         >
           <AgGridReact
             ref={gridRef}

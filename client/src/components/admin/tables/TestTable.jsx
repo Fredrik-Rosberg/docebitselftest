@@ -39,8 +39,8 @@ const TestTable = forwardRef((props, ref) => {
   const [event, setEvent] = useState({});
   const { data, error } = useFetch("/api/test");
   const [columnDefs] = useState([
-    { field: "testname", headerName: "Test", width: 100 },
-    { field: "uploaddate", headerName: "Uppladdningsdatum", width: 300 },
+    { field: "testname", headerName: "Test", width: 80 },
+    { field: "uploaddate", headerName: "Uppladdningsdatum", width: 150 },
   ]);
 
   const defaultColDef = useMemo(
@@ -56,7 +56,7 @@ const TestTable = forwardRef((props, ref) => {
     setRowData(data);
   }, [data]);
 
-  const rowSelectionType = "single";
+  const [rowSelectionType, setRowSelectionType] = useState("single");
   useEffect(() => {
     const onSelectionChanged = (event) => {
       if (deselectAll) {
@@ -83,7 +83,7 @@ const TestTable = forwardRef((props, ref) => {
         ></UpdatePasswordModal>
         <div
           className="ag-theme-alpine"
-          style={{ height: 210, width: 250, fontFamily: "Raleway" }}
+          style={{ height: 220, width: 231, fontFamily: "Raleway" }}
         >
           <AgGridReact
             ref={gridRef}

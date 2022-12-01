@@ -12,25 +12,24 @@ import { deleteAccount } from "../overview/overview.service";
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import { useNavigate } from "react-router-dom";
-
+import UpdatePasswordModal from "../../modal/UpdatedPassWordModal";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 const AccountTable = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     removeFromArray() {
-      if (selectedUsers.length > 0) {
-        selectedUsers.map(async (obj) => {
+      const selectedData = gridRef.current.api.getSelectedRows();
+      if (selectedData.length > 0) {
+        selectedData.map(async (obj) => {
           let result = await deleteAccount(obj);
           if (!result) {
-            setErrors((current) => [current, obj]);
-            console.log(errors.length + "geg");
+            setOpenModal(true);
+            gridRef.current.api.deselectAll();
+          } else {
+            const selectedData = gridRef.current.api.getSelectedRows();
+            gridRef.current.api.applyTransaction({ remove: selectedData });
           }
         });
-        if (errors.length <= 0) {
-          const selectedData = gridRef.current.api.getSelectedRows();
-          console.log(selectedData);
-          gridRef.current.api.applyTransaction({ remove: selectedData });
-        }
       }
     },
   }));
@@ -43,10 +42,11 @@ const AccountTable = forwardRef((props, ref) => {
   const { data, loading, error } = useFetch("/api/user");
   const [rowData, setRowData] = useState([]);
   const gridRef = useRef();
+  const [openModal, setOpenModal] = useState(false);
   const [columnDefs] = useState([
-    { field: "firstname", headerName: "Förnamn", width: 100 },
-    { field: "lastname", headerName: "Efternamn", width: 100 },
-    { field: "email", headerName: "Användarnamn", width: 183 },
+    { field: "firstname", headerName: "Förnamn", width: 80 },
+    { field: "lastname", headerName: "Efternamn", width: 90 },
+    { field: "email", headerName: "Användarnamn", width: 155 },
   ]);
 
   useEffect(() => {
@@ -55,7 +55,6 @@ const AccountTable = forwardRef((props, ref) => {
 
   const defaultColDef = useMemo(
     () => ({
-      resizable: true,
       sortable: true,
       sortingOrder: ["asc", "desc", "null"],
     }),
@@ -87,16 +86,21 @@ const AccountTable = forwardRef((props, ref) => {
     <>
       <div className="table-container">
         <h2>Konto</h2>
+        <UpdatePasswordModal
+          content="Ta bort från kurs först"
+          onClose={() => setOpenModal(!openModal)}
+          show={openModal}
+        ></UpdatePasswordModal>
         <div
           className="ag-theme-alpine"
-          style={{ height: 210, width: 385, fontFamily: "Raleway" }}
+          style={{ height: 220, width: 328, fontFamily: "Raleway" }}
         >
           <AgGridReact
             ref={gridRef}
             rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
-            rowSelection={rowSelectionType}
+            rowSelection={props.rowSelectionType}
             // onRowSelected={onRowSelected}
             onSelectionChanged={onSelectionChanged}
             rowMultiSelectWithClick={true}
