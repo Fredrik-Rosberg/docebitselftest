@@ -17,7 +17,7 @@
 }
 .questionsblockinner{
     display: grid;
-    grid-template-rows: 70px 70px 40px 280px;
+    grid-template-rows: 70px 90px 40px 250px;
     width: 420px;
     height: 450px;
     margin-left: 60px;
@@ -116,4 +116,22 @@ border-top-left-radius: 20px;
     width: auto;
     padding-right: 25px;
 }
+.questiondropdown{
+    width: 85px;
+    outline: 0px;
+    margin-left: 37px;
+    margin-top: 20px;
+    
+}
+.choosetext{
+    align-self: center;
+}
+.ralewayweight500{
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
 
+    align-self: end;
+}
+.question{
+    align-self: center;
+}
