@@ -44,6 +44,7 @@ const UploadTest = () => {
     if (!name) {
       setError("Vänligen fyll i samtliga uppgifter");
       setShowMessage(true);
+      inputEl.current.focus();
     } else if (!new RegExp(/^[A-Öa-ö\d]+$/).test(name) || name.length > 100) {
       setError(
         "Namn får endast innehålla bokstäver och siffror och vara max 100 tecken långt"
