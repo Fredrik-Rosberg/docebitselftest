@@ -16,9 +16,11 @@ import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-// import { setDateFormatOnArray } from "../tables/CourseOccasionTable";
 
 const Overview = () => {
+  const accountRef = useRef();
+  const testRef = useRef();
+  const occasionRef = useRef();
   const { deselect } = useContext(TableContext);
   const [deselectAll, setDeselectAll] = deselect;
   const [courses, setCourses] = useState([]);
@@ -30,13 +32,13 @@ const Overview = () => {
     {
       field: "courseorganizer",
       headerName: "Kursanordnare",
-      width: 150,
+      width: 126,
     },
     { field: "name", headerName: "Kursnamn", width: 120 },
     { field: "startdate", headerName: "Startdatum", width: 120 },
     { field: "enddate", headerName: "Slutdatum", width: 120 },
-    { field: "testname", headerName: "Test", width: 120 },
-    { field: "email", headerName: "Användarnamn", width: 180 },
+    { field: "testname", headerName: "Test", width: 130 },
+    { field: "email", headerName: "Användarnamn", width: 214 },
   ]);
   useEffect(() => {
     const getCours = async () => {
@@ -57,6 +59,9 @@ const Overview = () => {
     }),
     []
   );
+  const removeFromChildArray = (reference) => {
+    reference.current.removeFromArray();
+  };
 
   useEffect(() => {
     setDeselectAll(false);
@@ -78,26 +83,26 @@ const Overview = () => {
     <>
       <div className="overview-main">
         <div className="overview-tables">
-          <AccountTable />
-          <TestTable />
-          <CourseOccasionTable />
+          <AccountTable ref={accountRef} rowSelectionType={"single"} />
+          <TestTable ref={testRef} />
+          <CourseOccasionTable ref={occasionRef} />
         </div>
         <div className="overview-buttons">
           <button
             className="form-button admin-main-button"
-            onClick={onRemoveSelected}
+            onClick={() => removeFromChildArray(accountRef)}
           >
             Ta bort konto(n)
           </button>{" "}
           <button
             className="form-button admin-main-button"
-            onClick={onRemoveSelected}
+            onClick={() => removeFromChildArray(testRef)}
           >
             Ta bort test
           </button>{" "}
           <button
             className="form-button admin-main-button"
-            onClick={onRemoveSelected}
+            onClick={() => removeFromChildArray(occasionRef)}
           >
             Ta bort kurstillfälle
           </button>
@@ -105,7 +110,7 @@ const Overview = () => {
         <div className="course-table">
           <div
             className="ag-theme-alpine"
-            style={{ height: 210, width: 800, fontFamily: "Raleway" }}
+            style={{ height: 220, width: 832, fontFamily: "Raleway" }}
           >
             <AgGridReact
               ref={gridRef}
@@ -115,12 +120,14 @@ const Overview = () => {
               rowSelection={rowSelectionType}
               suppressCellFocus={true}
               overlayNoRowsTemplate={"Inga kurser funna"}
-              overlayLoadingTemplate={'loading'}
+              overlayLoadingTemplate={"loading"}
             ></AgGridReact>
           </div>{" "}
           <button onClick={onRemoveSelected} className="form-button">
             Ta bort kurs
           </button>
+          <button className="form-button">Spara</button>
+
         </div>
       </div>
     </>

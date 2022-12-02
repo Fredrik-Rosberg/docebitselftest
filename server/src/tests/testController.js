@@ -1,4 +1,5 @@
 const db = require("../../db");
+const { getCoursesByFKId } = require("../course/courseController");
 
 const getQuestions = (data) => {
   let questions = data.filter((element) => Object.values(element)[0] != "");
@@ -97,6 +98,19 @@ const uploadTest = async (req, res) => {
 //Lagt till cascade på foreignkey i table question
 //Error hantering behövs på backend
 
-const deleteTest = async (req, res) => {};
+const deleteTest = async (req, res) => {
+  try {
+    let resp = await getCoursesByFKId(req.params.id, "test");
+    if (resp.rowCount) {
+      throw "Ta bort test från kurs först";
+    } else {
+      let sqlQuery = "DELETE FROM test WHERE id=$1";
+      let result = await db.query(sqlQuery, [req.params.id]);
+      res.json({ message: "Test borttaget" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error });
+  }
+};
 
 module.exports = { uploadTest, deleteTest, getTestById, getTests };

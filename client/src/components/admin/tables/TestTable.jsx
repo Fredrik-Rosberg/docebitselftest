@@ -1,26 +1,46 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import useFetch from "../../../hooks/useFetch";
 import { useContext } from "react";
-import { getTests } from "../overview/overview.service";
+import { deleteTest } from "../overview/overview.service";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { TableContext } from "../../context/TableContext";
 import "./tables.css";
-
-const TestTable = () => {
-  // const [course, setCourse] = useContext(TableContext);
+import UpdatePasswordModal from "../../modal/UpdatedPassWordModal";
+const TestTable = forwardRef((props, ref) => {
+  useImperativeHandle(ref, () => ({
+    async removeFromArray() {
+      if (selectedTest) {
+        let result = await deleteTest(selectedTest);
+        if (!result) {
+          setOpenModal(true);
+          gridRef.current.api.deselectAll();
+        } else {
+          const selectedData = gridRef.current.api.getSelectedRows();
+          gridRef.current.api.applyTransaction({ remove: selectedData });
+        }
+      }
+    },
+  }));
   const gridRef = useRef();
-
+  const [openModal, setOpenModal] = useState(false);
   const { tests, deselect } = useContext(TableContext);
   const [rowData, setRowData] = useState([]);
-  const [selectedTests, setSelectedTests] = tests;
+  const [selectedTest, setSelectedTest] = tests;
   const [deselectAll, setDeselectAll] = deselect;
   const [event, setEvent] = useState({});
   const { data, error } = useFetch("/api/test");
   const [columnDefs] = useState([
-    { field: "testname", headerName: "Test", width: 100 },
-    { field: "uploaddate", headerName: "Uppladdningsdatum", width: 300 },
+    { field: "testname", headerName: "Test", width: 80 },
+    { field: "uploaddate", headerName: "Uppladdningsdatum", width: 150 },
   ]);
 
   const defaultColDef = useMemo(
@@ -33,22 +53,22 @@ const TestTable = () => {
   );
 
   useEffect(() => {
-        setRowData(data);
+    setRowData(data);
   }, [data]);
 
-  const rowSelectionType = "single";
+  const [rowSelectionType, setRowSelectionType] = useState("single");
   useEffect(() => {
     const onSelectionChanged = (event) => {
       if (deselectAll) {
         event.api.deselectAll();
         setDeselectAll(false);
-        setSelectedTests({});
+        setSelectedTest({});
       }
     };
     onSelectionChanged(event);
   }, [deselectAll]);
   const onSelectionChanged = (event) => {
-    setSelectedTests(event.api.getSelectedRows()[0]);
+    setSelectedTest(event.api.getSelectedRows()[0]);
     setEvent(event);
   };
 
@@ -56,12 +76,17 @@ const TestTable = () => {
     <>
       <div className="table-container">
         <h2>Test</h2>
+        <UpdatePasswordModal
+          content="Ta bort från kurs först"
+          onClose={() => setOpenModal(!openModal)}
+          show={openModal}
+        ></UpdatePasswordModal>
         <div
           className="ag-theme-alpine"
-          style={{ height: 210, width: 250, fontFamily: "Raleway" }}
+          style={{ height: 220, width: 231, fontFamily: "Raleway" }}
         >
           <AgGridReact
-            // ref={gridRef}
+            ref={gridRef}
             rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
@@ -75,6 +100,6 @@ const TestTable = () => {
       </div>
     </>
   );
-};
+});
 
 export default TestTable;

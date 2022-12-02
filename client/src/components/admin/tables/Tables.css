@@ -1,44 +1,77 @@
 .overview-main {
-    display: grid;
-    grid-template-rows: 250px 50px 250px 50px;
-    margin-left: -120px;
-    margin-top: -60px;
-  }
-  td {
-    padding: 0;
-  }
-  table {
-    border-spacing: 0;
-    text-indent: 0;
-  }
-  .overview-tables {
-    display: grid;
-    grid-template-columns: 420px 270px auto;
-  }
-  .overview-buttons {
-    display: grid;
-    grid-template-columns: 420px 270px auto;
-  }
-  .course-table {
-    padding-top: 50px;
-    padding-left: 20px;
-    display: grid;
-    grid-template-columns: 800px auto;
-    grid-template-rows: auto 50px;
-  }
-  .course-table > :nth-child(2){
-    grid-area: 2;
-  }
- 
-  .admin-main-button {
-    justify-self: start;
-  }
-  .form-button:disabled {
-    background-color: rgb(229, 229, 229);
-  }
-  
-  .create-course-container{
-    display:grid;
-    grid-template-rows: 250px 50px 250px 50px;
-    margin-left: -120px;
-  }
+  display: grid;
+  grid-template-rows: auto 50px auto;
+  margin-left: -80px;
+  margin-top: -80px;
+}
+td {
+  padding: 0;
+}
+table {
+  border-spacing: 0;
+  text-indent: 0;
+}
+.overview-tables {
+  display: grid;
+  grid-template-columns: 350px 253px auto;
+  align-content: space-between;
+}
+.overview-buttons {
+  display: grid;
+  grid-template-columns: 350px 253px auto;
+}
+.course-table {
+  padding-left: 20px;
+  display: grid;
+  grid-template-columns: 830px 250px;
+  grid-template-rows: 280px 60px;
+  align-items: flex-end;
+}
+.course-table > :nth-child(2) {
+  grid-area: 2;
+}
+.course-table > :nth-child(3) {
+  grid-area: 3/ 2;
+}
+
+.admin-main-button {
+  justify-self: start;
+}
+.form-button:disabled {
+  background-color: rgb(229, 229, 229);
+}
+
+.create-course-container {
+  display: grid;
+  grid-template-rows: 250px 50px 250px 50px;
+  margin-left: -120px;
+}
+
+.ag-cell {
+  padding: 0;
+  padding-left: 10px;
+  font-size: 11px;
+  font-family: "Raleway";
+  line-height: 30px;
+}
+.ag-header-cell {
+  padding: 0;
+  padding-left: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: "Raleway";
+  line-height: 30px;
+}
+.ag-row {
+  height: 35px;
+}
+
+.ag-header-row {
+  height: 35px;
+}
+.table-message {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: end;
+  height: 40px;
+}

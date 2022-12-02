@@ -1,13 +1,38 @@
-import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useMemo,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import useFetch from "../../../hooks/useFetch";
-import { getCourseOccasions } from "../overview/overview.service";
+import { deleteCourseOccasion } from "../overview/overview.service";
 import { TableContext } from "../../context/TableContext";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import UpdatePasswordModal from "../../modal/UpdatedPassWordModal";
 
-const CourseOccasionTable = () => {
+const CourseOccasionTable = forwardRef((props, ref) => {
+  useImperativeHandle(ref, () => ({
+    async removeFromArray() {
+      if (selectedOccasion) {
+        let result = await deleteCourseOccasion(selectedOccasion);
+        if (!result) {
+          setOpenModal(true)
+          gridRef.current.api.deselectAll();
+        } else {
+          const selectedData = gridRef.current.api.getSelectedRows();
+          gridRef.current.api.applyTransaction({ remove: selectedData });
+        }
+      }
+    },
+  }));
+
   const gridRef = useRef();
+  const [openModal, setOpenModal] = useState(false);
 
   const { occasion, deselect } = useContext(TableContext);
   const [selectedOccasion, setSelectedOccasion] = occasion;
@@ -17,10 +42,10 @@ const CourseOccasionTable = () => {
   const { data, error } = useFetch("/api/courseoccasion");
 
   const [columnDefs] = useState([
-    { field: "courseorganizer", headerName: "Kursanordnare", width: 126 },
-    { field: "name", headerName: "Kursnamn", width: 120 },
-    { field: "startdate", headerName: "Startdatum", width: 120 },
-    { field: "enddate", headerName: "Slutdatum", width: 120 },
+    { field: "courseorganizer", headerName: "Kursanordnare", width: 115 },
+    { field: "name", headerName: "Kursnamn", width: 100 },
+    { field: "startdate", headerName: "Startdatum", width: 90 },
+    { field: "enddate", headerName: "Slutdatum", width:90 },
   ]);
 
   const defaultColDef = useMemo(
@@ -56,9 +81,14 @@ const CourseOccasionTable = () => {
     <>
       <div className="table-container">
         <h2>Kurstillfälle</h2>
+        <UpdatePasswordModal
+          content="Ta bort från kurs först"
+          onClose={() => setOpenModal(!openModal)}
+          show={openModal}
+        ></UpdatePasswordModal>
         <div
           className="ag-theme-alpine"
-          style={{ height: 210, width: 488, fontFamily: "Raleway" }}
+          style={{ height: 220, width: 396, fontFamily: "Raleway" }}
         >
           <AgGridReact
             ref={gridRef}
@@ -75,6 +105,6 @@ const CourseOccasionTable = () => {
       </div>
     </>
   );
-};
+});
 
 export default CourseOccasionTable;

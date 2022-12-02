@@ -137,18 +137,17 @@ const checkCurrentPassword = async (req, res) => {
   }
 };
 const deleteUser = async (req, res) => {
-  let resp = await getCoursesByFKId(req.params.id);
-  console.log(resp.rowCount);
-  if (resp.rowCount) {
-    res.status(400).json({ error: "Ta bort konto från kurs först" });
-  } else {
-    try {
+  try {
+    let resp = await getCoursesByFKId(req.params.id, 'user');
+    if (resp.rowCount) {
+      throw  "Ta bort konto från kurs först" ;
+    } else {
       let sqlQuery = "DELETE FROM users WHERE id=$1";
       let result = await db.query(sqlQuery, [req.params.id]);
-        res.json({ message: "Konto borttagen" });
-    } catch (error) {
-      res.status(400).json({ error: error });
+      res.json({ message: "Konto borttagen" });
     }
+  } catch (error) {
+    res.status(400).json({ error: error });
   }
 };
 
