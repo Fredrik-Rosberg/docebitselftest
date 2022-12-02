@@ -3,6 +3,8 @@ import "./questions.css";
 import { useTimer } from "react-timer-hook";
 import UseTimer from "./Timer";
 import { BsStar, BsStarFill } from "react-icons/bs";
+import QuestionModalComponent from "../../modal/QuestionModal";
+import Result from "../result/Result";
 
 const Questions = () => {
   const time = new Date();
@@ -18,6 +20,19 @@ const Questions = () => {
   const [starInDropDown, setStarInDropDown] = useState(
     Array(localStorage.length).fill(false)
   );
+
+  const [correctCount, SetCorrectCount] = useState(0);
+  const [wrongAnswers, SetWrongAnswers] = useState([{}]);
+  const [openModal, setOpenModal] = useState(false);
+  const [getToResult, setGetToResult]=useState(false)
+
+  useEffect(() => {
+    if (sessionStorage.length == 0) {
+      localStorageCount.map((index) =>
+        sessionStorage.setItem(index + 1, checked)
+      );
+    }
+  }, []);
 
   useEffect(() => {
     getFromSession(-question.fråganr + 1);
@@ -51,7 +66,6 @@ const Questions = () => {
   }
 
   function handleQuestionChoice(choice) {
-    console.log(choice);
     let array = Array(11).fill(false);
     SetChecked(array);
     getFromSession(choice);
@@ -68,18 +82,17 @@ const Questions = () => {
   function handleAbort() {}
 
   async function handleFinishTest() {
+
     await handleLastQuestion();
 
     //get all results unfinished
     const resultarray = localStorageCount.map((item) => [
       sessionStorage.getItem(item + 1),
     ]);
-    console.log(resultarray);
 
     let array1 = resultarray.map((item) =>
       item.map((item2) => item2.split(","))
     );
-    console.log(array1);
 
     let array2 = array1.map((item) =>
       item.map((item2) =>
@@ -95,40 +108,38 @@ const Questions = () => {
       item.map((item2) => item2.filter(Boolean))
     );
 
-    console.log(cleanUpArr);
-
     //get all questions
     let questionArray = localStorageCount.map((item) =>
       JSON.parse(localStorage.getItem(item + 1))
     );
-    console.log(questionArray);
 
     let correctAnswerArray = questionArray.map((item) => [item.svar]);
-    console.log(correctAnswerArray);
 
     let correctAnswerArray2 = correctAnswerArray.map((item) =>
       item.map((item) => item.split(","))
     );
-    console.log(correctAnswerArray2);
 
     //Jämföra rätt svar med angivna svar
     let correctAnswerCount = 0;
+    let wrongAnswersArray = [];
 
     localStorageCount.map((index) =>
       JSON.stringify(cleanUpArr[index]) ===
       JSON.stringify(correctAnswerArray2[index])
         ? (correctAnswerCount += 1)
-        : (correctAnswerCount = correctAnswerCount)
+        : wrongAnswersArray.push({
+            questionnr: index,
+            youranswer: cleanUpArr[index],
+            correctAnswer: correctAnswerArray2[index],
+          })
     );
-    console.log(correctAnswerCount);
+
+    SetCorrectCount(correctAnswerCount);
+    SetWrongAnswers(wrongAnswersArray);
+    console.log("hej");
+    setGetToResult(true)
+    setOpenModal(false)
   }
-
-
-
-
-
-
-  
 
   function handleChecked(index) {
     SetChecked(Array().fill(false));
@@ -150,9 +161,10 @@ const Questions = () => {
     setStarInDropDown(array);
   };
 
+  
+
   return (
-    <>
-      <div className="questionsmain">
+    <>{!getToResult?(<div className="questionsmain">
         <p></p>
         <p>{useTimer.onExpire}</p>
         <div>
@@ -219,12 +231,19 @@ const Questions = () => {
               {localStorage.length != question.id ? (
                 <button onClick={handleNext}>Nästa</button>
               ) : (
-                <button onClick={handleFinishTest}>Avsluta test</button>
+                <button onClick={() => setOpenModal(true)}>Avsluta test</button>
               )}
             </div>
           </div>
         </div>
-      </div>
+      </div>):(<Result correctCount={correctCount} wrongAnswers={wrongAnswers}/>)}
+      
+      <QuestionModalComponent
+        content="Vill du avsluta testet?"
+        onClose={() => setOpenModal(!openModal)}
+        show={openModal}
+        signOut={handleFinishTest}
+      ></QuestionModalComponent>
     </>
   );
 };
