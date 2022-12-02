@@ -4,20 +4,16 @@ import CourseRow from "./CourseRow";
 import { getCourseByUserId } from "./overview.user.service";
 const OverviewUser = () => {
   const [courses, setCourses] = useState(null);
-  const [userId, setUserId] = useState(50);
+  const [userId, setUserId] = useState(47);
   //   useEffect(() => {
   //     setUserId(localStorage.getItem("userId"));
   //   }, []);
   useEffect(() => {
     const fetchCourses = async () => {
-      console.log(userId);
       let data = await getCourseByUserId(userId);
       setCourses(data.data);
     };
-    console.log(courses)
     fetchCourses();
-    console.log(courses)
-
   }, [userId]);
 
   return (
@@ -28,7 +24,7 @@ const OverviewUser = () => {
           <h2>Louise Rosengren</h2>
         </div>
         {courses?.map((obj) => (
-          <CourseRow key={obj.id} data={obj} />
+          <CourseRow key={obj.id + Math.random()} data={obj} />
         ))}
       </div>
     </>

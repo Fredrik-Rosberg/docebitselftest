@@ -41,3 +41,14 @@
 .overview-table {
   padding-top: 3vh;
 }
+
+table{
+  font-size: 14px
+}
+thead {
+  background-color: rgb(218, 218, 218);
+}
+th {
+  padding: 0.4vw;
+  width:10vw
+}

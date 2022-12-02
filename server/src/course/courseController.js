@@ -107,6 +107,10 @@ const getCourseByUserId = async (req, res) => {
 
   let result = await db.query(sqlQuery, [req.params.id]);
   if (result.rowCount > 0) {
+    result.rows.map((obj) => {
+      obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
+      obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
+    });
     res.status(200).json({ data: result.rows });
   } else {
     res.status(404).json({ message: "Ingen kurs funnen med det id" });
