@@ -17,4 +17,7 @@ Content-Type: application/json
 
 
 ###
-GET  http://localhost:3001/api/course/ HTTP/1.1
+GET  http://localhost:3001/api/course/ HTTP/1.1c
+
+###
+GET  http://localhost:3001/api/course/user/50 HTTP/1.1

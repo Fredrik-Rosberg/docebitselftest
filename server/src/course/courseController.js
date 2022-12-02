@@ -53,29 +53,6 @@ const createCourses = async (req, res) => {
   }
 };
 
-// let dataArray = req.body;
-// let sqlQuery =
-//   "INSERT INTO course(courseoccasionid, userid, testid) VALUES ($1, $2, $3)";
-// let iteration = 0;
-// let responseArray = [];
-
-// dataArray.forEach(async (data) => {
-//   try {
-
-//   } catch (error) {
-//     res.json(error);
-//   }
-//   return responseArray;
-// });
-// if (iteration == dataArray.length) {
-//   if (responseArray.length > 0) {
-//     res.status(400).json(responseArray);
-//   } else {
-//     res.json("sasa");
-//   }
-//   iteration++;
-// }
-// res.send("some");
 const getCourse = async (req, res) => {
   const sqlQuery = "SELECT * FROM course WHERE id=$1";
 
@@ -123,10 +100,23 @@ const getCoursesByFKId = async (id, table) => {
   let result = await db.query(sqlQuery, [id]);
   return result;
 };
+
+const getCourseByUserId = async (req, res) => {
+  const sqlQuery =
+    "SELECT course.id, courseoccasion.courseorganizer,courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, test.testname, test.maxscore, results.score  FROM users INNER JOIN course ON course.userid=users.id INNER JOIN courseoccasion ON courseoccasion.id = course.courseoccasionid INNER JOIN test ON test.id = course.testid INNER JOIN results ON results.userid = users.id  WHERE users.id=$1;    ";
+
+  let result = await db.query(sqlQuery, [req.params.id]);
+  if (result.rowCount > 0) {
+    res.status(200).json({ data: result.rows });
+  } else {
+    res.status(404).json({ message: "Ingen kurs funnen med det id" });
+  }
+};
 module.exports = {
   createCourses,
   getCourses,
   deleteCourse,
   getCourse,
   getCoursesByFKId,
+  getCourseByUserId,
 };

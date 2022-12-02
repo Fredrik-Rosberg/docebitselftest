@@ -32,7 +32,7 @@ const NavbarLayoutUser = () => {
             className="navbar-logo"
           />
           <div className="navbar-links addtopmargin">
-            <Link className="navbar-link" to="/user/test">
+            <Link className="navbar-link" to="/user/">
               <GrDocumentText />
               Översikt
             </Link>

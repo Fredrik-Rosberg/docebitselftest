@@ -15,7 +15,7 @@ import AccountTable from "./components/admin/tables/AccountTable";
 import MyAccount from "./components/Account/MyAccount";
 import Overview from "./components/admin/overview/Overview";
 import Course from "./components/admin/createCourse/CreateCourse";
-
+import OverviewUser from "./components/user/overview/OverviewUser";
 import EditAccount from "./components/admin/editAccount/EditAccount";
 import ChangePassword from "./components/admin/changePassword/ChangePassword";
 import Test from "./components/admin/uploadTest/UploadTest";
@@ -52,7 +52,7 @@ function App() {
           </Route>
           <Route>
             <Route path="/user" element={<NavbarLayoutUser />}>
-              {/* <Route path="/user/overview" element={<Overview />} /> */}
+              <Route path="/user/" element={<OverviewUser />} />
               <Route path="/user/test" element={<ChooseTest />} />
               <Route path="/user/myaccount" element={<MyAccount />} />
             </Route>
