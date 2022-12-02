@@ -8,6 +8,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid black;
 
 }
 
@@ -19,7 +20,7 @@
     width: 250px;
     height: 205px;
     background-color: #fff;
-    border-radius: 20px;
+    border-radius: 25px;
     border: 2px solid black;
 }
 
@@ -48,4 +49,49 @@ button.modal-button:hover,
 button.modal-button:active {
     cursor: pointer;
     background-color: rgba(42, 75, 240, 0.507);
+}
+
+.questionmodal-content {
+    display: grid;
+    grid-template-rows: 70% 30%;
+    align-items: center;
+    justify-items: center;
+    width: 250px;
+    height: 150px;
+    background-color: #fff;
+    border-radius: 30px;
+    border: 2px solid black;
+    font-size: 13px;
+    font-weight: 500;
+    
+}
+
+
+.questionmodal-bottombody {
+    border: solid 1px black;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 250px;
+    height: 42px;
+    grid-template-columns: 50% 50%;
+    margin-left: -1px;
+    margin-top: 3px;
+    text-align: center;
+    text-justify: end;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    
+    
+}
+.questionmodal-bottombody>div{
+    height: 18px;
+    align-self: center;
+    padding: 13px;
+
+
+    
+}
+.questionmodal-bottombody>:first-child{
+    border-right: 1px solid black;
+    
 }
