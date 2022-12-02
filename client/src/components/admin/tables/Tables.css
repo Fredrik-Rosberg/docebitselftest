@@ -61,7 +61,6 @@ table {
   font-weight: 500;
   font-family: "Raleway";
   line-height: 30px;
-
 }
 .ag-row {
   height: 35px;
@@ -69,4 +68,10 @@ table {
 
 .ag-header-row {
   height: 35px;
+}
+.table-message {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: end;
+  height: 40px;
 }

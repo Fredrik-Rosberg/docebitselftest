@@ -29,11 +29,14 @@ const createCourses = async (req, res) => {
             .json({ data: responseArray, error: "Kurs(er) existerar redan" });
         } else {
           try {
-            await db.query(sqlQuery, [
-              data.courseoccasionid,
-              data.userid,
-              data.testid,
-            ]);
+            dataArray.map(async (obj) => {
+              await db.query(sqlQuery, [
+                obj.courseoccasionid,
+                obj.userid,
+                obj.testid,
+              ]);
+            });
+
             res.status(200).json({
               addcount: dataArray.length,
               message: "Kurs(er) tillagda",

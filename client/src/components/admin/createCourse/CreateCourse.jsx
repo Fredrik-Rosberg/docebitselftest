@@ -72,11 +72,14 @@ const Course = () => {
   }
   const onRemoveSelected = useCallback(() => {
     const selectedData = gridRef.current.api.getSelectedRows();
+    // console.log(selectedData);
+    // let updatedCourseArray = [];
+    // selectedData.map((el) =>
+    //   setCourses((current) => [current, current.filter((obj) => obj.userid != 40)])
+    // );
     const res = gridRef.current.api.applyTransaction({ remove: selectedData });
   }, []);
-  const getRowId = useMemo(() => {
-    return (params) => params.data.userid && params.data.testid && params.data.coursceoccasionid;
-  }, []);
+
   const saveCourses = async () => {
     let result = await createCourses(courses);
     if (result.message) {
@@ -116,7 +119,6 @@ const Course = () => {
             style={{ height: 220, width: 832, fontFamily: "Raleway" }}
           >
             <AgGridReact
-            getRowId={getRowId}
               ref={gridRef}
               rowData={courses}
               columnDefs={columnDefs}
@@ -131,10 +133,7 @@ const Course = () => {
             Ta bort rad(er)
           </button>
         </div>
-        <div>
-          <button onClick={saveCourses} className="form-button">
-            Spara kurser
-          </button>
+        <div className="table-message">
           <div className="messages">
             {showMessages && (
               <>
@@ -146,7 +145,10 @@ const Course = () => {
                 <p className="error-message">{errorMessage}</p>
               </>
             )}
-          </div>
+          </div>{" "}
+          <button onClick={saveCourses} className="form-button">
+            Spara kurser
+          </button>
         </div>
       </div>
     </>
