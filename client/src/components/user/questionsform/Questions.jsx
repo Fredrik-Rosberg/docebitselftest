@@ -126,14 +126,18 @@ const Questions = () => {
     localStorageCount.map((index) =>
       JSON.stringify(cleanUpArr[index]) ===
       JSON.stringify(correctAnswerArray2[index])
-        ? (correctAnswerCount += 1)
-        : wrongAnswersArray.push({
-            questionnr: index,
-            youranswer: cleanUpArr[index],
-            correctAnswer: correctAnswerArray2[index],
-          })
+        ? (wrongAnswersArray.push([
+            index,
+            cleanUpArr[index],
+            correctAnswerArray2[index]
+        ]),correctAnswerCount += 1)
+        : wrongAnswersArray.push([
+            index,
+            cleanUpArr[index],
+            correctAnswerArray2[index]
+        ])
     );
-
+        console.log(wrongAnswersArray)
     SetCorrectCount(correctAnswerCount);
     SetWrongAnswers(wrongAnswersArray);
     console.log("hej");
