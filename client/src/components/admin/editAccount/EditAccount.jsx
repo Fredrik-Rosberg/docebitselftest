@@ -111,7 +111,7 @@ function EditAccount() {
           </select>
         </div>
         <div className="form-buttons-container">
-          <Link className="form-link" to="/admin/overview">
+          <Link className="form-link" to="/admin/">
             <button className="form-button">Tillbaka</button>
           </Link>
           <button className="form-button" onClick={handleSubmit}>
