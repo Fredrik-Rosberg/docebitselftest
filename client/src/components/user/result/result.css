@@ -1,0 +1,41 @@
+.resultmain-container{
+  margin-left:160px;
+  margin-top: 50px;
+  width: 480px;
+   
+}
+.resultoverview {
+    width: 480px;
+    height: 100px;
+    /* background-color:blue; */
+    
+}
+
+.resultbuttons {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-top: 12px;
+    width: 480px;
+    margin-right: none;
+
+}
+.generalbuttonstyle{
+    border: 1px solid black;
+    border-radius: 3px;
+    height: 27px;
+    box-shadow: rgba(0, 0, 0, 0.253) 1.95px 1.95px 2.6px;
+}
+
+.resultbuttons>:first-child {
+    width: 114px;
+    margin-left: 10px;
+    
+}
+.resultbuttons>:last-child{
+width: 80px;
+justify-self: end;
+margin-right: -10px;
+}
+.ag-header-cell-label {
+    justify-content: center;
+}

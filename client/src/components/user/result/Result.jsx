@@ -1,15 +1,17 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
+import "./result.css";
+
 
 const Result = (props) => {
   const [answerObjectArray, SetAnswerObjectArray] = useState([]);
 
   const [columnDefs] = useState([
-    { field: "questionnr", headerName: "Test", width: 100 },
-    { field: "youranswer", headerName: "Dina svar", width: 100 },
-    { field: "correctanswer", headerName: "Rätt svar", width: 100 },
-    { field: "result", headerName: "Resultat", width: 100 },
+    { field: "questionnr", headerName: "Fråga", width: 120 },
+    { field: "youranswer", headerName: "Ditt svar", width: 120 },
+    { field: "correctanswer", headerName: "Rätt svar", width: 120 },
+    { field: "result", headerName: "Resultat", width: 120 },
   ]);
 
   const defaultColDef = useMemo(
@@ -20,6 +22,10 @@ const Result = (props) => {
     []
   );
 
+  useEffect(() => {
+    setObject();
+  }, []);
+
   async function setObject() {
     let tempArray = [];
 
@@ -28,7 +34,7 @@ const Result = (props) => {
         questionnr: 0,
         youranswer: [],
         correctanswer: [],
-        result: false,
+        result: "",
       };
 
       (answerGrid.questionnr = props.wrongAnswers[index][0] + 1),
@@ -37,8 +43,8 @@ const Result = (props) => {
         (answerGrid.result =
           JSON.stringify(props.wrongAnswers[index][1]) ===
           JSON.stringify(props.wrongAnswers[index][2])
-            ? true
-            : false);
+            ? "✔️"
+            : "❌");
 
       console.log(answerGrid);
       tempArray.push(answerGrid);
@@ -47,33 +53,39 @@ const Result = (props) => {
     console.log(tempArray);
     SetAnswerObjectArray(tempArray);
   }
+  function finishTest(){
+    //Send to result and empty local- and sessionstorage
 
-  useEffect(() => {
-    setObject();
-  }, []);
 
-  console.log(props.wrongAnswers[2][0]); ///Loggar frågeindex och lägger till 1 för frågenummer
-  console.log(props.wrongAnswers[2][1]); // Dina svar array
-  console.log(props.wrongAnswers[2][2]);
+  }
+
+  
+
   return (
     <>
-      <div className="table-container">
-        <h2>Test</h2>
-        <div
-          className="ag-theme-alpine"
-          style={{ height: 210, width: 400, fontFamily: "Raleway" }}
-        >
-          <AgGridReact
-            rowData={answerObjectArray}
-            columnDefs={columnDefs}
-            defaultColDef={defaultColDef}
-            // rowSelection={rowSelectionType}
-
-            suppressCellFocus={true}
-            // rowMultiSelectWithClick={true}
-            overlayNoRowsTemplate={"Inga test funna"}
-          ></AgGridReact>
+      <div className="resultmain-container">
+        <div className="resultoverview"></div>
+        <div className="table-container">
+          <div
+            className="ag-theme-alpine"
+            style={{ height: 420, width: 480, fontFamily: "Raleway", textAlign:"center" }}
+          >
+            <AgGridReact
+              rowData={answerObjectArray}
+              columnDefs={columnDefs}
+              defaultColDef={defaultColDef}
+              suppressCellFocus={true}
+              overlayNoRowsTemplate={"Inga test funna"}
+            ></AgGridReact>
+          </div>
         </div>
+        <div className="resultbuttons">
+          <button className="backtotestbutton generalbuttonstyle">
+            Tillbaka till testet
+          </button>
+          <Link to={'/user'}>
+          <button onClick={()=>finishTest}className="quittestbutton generalbuttonstyle">Avsluta</button>
+        </Link></div>
       </div>
     </>
   );

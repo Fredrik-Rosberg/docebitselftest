@@ -140,7 +140,8 @@ const Questions = () => {
         console.log(wrongAnswersArray)
     SetCorrectCount(correctAnswerCount);
     SetWrongAnswers(wrongAnswersArray);
-    console.log("hej");
+    
+    //Hantera modal och navigering
     setGetToResult(true)
     setOpenModal(false)
   }
@@ -168,7 +169,9 @@ const Questions = () => {
   
 
   return (
-    <>{!getToResult?(<div className="questionsmain">
+    <>
+   
+    {!getToResult?(<div className="questionsmain">
         <p></p>
         <p>{useTimer.onExpire}</p>
         <div>

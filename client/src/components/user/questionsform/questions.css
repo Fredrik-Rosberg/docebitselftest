@@ -15,6 +15,7 @@
 
 
 }
+
 .questionsblockinner{
     display: grid;
     grid-template-rows: 70px 90px 40px 250px;
