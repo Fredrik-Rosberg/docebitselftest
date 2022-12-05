@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getTests } from "../../admin/overview/overview.service";
+import { getTestByUserId } from "./chooseTest.service";
 import RunTest from "../runTest/RunTest.jsx";
 import "./chooseTest.css";
 
@@ -10,28 +10,25 @@ const ChooseTest = () => {
     id: "",
     testtime: 75,
   });
-  const [startTest,SetStartTest]=useState(false)
+  const [startTest, SetStartTest] = useState(false);
 
   useEffect(() => {
     async function fetchTests() {
-      const data = await getTests();
+      const data = await getTestByUserId(1);
       setTests(data);
-      setChoice({ ...choice, id: data[0].id });
+      setChoice({ ...choice, id: data[0].testid });
     }
 
     fetchTests();
   }, []);
-
-  
 
   console.log(choice);
   console.log(tests);
 
   return (
     <>
-      
-      {startTest ? (<RunTest testid={choice.id} testtime={choice.testtime} />
-      
+      {startTest ? (
+        <RunTest testid={choice.id} testtime={choice.testtime} />
       ) : (
         <div className="choosetestmain">
           <div className="topsection">
