@@ -14,7 +14,7 @@ const Questions = () => {
   const alphabet = alpha.map((x) => String.fromCharCode(x).toLowerCase());
   const [checked, SetChecked] = useState(Array(11).fill(false));
   const localStorageCount = Array.from(
-    { length: localStorage.length },
+    { length: localStorage.length-1 },
     (v, i) => i
   );
   const [starInDropDown, setStarInDropDown] = useState(
@@ -107,17 +107,21 @@ const Questions = () => {
     let cleanUpArr = array2.map((item) =>
       item.map((item2) => item2.filter(Boolean))
     );
+    console.log(cleanUpArr)
 
     //get all questions
     let questionArray = localStorageCount.map((item) =>
       JSON.parse(localStorage.getItem(item + 1))
     );
 
+    console.log(questionArray)
+
     let correctAnswerArray = questionArray.map((item) => [item.svar]);
 
     let correctAnswerArray2 = correctAnswerArray.map((item) =>
       item.map((item) => item.split(","))
     );
+    console.log(correctAnswerArray)
 
     //Jämföra rätt svar med angivna svar
     let correctAnswerCount = 0;
@@ -126,17 +130,22 @@ const Questions = () => {
     localStorageCount.map((index) =>
       JSON.stringify(cleanUpArr[index]) ===
       JSON.stringify(correctAnswerArray2[index])
-        ? (correctAnswerCount += 1)
-        : wrongAnswersArray.push({
-            questionnr: index,
-            youranswer: cleanUpArr[index],
-            correctAnswer: correctAnswerArray2[index],
-          })
+        ? (wrongAnswersArray.push([
+            index,
+            cleanUpArr[index],
+            correctAnswerArray2[index]
+        ]),correctAnswerCount += 1)
+        : wrongAnswersArray.push([
+            index,
+            cleanUpArr[index],
+            correctAnswerArray2[index]
+        ])
     );
-
+        console.log(wrongAnswersArray)
     SetCorrectCount(correctAnswerCount);
     SetWrongAnswers(wrongAnswersArray);
-    console.log("hej");
+    
+    //Hantera modal och navigering
     setGetToResult(true)
     setOpenModal(false)
   }
@@ -164,7 +173,9 @@ const Questions = () => {
   
 
   return (
-    <>{!getToResult?(<div className="questionsmain">
+    <>
+   
+    {!getToResult?(<div className="questionsmain">
         <p></p>
         <p>{useTimer.onExpire}</p>
         <div>
@@ -228,7 +239,7 @@ const Questions = () => {
             </div>
 
             <div>
-              {localStorage.length != question.id ? (
+              {localStorage.length-1 != question.id ? (
                 <button onClick={handleNext}>Nästa</button>
               ) : (
                 <button onClick={() => setOpenModal(true)}>Avsluta test</button>

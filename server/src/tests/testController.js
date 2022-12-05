@@ -30,7 +30,19 @@ const getTests = async (req, res) => {
   }
 };
 
-const getTestById = async (req, res) => {
+const getTestByUserId = async (req, res) => {
+  console.log(req.params.id)
+  const sqlQuery =
+    "SELECT test.testname,course.id, test.id AS testid FROM course INNER JOIN test ON test.id = course.testid WHERE course.userid=$1";
+  let result = await db.query(sqlQuery,[req.params.id]);
+  if (result.rowCount > 0) {
+    
+    res.status(200).json(result.rows);
+  } else {
+    res.status(404).json({ error: "Inga test funna" });
+  }
+};
+const getQuestionsById = async (req, res) => {
   try {
     const sqlQuery = "SELECT * FROM question WHERE testid=$1";
     let result = await db.query(sqlQuery, [req.params.id]);
@@ -113,4 +125,4 @@ const deleteTest = async (req, res) => {
   }
 };
 
-module.exports = { uploadTest, deleteTest, getTestById, getTests };
+module.exports = { uploadTest, deleteTest, getTestByUserId, getTests, getQuestionsById };

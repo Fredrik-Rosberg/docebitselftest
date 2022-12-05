@@ -2,8 +2,8 @@
 // Hämtar alla test
 GET http://localhost:3001/api/test/
 
-### Hämtar test med id
-GET  http://localhost:3001/api/test/2
+### Hämtar test med userid
+GET  http://localhost:3001/api/test/questions/11
 
 ### Tar bort en test med id
 DELETE http://localhost:3001/api/test/5 HTTP/1.1
