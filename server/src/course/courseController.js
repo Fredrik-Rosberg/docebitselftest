@@ -70,11 +70,12 @@ const getCourses = async (req, res) => {
       "SELECT course.id, courseoccasion.courseorganizer,courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, test.testname, users.email FROM course INNER JOIN courseoccasion ON course.courseoccasionid = courseoccasion.id INNER JOIN users ON users.id = course.userid INNER JOIN test ON test.id = course.testid";
     let result = await db.query(sqlQuery);
     if (result.rowCount > 0) {
-      result.rows.map((obj) => {
-        obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
-        obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
-      });
-      res.status(200).json(result.rows);
+      console.log(result);
+      // result.rows.map((obj) => {
+      //   obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
+      //   obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
+      // });
+      res.status(200).json(result);
     } else {
       res.status(404).json({ message: "Inga kurser funna" });
     }
@@ -100,10 +101,11 @@ const getCoursesByFKId = async (id, table) => {
   let result = await db.query(sqlQuery, [id]);
   return result;
 };
-
+// select course.id, courseoccasion.name, courseoccasion.courseorganizer from course inner join courseoccasion ON courseoccasion.id = course.courseoccasionid where course.userid=50
+// select test.testname, test.maxscore, results.score from course inner join results on results.courseid = course.id inner join test on test.id = course.testid where course.id=100
 const getCourseByUserId = async (req, res) => {
   const sqlQuery =
-    "SELECT course.id, courseoccasion.courseorganizer,courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, test.testname, test.maxscore, results.score  FROM users INNER JOIN course ON course.userid=users.id INNER JOIN courseoccasion ON courseoccasion.id = course.courseoccasionid INNER JOIN test ON test.id = course.testid INNER JOIN results ON results.userid = users.id  WHERE users.id=$1;    ";
+    "SELECT DISTINCT courseoccasion.id, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, courseoccasion.courseorganizer from course inner join courseoccasion ON courseoccasion.id = course.courseoccasionid where course.userid=$1";
 
   let result = await db.query(sqlQuery, [req.params.id]);
   if (result.rowCount > 0) {
@@ -111,9 +113,20 @@ const getCourseByUserId = async (req, res) => {
       obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
       obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
     });
-    res.status(200).json({ data: result.rows });
+    res.status(200).json(result.rows);
   } else {
     res.status(404).json({ message: "Ingen kurs funnen med det id" });
+  }
+};
+const getTestResultByCourseId = async (req, res) => {
+  const sqlQuery =
+    "SELECT test.testname, test.maxscore, results.score from course inner join results on results.courseid = course.id inner join test on test.id = course.testid where course.courseoccasionid=$1";
+
+  let result = await db.query(sqlQuery, [req.params.id]);
+  if (result.rowCount > 0) {
+    res.status(200).json(result.rows);
+  } else {
+    res.status(404).json({ message: "Inga resultat funna" });
   }
 };
 module.exports = {
@@ -123,4 +136,5 @@ module.exports = {
   getCourse,
   getCoursesByFKId,
   getCourseByUserId,
+  getTestResultByCourseId,
 };

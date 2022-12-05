@@ -34,6 +34,7 @@
   display: grid;
   grid-template-columns: auto auto;
   justify-content: space-between;
+
 }
 .overview-row > p {
   padding-top: 2vh;
@@ -42,13 +43,40 @@
   padding-top: 3vh;
 }
 
-table{
-  font-size: 14px
+.result-table {
+  font-size: 14px;
+  width: 50vw;
 }
-thead {
+
+.overview-table-head {
   background-color: rgb(218, 218, 218);
 }
-th {
+
+.overview-table-head > tr > th {
+  padding: 0.6vw;
+  width: 10vw;
+  text-align: left;
+
+}
+
+.row-border-right {
+  border-right: 1px solid black;
+}
+
+.overview-table-body > tr > td {
   padding: 0.4vw;
-  width:10vw
+  width: 10vw;
+}
+
+.overview-table-border > td, th{
+  border-right: solid black 1px;
+  font-size: 13px;
+}
+
+.overview-table.border > th,td:last-child{
+  border: none;
+}
+
+p{
+  font-size: 13px;;
 }

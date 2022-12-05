@@ -60,11 +60,9 @@ UNIQUE (courseoccasionid, userid, testid)
 
 CREATE TABLE IF NOT EXISTS results(
 id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-testid int NOT NULL,
-userid int NOT NULL,
+courseid int NOT NULL,
 score int NOT NULL,
-FOREIGN KEY (testid) REFERENCES test(id),
-FOREIGN KEY (userid) REFERENCES users(id)
+FOREIGN KEY (courseid) REFERENCES course(id)
 );
 
 INSERT INTO users (firstname, lastname, email, hashedpassword, role) VALUES ('admin', 'admin', 'admin@admin.com', 'dafd082f83963dc30b4c7ffd6d78a2b62263c17a229aab3e0d0245064c1e07aacadf31946dd0be78e76968b6abe7d93efc5da2df37172affdae3b4450c3112fa', 'admin'  );
