@@ -1,20 +1,11 @@
 /*Using navbarLayout as parent*/
 
-.addtopmargin{
-    margin-top: 30px;
-    
+.navbar-user {
+  background-color: #ebf5fb;
+  
+}
 
-}
-.navbaruser{
-    background-color:#ebf5fb;
-    
-}
-.main-navbar-user{
-    background-color: white;
-    width: 100vw;
-}
-.navbar-body-user{
-    margin-top: 120px;
-    margin-left: 140px;
-
+.navbar-user-body {
+  background-color: white;
+  display: grid;
 }

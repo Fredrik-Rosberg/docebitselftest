@@ -24,14 +24,9 @@ const NavbarLayoutUser = () => {
 
   return (
     <>
-      <div className="main-navbar main-navbar-user">
-        <div className="navbar navbaruser">
-          <img
-            src="../../src/assets/cropped-DocebIT01-1-1.png"
-            alt=""
-            className="navbar-logo"
-          />
-          <div className="navbar-links addtopmargin">
+      <div className="main-navbar">
+        <div className="navbar navbar-user">
+          <div className="navbar-links">
             <Link className="navbar-link" to="/user/test">
               <GrDocumentText />
               Översikt
@@ -44,14 +39,15 @@ const NavbarLayoutUser = () => {
               <GrDocumentText />
               Mitt konto
             </Link>
-            
           </div>
           <button className="navbar-signout" onClick={() => setOpenModal(true)}>
             Logga ut
           </button>
         </div>
-        <div className="navbar-body-user">
-          <Outlet />
+        <div className="navbar-user-body">
+          <div className="navbar-body">
+            <Outlet />
+          </div>
         </div>
       </div>
       <ModalComponent
