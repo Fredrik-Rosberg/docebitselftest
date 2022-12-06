@@ -12,7 +12,7 @@ const NavbarLayoutAdmin = () => {
 
   async function handleSignOut() {
     localStorage.clear();
-  
+
     let response = await signOut();
     if (response.signedOut) {
       navigate("/");
@@ -25,32 +25,32 @@ const NavbarLayoutAdmin = () => {
     <>
       <div className="main-navbar">
         <div className="navbar">
-          <div className="navbar-links">
-            <Link className="navbar-link" to="/admin">
-              <GrDocumentText />
-              Översikt
-            </Link>
-            <Link className="navbar-link" to="/admin/account/create">
-              <GrDocumentText />
-              Konto
-            </Link>
-            <Link className="navbar-link" to="/admin/test">
-              <GrDocumentText />
-              Test
-            </Link>
-            <Link className="navbar-link" to="/admin/courseoccasion/create">
-              <GrDocumentText />
-              Kurstillfälle
-            </Link>
-            <Link className="navbar-link" to="/admin/course">
-              <GrDocumentText />
-              Kurs
-            </Link>
-            <Link className="navbar-link" to="/admin/myaccount">
-              <GrDocumentText />
-              Mitt konto
-            </Link>
-          </div>
+            <div className="navbar-links">
+              <Link className="navbar-link" to="/admin">
+                <GrDocumentText />
+                Översikt
+              </Link>
+              <Link className="navbar-link" to="/admin/account/create">
+                <GrDocumentText />
+                Konto
+              </Link>
+              <Link className="navbar-link" to="/admin/test">
+                <GrDocumentText />
+                Test
+              </Link>
+              <Link className="navbar-link" to="/admin/courseoccasion/create">
+                <GrDocumentText />
+                Kurstillfälle
+              </Link>
+              <Link className="navbar-link" to="/admin/course">
+                <GrDocumentText />
+                Kurs
+              </Link>
+              <Link className="navbar-link" to="/admin/myaccount">
+                <GrDocumentText />
+                Mitt konto
+              </Link>
+            </div>
           <button className="navbar-signout" onClick={() => setOpenModal(true)}>
             Logga ut
           </button>

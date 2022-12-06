@@ -5,7 +5,7 @@
 }
 .navbar {
   display: grid;
-  grid-template-rows: 35vh 1fr;
+  grid-template-rows: auto 1fr;
   background-color: white;
   text-align: center;
   font-size: 16px;
@@ -16,15 +16,10 @@
   margin-top: 120px;
   margin-left: 140px;
 }
-.navbar-logo {
-  width: 120px;
-  height: auto;
-  justify-self: center;
-  align-self: center;
-}
+
 .navbar-links {
   display: grid;
-  padding-top: 60px;
+  padding-top: 150px;
   text-align: start;
   padding-left: 35px;
 }
@@ -34,6 +29,7 @@
   margin: 1px;
   padding: 1px;
   width: 100%;
+  height: auto;
 }
 .navbar-link:hover {
   background-color: rgb(148, 184, 231);
@@ -51,4 +47,5 @@
   cursor: pointer;
   align-self: flex-start;
   font-size: 14px;
+  padding-top: 2vh;
 }
