@@ -38,6 +38,10 @@ const NavbarLayoutAdmin = () => {
                 <GrDocumentText />
                 Test
               </Link>
+              <Link className="navbar-link" to="/admin/course/organizer">
+                <GrDocumentText />
+                Kursanordnare
+              </Link>
               <Link className="navbar-link" to="/admin/courseoccasion/create">
                 <GrDocumentText />
                 Kurstillfälle

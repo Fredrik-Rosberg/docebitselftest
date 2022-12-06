@@ -1,4 +1,5 @@
 const db = require("../../db");
+const multer = require("multer");
 const getCourseById = async (data) => {
   let sqlQuery =
     "SELECT * FROM course WHERE userid=$1 AND courseoccasionid=$2 AND testid=$3";
@@ -118,6 +119,7 @@ const getCourseByUserId = async (req, res) => {
     res.status(404).json({ message: "Ingen kurs funnen med det id" });
   }
 };
+
 const getTestResultByCourseId = async (req, res) => {
   const sqlQuery =
     "SELECT test.testname, test.maxscore, results.time, results.score from course inner join results on results.courseid = course.id inner join test on test.id = course.testid where course.courseoccasionid=$1";
@@ -129,6 +131,19 @@ const getTestResultByCourseId = async (req, res) => {
     res.status(404).json({ message: "Inga resultat funna" });
   }
 };
+const upload = multer({
+  dest: "images/",
+}).single("image");
+
+const saveImage = async (req, res) => {
+  upload(req, res, function (err) {
+    console.log("Request ---", req.body);
+    console.log("Request file ---", req.file);
+    if (!err) {
+      return res.send(200).end();
+    }
+  });
+};
 module.exports = {
   createCourses,
   getCourses,
@@ -137,4 +152,5 @@ module.exports = {
   getCoursesByFKId,
   getCourseByUserId,
   getTestResultByCourseId,
+  saveImage,
 };
