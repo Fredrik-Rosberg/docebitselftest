@@ -19,7 +19,7 @@ const OverviewUser = () => {
       <div className="overview-user-container">
         <div className="overview-header">
           <h2>Översikt</h2>
-          <h2>Louise Rosengren</h2>
+          <h2>{localStorage.getItem('username')}</h2>
         </div>
         {courses?.map((obj) => (
           <div key={obj.id + Math.random()} className="overview-row">

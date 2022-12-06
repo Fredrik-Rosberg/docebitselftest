@@ -1,5 +1,13 @@
 const url = "/api/signin";
-
+const getUserById = async (id) => {
+  try {
+    let response = await fetch(`api/user/${id}`);
+    let data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const signIn = async (data) => {
   try {
     let dataResponse = await fetch(url, {
@@ -11,6 +19,11 @@ export const signIn = async (data) => {
 
     if (response.loggedIn) {
       localStorage.setItem("user", response.userId);
+      let username = await getUserById(response.userId);
+      localStorage.setItem(
+        "username",
+        `${username.firstname} ${username.lastname}`
+      );
       return response;
     } else {
       console.log(response);
