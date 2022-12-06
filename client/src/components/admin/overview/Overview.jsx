@@ -92,7 +92,7 @@ const Overview = () => {
             className="form-button admin-main-button"
             onClick={() => removeFromChildArray(accountRef)}
           >
-            Ta bort konto(n)
+            Ta bort konto
           </button>{" "}
           <button
             className="form-button admin-main-button"
