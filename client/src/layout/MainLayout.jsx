@@ -4,13 +4,7 @@ import './mainLayout.css'
 const MainLayout = () => {
   return (
     <div className="app">
-      <header className="headerstyle">
-        <img
-          src="../../src/assets/cropped-DocebIT01-1-1.png"
-          alt=""
-          className="docebitlogo"
-        />
-      </header>
+      <div></div>
       <Outlet/>
     </div>
   );

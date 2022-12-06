@@ -2,11 +2,10 @@
   display: grid;
   grid-template-columns: 190px 1fr;
   height: 100vh;
-  
 }
 .navbar {
   display: grid;
-  grid-template-rows: 100px 200px 60px 1fr;
+  grid-template-rows: 35vh 1fr;
   background-color: white;
   text-align: center;
   font-size: 16px;
@@ -39,9 +38,8 @@
 .navbar-link:hover {
   background-color: rgb(148, 184, 231);
 }
-.navbar-link>svg{
+.navbar-link > svg {
   padding-right: 5px;
-  
 }
 
 .navbar-signout {
@@ -51,6 +49,6 @@
   color: #069;
   text-decoration: underline;
   cursor: pointer;
- 
+  align-self: flex-start;
   font-size: 14px;
 }

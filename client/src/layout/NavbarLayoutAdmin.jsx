@@ -25,11 +25,6 @@ const NavbarLayoutAdmin = () => {
     <>
       <div className="main-navbar">
         <div className="navbar">
-          <img
-            src="../../src/assets/cropped-DocebIT01-1-1.png"
-            alt=""
-            className="navbar-logo"
-          />
           <div className="navbar-links">
             <Link className="navbar-link" to="/admin">
               <GrDocumentText />
