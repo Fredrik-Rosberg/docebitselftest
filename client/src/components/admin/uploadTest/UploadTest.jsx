@@ -7,11 +7,13 @@ const UploadTest = () => {
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
   const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState("");
 
   //Nollställer error och status meddelande
   useEffect(() => {
     setError("");
+    setMessage("")
     if (!file) {
       setStatus("");
     } else {
@@ -60,6 +62,9 @@ const UploadTest = () => {
           setShowMessage(true);
           setStatus("Misslyckad inläsning");
         } else {
+          setError("");
+          setMessage("Test har sparats");
+          setShowMessage(true);
           setStatus(result.status);
         }
         console.log(result);
@@ -108,7 +113,12 @@ const UploadTest = () => {
           </button>
         </div>{" "}
         <div className="messages form-test-messages">
-          {showMessage && <p className="error-message">{error}</p>}
+          {showMessage && (
+            <>
+              <p className="error-message">{error}</p>
+              <p className="success-message">{message}</p>
+            </>
+          )}
         </div>
       </form>
     </>
