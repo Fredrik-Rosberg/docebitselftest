@@ -120,7 +120,7 @@ const getCourseByUserId = async (req, res) => {
 };
 const getTestResultByCourseId = async (req, res) => {
   const sqlQuery =
-    "SELECT test.testname, test.maxscore, results.score from course inner join results on results.courseid = course.id inner join test on test.id = course.testid where course.courseoccasionid=$1";
+    "SELECT test.testname, test.maxscore, results.time, results.score from course inner join results on results.courseid = course.id inner join test on test.id = course.testid where course.courseoccasionid=$1";
 
   let result = await db.query(sqlQuery, [req.params.id]);
   if (result.rowCount > 0) {
