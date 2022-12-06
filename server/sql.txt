@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS results(
 id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 courseid int NOT NULL,
 score int NOT NULL,
+time int,
 FOREIGN KEY (courseid) REFERENCES course(id)
 );
 
