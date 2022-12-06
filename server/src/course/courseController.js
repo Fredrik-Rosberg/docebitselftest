@@ -71,11 +71,11 @@ const getCourses = async (req, res) => {
     let result = await db.query(sqlQuery);
     if (result.rowCount > 0) {
       console.log(result);
-      // result.rows.map((obj) => {
-      //   obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
-      //   obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
-      // });
-      res.status(200).json(result);
+      result.rows.map((obj) => {
+        obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
+        obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
+      });
+      res.status(200).json(result.rows);
     } else {
       res.status(404).json({ message: "Inga kurser funna" });
     }

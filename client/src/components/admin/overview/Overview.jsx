@@ -43,6 +43,7 @@ const Overview = () => {
   useEffect(() => {
     const getCours = async () => {
       let data = await getCourses();
+      console.log(data)
       if (!data.message) {
         setRowData(data);
       }

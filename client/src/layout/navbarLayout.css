@@ -11,7 +11,7 @@
   font-size: 16px;
 }
 .navbar-body {
-  justify-self: start;
+  /* justify-self: start; */
   width: auto;
   margin-top: 120px;
   margin-left: 140px;
