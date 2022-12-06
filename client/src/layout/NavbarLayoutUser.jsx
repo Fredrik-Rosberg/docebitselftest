@@ -27,7 +27,7 @@ const NavbarLayoutUser = () => {
       <div className="main-navbar">
         <div className="navbar navbar-user">
           <div className="navbar-links">
-            <Link className="navbar-link" to="/user/test">
+            <Link className="navbar-link" to="/user/">
               <GrDocumentText />
               Översikt
             </Link>

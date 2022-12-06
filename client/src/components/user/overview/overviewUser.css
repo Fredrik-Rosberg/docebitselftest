@@ -1,0 +1,81 @@
+.overview-user-container {
+  display: grid;
+  grid-template-rows: auto auto;
+  margin-left: -140px;
+  margin-top: -7vh;
+}
+
+.overview-header {
+  display: grid;
+  grid-template-columns: auto auto;
+  border-bottom: solid 1px black;
+  justify-content: space-between;
+  padding-left: 6vw;
+}
+.overview-header > h2 {
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Raleway";
+}
+.overview-header:nth-child(1) {
+  text-align: end;
+  padding-right: 7vw;
+}
+
+.overview-row {
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  padding: 3vh;
+  padding-left: 6vw;
+  padding-right: 6vw;
+  border-bottom: solid 1px black;
+}
+.overview-row-header {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+}
+.overview-row > p {
+  padding-top: 2vh;
+}
+.overview-table {
+  padding-top: 3vh;
+}
+
+.result-table {
+  font-size: 14px;
+  width: 50vw;
+}
+
+.overview-table-head {
+  background-color: rgb(218, 218, 218);
+}
+
+.overview-table-head > tr > th {
+  padding: 0.6vw;
+  width: 10vw;
+  text-align: left;
+}
+
+.overview-table-body > tr > td {
+  padding: 0.4vw;
+  width: 10vw;
+}
+
+.overview-table-border > td,
+th {
+  border-right: solid black 1px;
+  font-size: 13px;
+}
+
+.overview-table-border > th:last-child,
+td:last-child {
+  border: none;
+}
+
+p {
+  font-size: 13px;
+}
+.overview-user-results > p {
+  padding-top: 2vh;
+}

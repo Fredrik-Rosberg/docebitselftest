@@ -9,3 +9,5 @@ SELECT course.id, courseoccasion.name, courseoccasion.startdate, courseoccasion.
 INNER JOIN test ON test.id = course.testid
 
 """"
+
+ "SELECT course.id, courseoccasion.courseorganizer,courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, test.testname, test.maxscore, results.score FROM course INNER JOIN courseoccasion ON courseoccasion.id = course.courseoccasionid INNER JOIN test ON test.id = course.testid LEFT JOIN results ON results.courseid = course.id WHERE course.userid=$1"

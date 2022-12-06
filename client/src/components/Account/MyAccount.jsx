@@ -10,7 +10,7 @@ const MyAccount = () => {
   }
 
   useEffect(() => {
-    let userId = localStorage.getItem("userId");
+    let userId = localStorage.getItem("user");
     if (userId) {
       loadUser(userId);
     }
