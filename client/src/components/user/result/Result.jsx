@@ -74,6 +74,7 @@ const Result = (props) => {
     getFromSession(id)
     props.resultBool(false)
     props.questionnr(JSON.parse(localStorage.getItem(id)));
+    props.setfacit(true);
    
 
   }
