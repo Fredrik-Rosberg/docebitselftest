@@ -8,11 +8,15 @@ const OverviewUser = () => {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      let data = await getCourseByUserId(localStorage.getItem("user"));
-      let username = await getUserById(localStorage.getItem("user"));
-      setUsername(`${username.firstname} ${username.lastname}`);
+      let id = localStorage.getItem("user");
+      let data = await getCourseByUserId(id);
       setCourses(data);
     };
+    const fetchUser = async () => {
+      let username = await getUserById(2);
+      setUsername(username);
+    };
+    fetchUser();
     fetchCourses();
   }, []);
 
@@ -21,7 +25,7 @@ const OverviewUser = () => {
       <div className="overview-user-container">
         <div className="overview-header">
           <h2>Översikt</h2>
-          <h2>{username}</h2>
+          <h2>{username?`${username.firstname} ${username.lastname}`:""}</h2>
         </div>
         {courses?.map((obj) => (
           <div key={obj.id + Math.random()} className="overview-row">
