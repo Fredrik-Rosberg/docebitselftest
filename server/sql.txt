@@ -52,7 +52,7 @@ id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 courseoccasionid int NOT NULL,
 userid int NOT NULL,
 testid int NOT NULL,
-FOREIGN KEY (courseoccasionid) REFERENCES course(id) ON DELETE CASCADE,
+FOREIGN KEY (courseoccasionid) REFERENCES courseoccasion(id) ON DELETE CASCADE,
 FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE,
 FOREIGN KEY (testid) REFERENCES test(id) ON DELETE CASCADE,
 UNIQUE (courseoccasionid, userid, testid)
