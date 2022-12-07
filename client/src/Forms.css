@@ -83,6 +83,13 @@
   align-items: center;
 }
 
+.previewImage {
+  max-width: 160px;
+  max-height: 400px;
+  justify-self: center;
+  align-self: center;
+}
+
 /* Styles for Components form containers */
 
 .create-account-form {
@@ -106,4 +113,8 @@
 
 .test-form {
   grid-template-rows: repeat(2, 45px) 100px;
+}
+
+.organizer-form {
+  grid-template-rows: repeat(3, 45px) 150px 100px;
 }

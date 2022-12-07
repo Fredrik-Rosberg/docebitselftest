@@ -2,10 +2,13 @@ const express = require("express");
 const app = express();
 const PORT = 3001;
 const oneDay = 1000 * 60 * 60 * 24;
+const path = require("path");
 
 //Middlewhere
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 //Session
 let session = require("express-session");

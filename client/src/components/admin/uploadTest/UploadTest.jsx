@@ -13,7 +13,7 @@ const UploadTest = () => {
   //Nollställer error och status meddelande
   useEffect(() => {
     setError("");
-    setMessage("")
+    setMessage("");
     if (!file) {
       setStatus("");
     } else {
@@ -42,7 +42,7 @@ const UploadTest = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-
+    setMessage("");
     if (!name) {
       setError("Vänligen fyll i samtliga uppgifter");
       setShowMessage(true);

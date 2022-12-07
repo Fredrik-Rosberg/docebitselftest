@@ -131,20 +131,28 @@ const getTestResultByCourseId = async (req, res) => {
     res.status(404).json({ message: "Inga resultat funna" });
   }
 };
-const upload = multer({
-  dest: "images/",
-}).single("image");
 
 const saveImage = async (req, res) => {
-  upload(req, res, function (err) {
-    console.log(req.file.mimetype.startsWith("image"));
+  const { filename } = req.file;
 
-    console.log("Request ---", req.body);
-    console.log("Request file ---", req.file);
-    if (!err) {
-      return res.send(200);
+  const { city, name } = req.body;
+
+  if (!city || !name || !filename) {
+    res.status(401).json({ status: 401, message: "fill all the data" });
+  }
+  try {
+    let sqlQuery =
+      "INSERT INTO courseorganizer(organizer, city, imagepath) VALUES ($1, $2, $3)";
+    await db.query(sqlQuery, [name, city, filename]);
+    return res.status(200).json({ message: "Lyckad inläsning" });
+  } catch (error) {
+    console.log(error);
+    if (error.code == 23505) {
+      res.status(400).json({ error: "Angiven kursanordnare existerar redan" });
+    } else {
+      res.status(400).json({ error: error });
     }
-  });
+  }
 };
 module.exports = {
   createCourses,

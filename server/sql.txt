@@ -58,6 +58,15 @@ FOREIGN KEY (testid) REFERENCES test(id) ON DELETE CASCADE,
 UNIQUE (courseoccasionid, userid, testid)
 );
 
+CREATE TABLE IF NOT EXISTS courseorganizer(
+id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+organizer varchar NOT NULL,
+city varchar NOT NULL,
+imagepath varchar NOT NULL,
+FOREIGN KEY (courseoccasionid) REFERENCES courseoccasion(id) ON DELETE CASCADE,
+UNIQUE (organizer, city)
+);
+
 CREATE TABLE IF NOT EXISTS results(
 id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 courseid int NOT NULL,
