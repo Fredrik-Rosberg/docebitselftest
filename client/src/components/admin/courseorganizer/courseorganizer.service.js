@@ -8,6 +8,7 @@ export const uploadImage = async (image, info) => {
     body: data,
   });
   let result = await response.json();
+  console.log(response)
   if (response.ok) {
     return { message: result.message, status: "Lyckad inläsning" };
   } else {
