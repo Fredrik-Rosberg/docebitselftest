@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { changePassword, checkCurrentPassword } from "./changePassword.service";
 import { validatePassword } from "../../signIn/validation.service";
 import UpdatePasswordModal from "../../modal/UpdatedPassWordModal";
@@ -16,7 +16,7 @@ function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState();
   const [showMessage, setShowMessage] = useState(false);
-
+const navigate = useNavigate();
   const params = useParams();
 
   useEffect(() => {
@@ -119,11 +119,10 @@ function ChangePassword() {
           />
         </div>
         <div className="form-buttons-container">
-          <Link className="form-link" to="/admin/myaccount">
-            <button type="button" className="form-button">
+        
+            <button type="button" className="form-button" onClick={() => navigate(-1)}>
               Tillbaka
             </button>
-          </Link>
           <button type="submit" className="form-button">
             Spara
           </button>
