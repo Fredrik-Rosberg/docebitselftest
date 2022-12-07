@@ -16,6 +16,7 @@ import MyAccount from "./components/Account/MyAccount";
 import Overview from "./components/admin/overview/Overview";
 import Course from "./components/admin/createCourse/CreateCourse";
 import OverviewUser from "./components/user/overview/OverviewUser";
+import CourseOrganizer from "./components/admin/courseorganizer/CourseOrganizer";
 import EditAccount from "./components/admin/editAccount/EditAccount";
 import ChangePassword from "./components/admin/changePassword/ChangePassword";
 import Test from "./components/admin/uploadTest/UploadTest";
@@ -41,6 +42,8 @@ function App() {
             <Route path="/admin/account/users" element={<AccountTable />} />
             <Route path="/admin/myaccount" element={<MyAccount />} />
             <Route path="/admin/test" element={<Test />} />
+            <Route path="/admin/course/organizer" element={<CourseOrganizer />} />
+
 
             <Route path="/admin/account/:id" element={<EditAccount />} />
             <Route

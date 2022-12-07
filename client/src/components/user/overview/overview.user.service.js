@@ -17,3 +17,13 @@ export const getResultsByCourseId = async (id) => {
     return null;
   }
 };
+
+export const getUserById = async (id) => {
+  try {
+    let response = await fetch(`api/user/${id}`);
+    let data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};

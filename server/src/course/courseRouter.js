@@ -6,7 +6,7 @@ const {
   getCourses,
   getCourse,
   getCourseByUserId,
-  getTestResultByCourseId
+  getTestResultByCourseId, saveImage
 } = require("./courseController");
 
 //Skapa kurstillfälle
@@ -15,6 +15,7 @@ router.delete("/api/course/:id", deleteCourse);
 router.get("/api/course", getCourses);
 router.get("/api/course/user/:id", getCourseByUserId);
 router.get("/api/course/result/:id", getTestResultByCourseId);
+router.post("/api/course/organizer", saveImage);
 
 router.get("/api/course/:id", getCourse);
 

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./overviewUser.css";
 import CourseRow from "./CourseRow";
-import { getCourseByUserId } from "./overview.user.service";
+import { getCourseByUserId, getUserById } from "./overview.user.service";
 const OverviewUser = () => {
   const [courses, setCourses] = useState([]);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const fetchCourses = async () => {
       let data = await getCourseByUserId(localStorage.getItem("user"));
+      let username = await getUserById(localStorage.getItem("user"));
+      setUsername(`${username.firstname} ${username.lastname}`);
       setCourses(data);
-      console.log(data)
     };
     fetchCourses();
   }, []);
@@ -19,7 +21,7 @@ const OverviewUser = () => {
       <div className="overview-user-container">
         <div className="overview-header">
           <h2>Översikt</h2>
-          <h2>{localStorage.getItem('username')}</h2>
+          <h2>{username}</h2>
         </div>
         {courses?.map((obj) => (
           <div key={obj.id + Math.random()} className="overview-row">
