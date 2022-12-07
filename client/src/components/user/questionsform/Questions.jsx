@@ -25,35 +25,49 @@ const Questions = (props) => {
   const [wrongAnswers, SetWrongAnswers] = useState([{}]);
   const [openModal, setOpenModal] = useState(false);
   const [getToResult, setGetToResult] = useState(false);
+  const [facitMode, SetFacitMode] = useState(false);
 
   useEffect(() => {
-    
-    getFromSession(1)
-    if (sessionStorage.length == 0) {
-      localStorageCount.map((index) =>
-        sessionStorage.setItem(index + 1, checked)
-      );
+    const facitBool = sessionStorage.getItem("facitmode");
+    resultHandling();
+    if (localStorageCount.length + 1 != sessionStorage.length) {
+      sessionStorage.setItem("facitmode", false);
+    } else {
+      SetFacitMode(facitBool);
     }
+
+    getFromSession(1);
+
+    setFirstQuestion();
+
+    function setFirstQuestion() {
+      if (sessionStorage.length == 0) {
+        localStorageCount.map((index) =>
+          sessionStorage.setItem(index + 1, checked)
+        );
+      }
+    }
+    console.log(question);
   }, []);
 
   useEffect(() => {
-    getFromSession(-question.fråganr + 1);
+    getFromSession(-question.questionnr + 1);
   }, [starInDropDown]);
 
   function handleNext() {
     let array = Array(11).fill(false);
     SetChecked(array);
-    getFromSession(question.fråganr + 1);
-    SetQuestion(JSON.parse(localStorage.getItem(question.fråganr + 1)));
-    sessionStorage.setItem(question.fråganr, checked);
+    getFromSession(question.questionnr + 1);
+    SetQuestion(JSON.parse(localStorage.getItem(question.questionnr + 1)));
+    sessionStorage.setItem(question.questionnr, checked);
   }
 
   function handlePrevious() {
     let array = Array(11).fill(false);
     SetChecked(array);
-    getFromSession(question.fråganr - 1);
-    SetQuestion(JSON.parse(localStorage.getItem(question.fråganr - 1)));
-    sessionStorage.setItem(question.fråganr, checked);
+    getFromSession(question.questionnr - 1);
+    SetQuestion(JSON.parse(localStorage.getItem(question.questionnr - 1)));
+    sessionStorage.setItem(question.questionnr, checked);
   }
 
   function getFromSession(index) {
@@ -72,26 +86,23 @@ const Questions = (props) => {
     SetChecked(array);
     getFromSession(choice);
     SetQuestion(JSON.parse(localStorage.getItem(choice)));
-    sessionStorage.setItem(question.fråganr, checked);
+    sessionStorage.setItem(question.questionnr, checked);
   }
 
   async function handleLastQuestion() {
     let array = Array(11).fill(false);
     SetChecked(array);
-    sessionStorage.setItem(question.fråganr, checked);
+    sessionStorage.setItem(question.questionnr, checked);
   }
 
   function handleAbort() {}
-
-  async function handleFinishTest() {
-    await handleLastQuestion();
-
-    //get all results unfinished
+  let cleanUpArr=[];
+  async function resultHandling() {
     const resultarray = localStorageCount.map((item) => [
       sessionStorage.getItem(item + 1),
     ]);
-
-    let array1 = resultarray.map((item) =>
+    console.log(resultarray[0][0])
+    if(resultarray[0][0]!=null){ let array1 = resultarray.map((item) =>
       item.map((item2) => item2.split(","))
     );
 
@@ -105,10 +116,10 @@ const Questions = (props) => {
       )
     );
 
-    let cleanUpArr = array2.map((item) =>
+    cleanUpArr = array2.map((item) =>
       item.map((item2) => item2.filter(Boolean))
-    );
-    console.log(cleanUpArr);
+    );}
+   
 
     //get all questions
     let questionArray = localStorageCount.map((item) =>
@@ -118,7 +129,7 @@ const Questions = (props) => {
     console.log(questionArray);
 
     let correctAnswerArray = questionArray.map((item) => [
-      item.svar.toUpperCase(),
+      item.answer.toUpperCase(),
     ]);
 
     let correctAnswerArray2 = correctAnswerArray.map((item) =>
@@ -148,10 +159,19 @@ const Questions = (props) => {
     console.log(wrongAnswersArray);
     SetCorrectCount(correctAnswerCount);
     SetWrongAnswers(wrongAnswersArray);
+  }
+
+  async function handleFinishTest() {
+    await handleLastQuestion();
+    await resultHandling();
+
+    //get all results unfinished
 
     //Hantera modal och navigering
+    sessionStorage.setItem("facitmode", "true");
     setGetToResult(true);
     setOpenModal(false);
+    console.log(wrongAnswers);
   }
 
   function handleChecked(index) {
@@ -166,13 +186,24 @@ const Questions = (props) => {
 
   const handleStar = () => {
     let array = [...starInDropDown];
-    array[question.fråganr - 1] = !array[question.fråganr - 1];
+    array[question.questionnr - 1] = !array[question.questionnr - 1];
     array.map((item) =>
       item != true || item != false ? (item = false) : (item = item)
     );
 
     setStarInDropDown(array);
   };
+  function setCorrectColor(answeritem) {
+    let answerArray = question["answer"].split(",");
+    let cssBool = false;
+    answerArray.map((item) => {
+      console.log(item);
+      if (item == answeritem) {
+        cssBool = true;
+      } 
+    });
+    return cssBool;
+  }
 
   return (
     <>
@@ -181,7 +212,7 @@ const Questions = (props) => {
           <p></p>
           <p>{useTimer.onExpire}</p>
           <div>
-            <UseTimer expiryTimestamp={time} />
+            {!facitMode ? <UseTimer expiryTimestamp={time} /> : ""}
             <select
               className="questiondropdown"
               onChange={(e) => handleQuestionChoice(e.target.value)}
@@ -195,30 +226,40 @@ const Questions = (props) => {
           </div>
           <div className="questionscontainer">
             <div className="questionsblock">
-              {starInDropDown[question.fråganr - 1] ? (
+              {starInDropDown[question.questionnr - 1] ? (
                 <BsStarFill className="handlestar" onClick={handleStar} />
               ) : (
                 <BsStar className="handlestar" onClick={handleStar} />
               )}
               <div className="questionsblockinner">
                 <h3 className="questionnumber ralewayweight500">
-                  Fråga {question.fråganr}
+                  Fråga {question.questionnr}
                 </h3>
-                <div className="question setfontsize">{question.fråga}</div>
+                <div className="question setfontsize">{question.question}</div>
                 <div className="setfontsize choosetext">
                   Välj ett eller flera av svaren nedan
                 </div>
                 <div className="questionscrollcontainer setfontsize">
                   {alphabet.map((item, index) =>
-                    question["frågealternativ" + item] != "" ? (
-                      <div key={index} className="questiongrid">
+                    question["alternative" + item] != "" ? (
+                      <div
+                        key={index}
+                        className={
+                          facitMode
+                            ? setCorrectColor(item)
+                              ? "questiongrid answercolor"
+                              : "questiongrid"
+                            : "questiongrid"
+                        }
+                      >
                         <input
+                          disabled={facitMode ? true : false}
                           checked={checked[index]}
                           value={item}
                           onChange={() => handleChecked(index)}
                           type="checkbox"
                         ></input>
-                        <label>{question["frågealternativ" + item]}</label>
+                        <label>{question["alternative" + item]}</label>
                       </div>
                     ) : (
                       ""
@@ -232,17 +273,33 @@ const Questions = (props) => {
               <div>
                 {question.id == 1 ? (
                   ""
+                ) : facitMode ? (
+                  ""
                 ) : (
                   <button onClick={handlePrevious}>Föregående</button>
                 )}
               </div>
               <div>
-                <button onClick={handleAbort}>Avbryt</button>
+                {facitMode ? (
+                  <button onClick={() => setGetToResult(true)}>
+                    Tillbaka till resultat
+                  </button>
+                ) : (
+                  <button onClick={handleAbort}>Avbryt</button>
+                )}
               </div>
 
               <div>
                 {localStorage.length - 1 != question.id ? (
-                  <button onClick={handleNext}>Nästa</button>
+                  facitMode ? (
+                    ""
+                  ) : facitMode ? (
+                    ""
+                  ) : (
+                    <button onClick={handleNext}>Nästa</button>
+                  )
+                ) : facitMode ? (
+                  ""
                 ) : (
                   <button onClick={() => setOpenModal(true)}>
                     Avsluta test
@@ -259,6 +316,7 @@ const Questions = (props) => {
           resultBool={setGetToResult}
           questionnr={SetQuestion}
           checkedChoice={SetChecked}
+          setfacit={SetFacitMode}
         />
       )}
 

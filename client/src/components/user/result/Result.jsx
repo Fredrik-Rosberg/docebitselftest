@@ -74,6 +74,7 @@ const Result = (props) => {
     getFromSession(id)
     props.resultBool(false)
     props.questionnr(JSON.parse(localStorage.getItem(id)));
+    props.setfacit(true);
    
 
   }
@@ -86,13 +87,13 @@ const Result = (props) => {
           <div className="passorfail">Resultat: {passOrFail}</div>
           <div className="passorfailtable">
             <div>
-              Ditt resultat <div>{props.correctCount}</div>
+              Ditt resultat: <div>{props.correctCount}</div>
             </div>
             <div>
-              Gräns för godkänt <div>{Math.ceil((localStorage.length - 1) * 0.7)}</div>
+              Gräns för godkänt: <div>{Math.ceil((localStorage.length - 1) * 0.7)}</div>
             </div>
             <div>
-              Totalt antal poäng <div>{localStorage.length - 1}</div>
+              Totalt antal poäng: <div>{localStorage.length - 1}</div>
             </div>
           </div>
         </div>

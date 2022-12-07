@@ -136,3 +136,7 @@ border-top-left-radius: 20px;
 .question{
     align-self: center;
 }
+.answercolor{
+    background-color: rgba(92, 214, 92, 0.418);
+    border-radius: 6px;
+}
