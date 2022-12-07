@@ -43,7 +43,7 @@ const CourseOrganizer = () => {
     } else {
       if (file) {
         let data = {name: name, city: city}
-        let result = await uploadImage(file, data);
+        await uploadImage(file, data);
       }
     }
   };

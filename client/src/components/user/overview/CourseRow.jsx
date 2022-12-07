@@ -29,9 +29,9 @@ const CourseRow = (props) => {
                   <tr className="overview-table-border">
                     <th>Genomfört</th>
                     <th>Tid</th>
-                    <th>Resultat</th>
+                    <th>Dina poäng</th>
                     <th>Maxpoäng</th>
-                    <th>Godkänd</th>
+                    <th>Resultat</th>
                   </tr>
                 </thead>
                 <tbody className="overview-table-body">

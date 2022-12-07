@@ -137,10 +137,12 @@ const upload = multer({
 
 const saveImage = async (req, res) => {
   upload(req, res, function (err) {
+    console.log(req.file.mimetype.startsWith("image"));
+
     console.log("Request ---", req.body);
     console.log("Request file ---", req.file);
     if (!err) {
-      return res.send(200).end();
+      return res.send(200);
     }
   });
 };
