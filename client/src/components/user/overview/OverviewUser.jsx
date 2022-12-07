@@ -13,7 +13,8 @@ const OverviewUser = () => {
       setCourses(data);
     };
     const fetchUser = async () => {
-      let username = await getUserById(2);
+      let id = localStorage.getItem("user");
+      let username = await getUserById(id);
       setUsername(username);
     };
     fetchUser();
@@ -25,7 +26,9 @@ const OverviewUser = () => {
       <div className="overview-user-container">
         <div className="overview-header">
           <h2>Översikt</h2>
-          <h2>{username?`${username.firstname} ${username.lastname}`:""}</h2>
+          <h2>
+            {username ? `${username.firstname} ${username.lastname}` : ""}
+          </h2>
         </div>
         {courses?.map((obj) => (
           <div key={obj.id + Math.random()} className="overview-row">
