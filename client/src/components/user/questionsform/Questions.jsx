@@ -26,7 +26,6 @@ const Questions = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [getToResult, setGetToResult] = useState(false);
   const [facitMode, SetFacitMode] = useState(false);
-  const [colorBool, SetColorBool]=useState(false)
 
   useEffect(() => {
     const facitBool = sessionStorage.getItem("facitmode");
@@ -52,23 +51,23 @@ const Questions = (props) => {
   }, []);
 
   useEffect(() => {
-    getFromSession(-question.fråganr + 1);
+    getFromSession(-question.questionnr + 1);
   }, [starInDropDown]);
 
   function handleNext() {
     let array = Array(11).fill(false);
     SetChecked(array);
-    getFromSession(question.fråganr + 1);
-    SetQuestion(JSON.parse(localStorage.getItem(question.fråganr + 1)));
-    sessionStorage.setItem(question.fråganr, checked);
+    getFromSession(question.questionnr + 1);
+    SetQuestion(JSON.parse(localStorage.getItem(question.questionnr + 1)));
+    sessionStorage.setItem(question.questionnr, checked);
   }
 
   function handlePrevious() {
     let array = Array(11).fill(false);
     SetChecked(array);
-    getFromSession(question.fråganr - 1);
-    SetQuestion(JSON.parse(localStorage.getItem(question.fråganr - 1)));
-    sessionStorage.setItem(question.fråganr, checked);
+    getFromSession(question.questionnr - 1);
+    SetQuestion(JSON.parse(localStorage.getItem(question.questionnr - 1)));
+    sessionStorage.setItem(question.questionnr, checked);
   }
 
   function getFromSession(index) {
@@ -87,23 +86,23 @@ const Questions = (props) => {
     SetChecked(array);
     getFromSession(choice);
     SetQuestion(JSON.parse(localStorage.getItem(choice)));
-    sessionStorage.setItem(question.fråganr, checked);
+    sessionStorage.setItem(question.questionnr, checked);
   }
 
   async function handleLastQuestion() {
     let array = Array(11).fill(false);
     SetChecked(array);
-    sessionStorage.setItem(question.fråganr, checked);
+    sessionStorage.setItem(question.questionnr, checked);
   }
 
   function handleAbort() {}
-
+  let cleanUpArr=[];
   async function resultHandling() {
     const resultarray = localStorageCount.map((item) => [
       sessionStorage.getItem(item + 1),
     ]);
-
-    let array1 = resultarray.map((item) =>
+    console.log(resultarray[0][0])
+    if(resultarray[0][0]!=null){ let array1 = resultarray.map((item) =>
       item.map((item2) => item2.split(","))
     );
 
@@ -117,9 +116,10 @@ const Questions = (props) => {
       )
     );
 
-    let cleanUpArr = array2.map((item) =>
+    cleanUpArr = array2.map((item) =>
       item.map((item2) => item2.filter(Boolean))
-    );
+    );}
+   
 
     //get all questions
     let questionArray = localStorageCount.map((item) =>
@@ -129,7 +129,7 @@ const Questions = (props) => {
     console.log(questionArray);
 
     let correctAnswerArray = questionArray.map((item) => [
-      item.svar.toUpperCase(),
+      item.answer.toUpperCase(),
     ]);
 
     let correctAnswerArray2 = correctAnswerArray.map((item) =>
@@ -186,7 +186,7 @@ const Questions = (props) => {
 
   const handleStar = () => {
     let array = [...starInDropDown];
-    array[question.fråganr - 1] = !array[question.fråganr - 1];
+    array[question.questionnr - 1] = !array[question.questionnr - 1];
     array.map((item) =>
       item != true || item != false ? (item = false) : (item = item)
     );
@@ -194,22 +194,16 @@ const Questions = (props) => {
     setStarInDropDown(array);
   };
   function setCorrectColor(answeritem) {
-    let answerArray = question["svar"].split(",");
-    let cssBool=false;
+    let answerArray = question["answer"].split(",");
+    let cssBool = false;
     answerArray.map((item) => {
-
-      console.log(item)
+      console.log(item);
       if (item == answeritem) {
-        cssBool=true;
-      }
-      else{
-        
-         
-      }
+        cssBool = true;
+      } 
     });
-    return cssBool
+    return cssBool;
   }
-  
 
   return (
     <>
@@ -218,7 +212,7 @@ const Questions = (props) => {
           <p></p>
           <p>{useTimer.onExpire}</p>
           <div>
-            {!facitMode?<UseTimer expiryTimestamp={time} />:""}
+            {!facitMode ? <UseTimer expiryTimestamp={time} /> : ""}
             <select
               className="questiondropdown"
               onChange={(e) => handleQuestionChoice(e.target.value)}
@@ -232,27 +226,31 @@ const Questions = (props) => {
           </div>
           <div className="questionscontainer">
             <div className="questionsblock">
-              {starInDropDown[question.fråganr - 1] ? (
+              {starInDropDown[question.questionnr - 1] ? (
                 <BsStarFill className="handlestar" onClick={handleStar} />
               ) : (
                 <BsStar className="handlestar" onClick={handleStar} />
               )}
               <div className="questionsblockinner">
                 <h3 className="questionnumber ralewayweight500">
-                  Fråga {question.fråganr}
+                  Fråga {question.questionnr}
                 </h3>
-                <div className="question setfontsize">{question.fråga}</div>
+                <div className="question setfontsize">{question.question}</div>
                 <div className="setfontsize choosetext">
                   Välj ett eller flera av svaren nedan
                 </div>
                 <div className="questionscrollcontainer setfontsize">
                   {alphabet.map((item, index) =>
-                    question["frågealternativ" + item] != "" ? (
-                      
+                    question["alternative" + item] != "" ? (
                       <div
                         key={index}
-                       
-                        className={facitMode? (setCorrectColor(item)?"questiongrid answercolor":"questiongrid"):"questiongrid"}
+                        className={
+                          facitMode
+                            ? setCorrectColor(item)
+                              ? "questiongrid answercolor"
+                              : "questiongrid"
+                            : "questiongrid"
+                        }
                       >
                         <input
                           disabled={facitMode ? true : false}
@@ -261,7 +259,7 @@ const Questions = (props) => {
                           onChange={() => handleChecked(index)}
                           type="checkbox"
                         ></input>
-                        <label>{question["frågealternativ" + item]}</label>
+                        <label>{question["alternative" + item]}</label>
                       </div>
                     ) : (
                       ""
