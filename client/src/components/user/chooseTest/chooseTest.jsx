@@ -14,7 +14,7 @@ const ChooseTest = () => {
 
   useEffect(() => {
     async function fetchTests() {
-      const data = await getTestByUserId("user");
+      const data = await getTestByUserId(localStorage.getItem("user"));
       setTests(data);
       setChoice({ ...choice, id: data[0].testid });
     }
