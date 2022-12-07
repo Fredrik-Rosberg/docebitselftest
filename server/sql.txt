@@ -63,7 +63,6 @@ id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 organizer varchar NOT NULL,
 city varchar NOT NULL,
 imagepath varchar NOT NULL,
-FOREIGN KEY (courseoccasionid) REFERENCES courseoccasion(id) ON DELETE CASCADE,
 UNIQUE (organizer, city)
 );
 
