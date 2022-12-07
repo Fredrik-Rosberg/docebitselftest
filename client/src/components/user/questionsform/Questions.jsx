@@ -26,18 +26,17 @@ const Questions = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [getToResult, setGetToResult] = useState(false);
   const [facitMode, SetFacitMode] = useState(false);
-  
+  const [colorBool, SetColorBool]=useState(false)
 
   useEffect(() => {
     const facitBool = sessionStorage.getItem("facitmode");
-    resultHandling()
+    resultHandling();
     if (localStorageCount.length + 1 != sessionStorage.length) {
       sessionStorage.setItem("facitmode", false);
     } else {
       SetFacitMode(facitBool);
     }
 
-    
     getFromSession(1);
 
     setFirstQuestion();
@@ -49,7 +48,7 @@ const Questions = (props) => {
         );
       }
     }
-    
+    console.log(question);
   }, []);
 
   useEffect(() => {
@@ -99,11 +98,11 @@ const Questions = (props) => {
 
   function handleAbort() {}
 
-  async function resultHandling(){
+  async function resultHandling() {
     const resultarray = localStorageCount.map((item) => [
       sessionStorage.getItem(item + 1),
     ]);
-    console.log(resultarray);
+
     let array1 = resultarray.map((item) =>
       item.map((item2) => item2.split(","))
     );
@@ -121,7 +120,6 @@ const Questions = (props) => {
     let cleanUpArr = array2.map((item) =>
       item.map((item2) => item2.filter(Boolean))
     );
-    console.log(cleanUpArr);
 
     //get all questions
     let questionArray = localStorageCount.map((item) =>
@@ -168,12 +166,12 @@ const Questions = (props) => {
     await resultHandling();
 
     //get all results unfinished
-    
 
     //Hantera modal och navigering
     sessionStorage.setItem("facitmode", "true");
     setGetToResult(true);
     setOpenModal(false);
+    console.log(wrongAnswers);
   }
 
   function handleChecked(index) {
@@ -195,7 +193,22 @@ const Questions = (props) => {
 
     setStarInDropDown(array);
   };
+  function setCorrectColor(answeritem) {
+    let answerArray = question["svar"].split(",");
+    let cssBool=false;
+    answerArray.map((item) => {
 
+      console.log(item)
+      if (item == answeritem) {
+        cssBool=true;
+      }
+      else{
+        
+         
+      }
+    });
+    return cssBool
+  }
   
 
   return (
@@ -205,7 +218,7 @@ const Questions = (props) => {
           <p></p>
           <p>{useTimer.onExpire}</p>
           <div>
-            <UseTimer expiryTimestamp={time} />
+            {!facitMode?<UseTimer expiryTimestamp={time} />:""}
             <select
               className="questiondropdown"
               onChange={(e) => handleQuestionChoice(e.target.value)}
@@ -235,8 +248,14 @@ const Questions = (props) => {
                 <div className="questionscrollcontainer setfontsize">
                   {alphabet.map((item, index) =>
                     question["frågealternativ" + item] != "" ? (
-                      <div key={index} className="questiongrid">
+                      
+                      <div
+                        key={index}
+                       
+                        className={facitMode? (setCorrectColor(item)?"questiongrid answercolor":"questiongrid"):"questiongrid"}
+                      >
                         <input
+                          disabled={facitMode ? true : false}
                           checked={checked[index]}
                           value={item}
                           onChange={() => handleChecked(index)}
