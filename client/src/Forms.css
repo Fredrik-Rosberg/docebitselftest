@@ -90,6 +90,11 @@
   align-self: center;
 }
 
+.select-organizer{
+  width: 100%;
+  height: 31px;
+}
+
 /* Styles for Components form containers */
 
 .create-account-form {

@@ -25,7 +25,7 @@ const Course = () => {
   const gridRef = useRef();
   const [columnDefs] = useState([
     {
-      field: "occasion.courseorganizer",
+      field: "occasion.name",
       headerName: "Kursanordnare",
       width: 150,
     },
@@ -45,6 +45,7 @@ const Course = () => {
   );
 
   useEffect(() => {
+    console.log(courses)
     setDeselectAll(false);
   }, [courses]);
 
@@ -63,11 +64,13 @@ const Course = () => {
     });
 
     setCourses(unique);
+    console.log(unique)
     setDeselectAll(true);
     setSelectedCourse([]);
   }
   const onRemoveSelected = useCallback(() => {
     const selectedData = gridRef.current.api.getSelectedRows();
+    console.log(selectedData);
     const res = gridRef.current.api.applyTransaction({ remove: selectedData });
   }, []);
 

@@ -5,27 +5,28 @@ import {
   focusOnEmptyInputField,
   focusOnWrongInput,
 } from "../../admin/createAccount/CreateAccount";
+import { getCourseOrganizers } from "./createCourseOccasion.service";
 
 const CreateCourseOccasion = () => {
   const inputNameEl = useRef(null);
-  const inputOrganizerEl = useRef(null);
 
   const [newCourseOccasion, setNewCourseOccasion] = useState({
     name: "",
     startdate: "",
     enddate: "",
-    courseorganizer: "",
+    courseorganizerid: "",
   });
   const [message, setMessage] = useState("");
   const [validationMessage, setValidationMessage] = useState("");
   const [showErrorMessages, setShowErrorMessages] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
+  const [courseorganizer, setCourseorganizer] = useState([]);
   useEffect(() => {
     setNewCourseOccasion({
       name: "",
       startdate: "",
       enddate: "",
-      courseorganizer: "",
+      courseorganizerid: "",
     });
   }, [message]);
 
@@ -38,18 +39,22 @@ const CreateCourseOccasion = () => {
     setShowErrorMessages(false);
   }, [
     newCourseOccasion.name,
-    newCourseOccasion.courseorganizer,
+    newCourseOccasion.courseorganizerid,
     newCourseOccasion.startdate,
     newCourseOccasion.enddate,
   ]);
-
+  useEffect(() => {
+    const getOrganizers = async () => {
+      let data = await getCourseOrganizers();
+      setCourseorganizer(data);
+    };
+    getOrganizers();
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowMessages(false);
-    focusOnEmptyInputField(inputOrganizerEl);
     focusOnEmptyInputField(inputNameEl);
     if (validationMessage != "") {
-      focusOnWrongInput(inputOrganizerEl);
       focusOnWrongInput(inputNameEl);
     }
     if (validationMessage == "") {
@@ -92,20 +97,24 @@ const CreateCourseOccasion = () => {
         </div>
         <div className="form-row-item">
           <label htmlFor="courseoccasion-organizer">Kursanordnare:</label>
-          <input
-            ref={inputOrganizerEl}
-            value={newCourseOccasion.courseorganizer}
-            type="text"
-            className="nameinput"
-            onChange={(e) => {
+          <select
+            className="form-select select-organizer"
+            value={newCourseOccasion.courseorganizerid}
+            onChange={(e) =>
               setNewCourseOccasion({
                 ...newCourseOccasion,
-                courseorganizer: e.target.value,
-              }),
-                setValidationMessage(""),
-                setMessage("");
-            }}
-          />
+                courseorganizerid: e.target.value,
+              })
+            }
+          >
+            <option value="Ingen kursanordnare">Ingen kursanordnare</option>
+            {courseorganizer.map((organizer) => (
+              <option
+                key={organizer.id + Math.random()}
+                value={organizer.id}
+              >{`${organizer.name} ${organizer.city}`}</option>
+            ))}
+          </select>
         </div>
         <div className="form-row-item">
           <label htmlFor="courseoccasion-startdate">Startdatum:</label>

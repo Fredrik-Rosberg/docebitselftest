@@ -23,7 +23,7 @@ table {
 .course-table {
   padding-left: 20px;
   display: grid;
-  grid-template-columns: 830px 250px;
+  grid-template-columns: 830px 150px;
   grid-template-rows: 280px 60px;
   align-items: flex-end;
 }
@@ -69,6 +69,7 @@ table {
 .ag-header-row {
   height: 35px;
 }
+
 .table-message {
   display: grid;
   grid-template-columns: auto auto;

@@ -21,7 +21,7 @@ const CourseOccasionTable = forwardRef((props, ref) => {
       if (selectedOccasion) {
         let result = await deleteCourseOccasion(selectedOccasion);
         if (!result) {
-          setOpenModal(true)
+          setOpenModal(true);
           gridRef.current.api.deselectAll();
         } else {
           const selectedData = gridRef.current.api.getSelectedRows();
@@ -42,10 +42,10 @@ const CourseOccasionTable = forwardRef((props, ref) => {
   const { data, error } = useFetch("/api/courseoccasion");
 
   const [columnDefs] = useState([
-    { field: "courseorganizer", headerName: "Kursanordnare", width: 115 },
+    { field: "organizer", headerName: "Kursanordnare", width: 115 },
     { field: "name", headerName: "Kursnamn", width: 100 },
     { field: "startdate", headerName: "Startdatum", width: 90 },
-    { field: "enddate", headerName: "Slutdatum", width:90 },
+    { field: "enddate", headerName: "Slutdatum", width: 90 },
   ]);
 
   const defaultColDef = useMemo(

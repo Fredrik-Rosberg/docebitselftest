@@ -68,15 +68,11 @@ export const validateInputsSignIn = (userInput) => {
 export const validateInputsCourseOccasion = (userInput) => {
   const nameError = validateName(userInput.name, 100);
 
-  const courseOrganizerError = validateName(userInput.courseorganizer, 100);
-  if (nameError == "" && courseOrganizerError == "") {
+  if (nameError == "") {
     return "";
   }
   if (nameError != "") {
     return nameError;
-  }
-  if (courseOrganizerError != "") {
-    return courseOrganizerError;
   }
 };
 

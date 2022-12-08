@@ -29,6 +29,7 @@ export const getCourses = async () => {
   export const getCourseOccasions = async () => {
     let response = await fetch("/api/courseoccasion");
     let data = await response.json();
+    console.log(data)
     if (response.ok) {
       return data;
     } else {

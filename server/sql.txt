@@ -38,12 +38,21 @@ answer varchar(55) NOT NULL,
 FOREIGN KEY (testid) REFERENCES test(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS courseorganizer(
+id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+name varchar NOT NULL,
+city varchar NOT NULL,
+imagepath varchar NOT NULL,
+UNIQUE (name, city)
+);
+
 CREATE TABLE IF NOT EXISTS courseoccasion(
 id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 name varchar(55) NOT NULL,
 startdate date NOT NULL,
 enddate date NOT NULL,
-courseorganizer varchar(55) NOT NULL,
+courseorganizerid int,
+FOREIGN KEY (courseorganizerid) REFERENCES courseorganizer(id)ON DELETE CASCADE,
 UNIQUE (name, startdate)
 );
 
@@ -58,13 +67,6 @@ FOREIGN KEY (testid) REFERENCES test(id) ON DELETE CASCADE,
 UNIQUE (courseoccasionid, userid, testid)
 );
 
-CREATE TABLE IF NOT EXISTS courseorganizer(
-id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-organizer varchar NOT NULL,
-city varchar NOT NULL,
-imagepath varchar NOT NULL,
-UNIQUE (organizer, city)
-);
 
 CREATE TABLE IF NOT EXISTS results(
 id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,

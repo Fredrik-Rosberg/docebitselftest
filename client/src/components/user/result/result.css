@@ -69,5 +69,5 @@ justify-self: end;
 margin-right: 10px;
 }
 .ag-header-cell-label {
-    justify-content: center;
+    /* justify-content: center; */
 }

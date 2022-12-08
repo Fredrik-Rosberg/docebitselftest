@@ -30,7 +30,7 @@ const Overview = () => {
 
   const [columnDefs] = useState([
     {
-      field: "courseorganizer",
+      field: "organizer",
       headerName: "Kursanordnare",
       width: 126,
     },
@@ -43,7 +43,6 @@ const Overview = () => {
   useEffect(() => {
     const getCours = async () => {
       let data = await getCourses();
-      console.log(data)
       if (!data.message) {
         setRowData(data);
       }
@@ -127,8 +126,6 @@ const Overview = () => {
           <button onClick={onRemoveSelected} className="form-button">
             Ta bort kurs
           </button>
-          <button className="form-button">Spara</button>
-
         </div>
       </div>
     </>

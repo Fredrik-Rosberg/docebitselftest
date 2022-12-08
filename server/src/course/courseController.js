@@ -12,6 +12,7 @@ const getCourseById = async (data) => {
 const createCourses = async (req, res) => {
   let responseArray = [];
   let dataArray = req.body;
+  console.log(dataArray);
   let sqlQuery =
     "INSERT INTO course(courseoccasionid, userid, testid) VALUES ($1, $2, $3)";
 
@@ -68,11 +69,11 @@ const getCourse = async (req, res) => {
 const getCourses = async (req, res) => {
   try {
     const sqlQuery =
-      "SELECT course.id, courseoccasion.courseorganizer,courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, test.testname, users.email FROM course INNER JOIN courseoccasion ON course.courseoccasionid = courseoccasion.id INNER JOIN users ON users.id = course.userid INNER JOIN test ON test.id = course.testid";
+      "SELECT course.id, courseorganizer.name, courseorganizer.city, courseoccasion.name AS organizer, courseoccasion.startdate, courseoccasion.enddate, test.testname, users.email FROM course INNER JOIN courseoccasion ON course.courseoccasionid = courseoccasion.id INNER JOIN courseorganizer ON courseoccasion.courseorganizerid = courseorganizer.id INNER JOIN users ON users.id = course.userid INNER JOIN test ON test.id = course.testid";
     let result = await db.query(sqlQuery);
     if (result.rowCount > 0) {
-      console.log(result);
       result.rows.map((obj) => {
+        obj.organizer = `${obj.organizer} ${obj.city}`;
         obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
         obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
       });
@@ -171,7 +172,7 @@ const saveImage = async (req, res) => {
     }
     try {
       let sqlQuery =
-        "INSERT INTO courseorganizer(organizer, city, imagepath) VALUES ($1, $2, $3)";
+        "INSERT INTO courseorganizer(name, city, imagepath) VALUES ($1, $2, $3)";
       await db.query(sqlQuery, [name, city, filename]);
       return res.status(200).json({ message: "Lyckad inläsning" });
     } catch (error) {
@@ -207,6 +208,17 @@ const createResult = async (req, res) => {
 
 
 
+
+const getOrganizers = async (req, res) => {
+  const sqlQuery = "SELECT * FROM courseorganizer";
+
+  let result = await db.query(sqlQuery);
+  if (result.rowCount > 0) {
+    res.status(200).json(result.rows);
+  } else {
+    res.status(404).json({ message: "Ingen kurs funnen med det id" });
+  }
+};
 module.exports = {
   createCourses,
   getCourses,
@@ -216,5 +228,6 @@ module.exports = {
   getCourseByUserId,
   getTestResultByCourseId,
   saveImage,
-  createResult
+  createResult,
+  getOrganizers,
 };
