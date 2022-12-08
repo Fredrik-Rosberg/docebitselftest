@@ -2,10 +2,10 @@ import React from "react";
 import "./questions.css";
 import { useTimer } from "react-timer-hook";
 
-export default function UseTimer({ expiryTimestamp }) {
+export default function UseTimer({ expiryTimestamp, onexpire }) {
   const { seconds, minutes, hours } = useTimer({
-    expiryTimestamp,
-    onExpire: () => console.warn("onExpire called"),
+    expiryTimestamp,onexpire,
+    onExpire: onexpire,
   });
 
   return (
