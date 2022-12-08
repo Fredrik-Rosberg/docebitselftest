@@ -73,7 +73,7 @@ id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 courseid int NOT NULL,
 score int NOT NULL,
 time int,
-FOREIGN KEY (courseid) REFERENCES course(id)
+FOREIGN KEY (courseid) REFERENCES course(id) ON DELETE CASCADE
 );
 
 INSERT INTO users (firstname, lastname, email, hashedpassword, role) VALUES ('admin', 'admin', 'admin@admin.com', 'dafd082f83963dc30b4c7ffd6d78a2b62263c17a229aab3e0d0245064c1e07aacadf31946dd0be78e76968b6abe7d93efc5da2df37172affdae3b4450c3112fa', 'admin'  );

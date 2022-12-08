@@ -69,7 +69,7 @@ const getCourse = async (req, res) => {
 const getCourses = async (req, res) => {
   try {
     const sqlQuery =
-      "SELECT course.id, courseorganizer.name, courseorganizer.city, courseoccasion.name AS organizer, courseoccasion.startdate, courseoccasion.enddate, test.testname, users.email FROM course INNER JOIN courseoccasion ON course.courseoccasionid = courseoccasion.id INNER JOIN courseorganizer ON courseoccasion.courseorganizerid = courseorganizer.id INNER JOIN users ON users.id = course.userid INNER JOIN test ON test.id = course.testid";
+      "SELECT course.id, courseorganizer.name AS organizer, courseorganizer.city, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, test.testname, users.email FROM course INNER JOIN courseoccasion ON course.courseoccasionid = courseoccasion.id INNER JOIN courseorganizer ON courseoccasion.courseorganizerid = courseorganizer.id INNER JOIN users ON users.id = course.userid INNER JOIN test ON test.id = course.testid";
     let result = await db.query(sqlQuery);
     if (result.rowCount > 0) {
       result.rows.map((obj) => {

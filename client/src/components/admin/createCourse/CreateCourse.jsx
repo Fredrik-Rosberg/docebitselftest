@@ -32,7 +32,7 @@ const Course = () => {
       { field: "id", headerName: "Id", hide: true },
 
       {
-        field: "occasion.courseorganizer",
+        field: "occasion.organizer",
         headerName: "Kursanordnare",
         width: 150,
       },
