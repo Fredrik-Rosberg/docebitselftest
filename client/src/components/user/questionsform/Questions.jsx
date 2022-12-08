@@ -226,7 +226,11 @@ const Questions = () => {
           <p></p>
           <p>{useTimer.onExpire}</p>
           <div>
-            {!facitMode ? <UseTimer expiryTimestamp={time} /> : ""}
+            {!facitMode ? (choosenTime.testtime==0?"":
+              <UseTimer expiryTimestamp={time} onexpire={handleFinishTest} />
+            ) : (
+              ""
+            )}
             <select
               className="questiondropdown"
               onChange={(e) => handleQuestionChoice(e.target.value)}
