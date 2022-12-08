@@ -1,7 +1,8 @@
-import React, { createContext, useContext }from "react";
+import React, { useContext }from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { QuestionContext } from "../../context/QuestionContext";
 
 import "./runTest.css";
 import { getQuestionsById } from "./runTest.service";
@@ -10,6 +11,7 @@ import { getQuestionsById } from "./runTest.service";
 const RunTest = (props) => {
   
   const [questions, SetQuestions] = useState([]);
+  const [time, SetTime]=useContext(QuestionContext)
   
   useEffect(() => {
 
@@ -18,11 +20,12 @@ const RunTest = (props) => {
       SetQuestions(questions);
     }
     getQuestions()
-    
+   
 
   }, []);
 
   function handleSubmit(){
+     SetTime(props)
     
     questions.map((items)=>(localStorage.setItem(items.questionnr, JSON.stringify(items), console.log(items))))
     

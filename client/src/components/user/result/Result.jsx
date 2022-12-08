@@ -1,12 +1,19 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useMemo, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import "./result.css";
-import  Questions from "../questionsform/Questions"
+import { QuestionContext } from "../../context/QuestionContext";
+import { createResult } from "../../user/overview/overview.user.service";
 
 const Result = (props) => {
   const [answerObjectArray, SetAnswerObjectArray] = useState([]);
   const [passOrFail, setPassOrFail] = useState("");
+  const [time, SetTime] = useContext(QuestionContext);
+  const [resultObject, SetResultObject] = useState({
+    courseid: 0,
+    time: 0,
+    score: 0,
+  });
 
   const [columnDefs] = useState([
     { field: "questionnr", headerName: "Fråga", width: 100 },
@@ -22,8 +29,10 @@ const Result = (props) => {
     }),
     []
   );
+  const navigate = useNavigate();
 
   useEffect(() => {
+    SetResultObject({ ...resultObject, score: props.correctCount, courseid:time.courseid, time:time.testtime });
     setObject();
     if (props.correctCount / (localStorage.length - 1) > 0.7) {
       setPassOrFail("Godkänd");
@@ -70,15 +79,28 @@ const Result = (props) => {
       props.checkedChoice(boolarr);
     }
   }
-  function handleQuestionChoice(id){
-    getFromSession(id)
-    props.resultBool(false)
+  function handleQuestionChoice(id) {
+    getFromSession(id);
+    props.resultBool(false);
     props.questionnr(JSON.parse(localStorage.getItem(id)));
     props.setfacit(true);
-   
-
   }
 
+  function finishTest() {
+    let clearCount = localStorage.length;
+
+    sessionStorage.clear();
+    for (let index = 1; index <= clearCount; index++) {
+      localStorage.removeItem(index);
+    }
+    //courseid, score, time
+    createResult(resultObject)
+    console.log()
+    console.log(time);
+    console.log(props.correctCount);
+
+    navigate("/user");
+  }
 
   return (
     <>
@@ -90,7 +112,8 @@ const Result = (props) => {
               Ditt resultat: <div>{props.correctCount}</div>
             </div>
             <div>
-              Gräns för godkänt: <div>{Math.ceil((localStorage.length - 1) * 0.7)}</div>
+              Gräns för godkänt:{" "}
+              <div>{Math.ceil((localStorage.length - 1) * 0.7)}</div>
             </div>
             <div>
               Totalt antal poäng: <div>{localStorage.length - 1}</div>
@@ -108,7 +131,9 @@ const Result = (props) => {
             }}
           >
             <AgGridReact
-              onCellDoubleClicked={(e)=>handleQuestionChoice(e.data.questionnr)}
+              onCellDoubleClicked={(e) =>
+                handleQuestionChoice(e.data.questionnr)
+              }
               rowData={answerObjectArray}
               columnDefs={columnDefs}
               defaultColDef={defaultColDef}
@@ -118,17 +143,14 @@ const Result = (props) => {
           </div>
         </div>
         <div className="resultbuttons">
-          <div>
-            
-          </div>
-          <Link to={"/user"}>
-            <button
-              onClick={() => finishTest}
-              className="quittestbutton generalbuttonstyle"
-            >
-              Avsluta
-            </button>
-          </Link>
+          <div></div>
+
+          <button
+            onClick={() => finishTest()}
+            className="quittestbutton generalbuttonstyle"
+          >
+            Avsluta
+          </button>
         </div>
       </div>
     </>

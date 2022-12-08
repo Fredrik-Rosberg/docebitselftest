@@ -186,6 +186,27 @@ const saveImage = async (req, res) => {
     }
   });
 };
+const createResult = async (req, res) => {
+
+  
+
+  try {  
+    let sqlQuery = "INSERT INTO results(courseid, score, time) VALUES($1,$2,$3)";
+    let result = await db.query(sqlQuery, [req.body.courseid, req.body.score, req.body.time]);
+    console.log(result);
+    if (result.rowCount) {
+      res.status(200).json({ message: "Resultat sparat", result: true });
+    } else {
+      res.status(400).json({ message: "Resultat ej sparat", result: false });
+    }
+  } catch (error) {
+    res.status(400).json({ message: "Misslyckad ändring2" });
+  }
+};
+
+
+
+
 module.exports = {
   createCourses,
   getCourses,
@@ -195,4 +216,5 @@ module.exports = {
   getCourseByUserId,
   getTestResultByCourseId,
   saveImage,
+  createResult
 };

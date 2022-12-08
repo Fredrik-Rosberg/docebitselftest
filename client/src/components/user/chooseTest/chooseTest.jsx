@@ -1,14 +1,16 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getTestByUserId } from "./chooseTest.service";
 import RunTest from "../runTest/RunTest.jsx";
 import "./chooseTest.css";
+import { QuestionContext } from "../../context/QuestionContext";
 
 const ChooseTest = () => {
   const [tests, setTests] = useState([]);
   const [choice, setChoice] = useState({
     id: "",
     testtime: 75,
+    courseid:0
   });
   const [startTest, SetStartTest] = useState(false);
 
@@ -16,19 +18,22 @@ const ChooseTest = () => {
     async function fetchTests() {
       const data = await getTestByUserId(localStorage.getItem("user"));
       setTests(data);
-      setChoice({ ...choice, id: data[0].testid });
+      setChoice({ ...choice, id: data[0].testid, courseid:data[0].id });
+     
+      
     }
-
+    
     fetchTests();
   }, []);
 
   console.log(choice);
   console.log(tests);
 
+
   return (
     <>
       {startTest ? (
-        <RunTest testid={choice.id} testtime={choice.testtime} />
+        <RunTest testid={choice.id} testtime={choice.testtime} courseid={choice.courseid} />
       ) : (
         <div className="choosetestmain">
           <div className="topsection">

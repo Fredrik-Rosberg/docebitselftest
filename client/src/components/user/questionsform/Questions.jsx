@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./questions.css";
 import { useTimer } from "react-timer-hook";
 import UseTimer from "./Timer";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import QuestionModalComponent from "../../modal/QuestionModal";
+import AbortQuestionsModal from "../../modal/AbortQuestionModal";
 import Result from "../result/Result";
+import { useNavigate } from "react-router-dom";
+import { QuestionContext } from "../../context/QuestionContext";
 
-const Questions = (props) => {
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 12 * 60);
+const Questions = () => {
   const [question, SetQuestion] = useState(JSON.parse(localStorage.getItem(1)));
   const alpha = Array.from(Array(11)).map((e, i) => i + 65);
   const alphabet = alpha.map((x) => String.fromCharCode(x).toLowerCase());
@@ -20,14 +21,18 @@ const Questions = (props) => {
   const [starInDropDown, setStarInDropDown] = useState(
     Array(localStorage.length).fill(false)
   );
-
   const [correctCount, SetCorrectCount] = useState(0);
   const [wrongAnswers, SetWrongAnswers] = useState([{}]);
   const [openModal, setOpenModal] = useState(false);
+  const [openModal2, setOpenModal2] = useState(false);
   const [getToResult, setGetToResult] = useState(false);
   const [facitMode, SetFacitMode] = useState(false);
-
+  const [choosenTime, SetChoosenTime] = useContext(QuestionContext);
+  const navigate = useNavigate();
+  let time = new Date();
+  time.setSeconds(time.getSeconds() + choosenTime.testtime * 60);
   useEffect(() => {
+    console.log(choosenTime);
     const facitBool = sessionStorage.getItem("facitmode");
     resultHandling();
     if (localStorageCount.length + 1 != sessionStorage.length) {
@@ -47,7 +52,6 @@ const Questions = (props) => {
         );
       }
     }
-    console.log(question);
   }, []);
 
   useEffect(() => {
@@ -95,31 +99,31 @@ const Questions = (props) => {
     sessionStorage.setItem(question.questionnr, checked);
   }
 
-  function handleAbort() {}
-  let cleanUpArr=[];
   async function resultHandling() {
+    let cleanUpArr = [];
     const resultarray = localStorageCount.map((item) => [
       sessionStorage.getItem(item + 1),
     ]);
-    console.log(resultarray[0][0])
-    if(resultarray[0][0]!=null){ let array1 = resultarray.map((item) =>
-      item.map((item2) => item2.split(","))
-    );
+    console.log(resultarray[0][0]);
+    if (resultarray[0][0] != null) {
+      let array1 = resultarray.map((item) =>
+        item.map((item2) => item2.split(","))
+      );
 
-    let array2 = array1.map((item) =>
-      item.map((item2) =>
-        item2.map((item3, index) =>
-          item3 == "true"
-            ? (item3 = String.fromCharCode(97 + index).toUpperCase())
-            : (item3 = false)
+      let array2 = array1.map((item) =>
+        item.map((item2) =>
+          item2.map((item3, index) =>
+            item3 == "true"
+              ? (item3 = String.fromCharCode(97 + index).toUpperCase())
+              : (item3 = false)
+          )
         )
-      )
-    );
+      );
 
-    cleanUpArr = array2.map((item) =>
-      item.map((item2) => item2.filter(Boolean))
-    );}
-   
+      cleanUpArr = array2.map((item) =>
+        item.map((item2) => item2.filter(Boolean))
+      );
+    }
 
     //get all questions
     let questionArray = localStorageCount.map((item) =>
@@ -162,6 +166,7 @@ const Questions = (props) => {
   }
 
   async function handleFinishTest() {
+    time=0;
     await handleLastQuestion();
     await resultHandling();
 
@@ -197,14 +202,23 @@ const Questions = (props) => {
     let answerArray = question["answer"].split(",");
     let cssBool = false;
     answerArray.map((item) => {
-      console.log(item);
       if (item == answeritem) {
         cssBool = true;
-      } 
+      }
     });
     return cssBool;
   }
 
+  function handleAbort() {
+    let clearCount = localStorageCount.length;
+
+    sessionStorage.clear();
+    for (let index = 1; index <= clearCount; index++) {
+      localStorage.removeItem(index);
+    }
+
+    navigate("/user");
+  }
   return (
     <>
       {!getToResult ? (
@@ -285,7 +299,7 @@ const Questions = (props) => {
                     Tillbaka till resultat
                   </button>
                 ) : (
-                  <button onClick={handleAbort}>Avbryt</button>
+                  <button onClick={() => setOpenModal2(true)}>Avbryt</button>
                 )}
               </div>
 
@@ -319,7 +333,12 @@ const Questions = (props) => {
           setfacit={SetFacitMode}
         />
       )}
-
+      <AbortQuestionsModal
+        content="Vill du avbryta testet?"
+        onClose={() => setOpenModal2(!openModal2)}
+        show={openModal2}
+        signOut={handleAbort}
+      ></AbortQuestionsModal>
       <QuestionModalComponent
         content="Vill du avsluta testet?"
         onClose={() => setOpenModal(!openModal)}
