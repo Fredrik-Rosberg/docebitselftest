@@ -304,7 +304,7 @@ const Questions = () => {
               </div>
 
               <div>
-                {localStorage.length - 1 != question.id ? (
+                {localStorage.length - 1 != question.questionnr ? (
                   facitMode ? (
                     ""
                   ) : facitMode ? (

@@ -8,9 +8,9 @@ import { QuestionContext } from "../../context/QuestionContext";
 const ChooseTest = () => {
   const [tests, setTests] = useState([]);
   const [choice, setChoice] = useState({
-    id: "",
+    testid: "",
     testtime: 75,
-    courseid:0
+    courseid: 0,
   });
   const [startTest, SetStartTest] = useState(false);
 
@@ -18,22 +18,25 @@ const ChooseTest = () => {
     async function fetchTests() {
       const data = await getTestByUserId(localStorage.getItem("user"));
       setTests(data);
-      setChoice({ ...choice, id: data[0].testid, courseid:data[0].id });
-     
-      
+      setChoice({ ...choice, testid: data[0].testid, courseid: data[0].id });
+
+      console.log(data);
     }
-    
+
     fetchTests();
   }, []);
 
   console.log(choice);
   console.log(tests);
 
-
   return (
     <>
       {startTest ? (
-        <RunTest testid={choice.id} testtime={choice.testtime} courseid={choice.courseid} />
+        <RunTest
+          testid={choice.testid}
+          testtime={choice.testtime}
+          courseid={choice.courseid}
+        />
       ) : (
         <div className="choosetestmain">
           <div className="topsection">
@@ -41,11 +44,11 @@ const ChooseTest = () => {
             <select
               className="choose-test-field"
               onChange={(e) =>
-                setChoice({ ...choice, id: parseInt(e.target.value) })
+                setChoice({ ...choice, testid: parseInt(e.target.value) })
               }
             >
               {tests.map((test) => (
-                <option value={test.id} key={test.id}>
+                <option value={test.testid} key={test.id}>
                   {test.testname}
                 </option>
               ))}

@@ -3,7 +3,7 @@
 GET http://localhost:3001/api/test/
 
 ### Hämtar test med userid
-GET  http://localhost:3001/api/test/questions/11
+GET  http://localhost:3001/api/test/questions/2
 
 ### Tar bort en test med id
 DELETE http://localhost:3001/api/test/5 HTTP/1.1
