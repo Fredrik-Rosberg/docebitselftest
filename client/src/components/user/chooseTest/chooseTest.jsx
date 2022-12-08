@@ -3,7 +3,6 @@ import { useEffect, useState, useContext } from "react";
 import { getTestByUserId } from "./chooseTest.service";
 import RunTest from "../runTest/RunTest.jsx";
 import "./chooseTest.css";
-import { QuestionContext } from "../../context/QuestionContext";
 
 const ChooseTest = () => {
   const [tests, setTests] = useState([]);
@@ -25,6 +24,18 @@ const ChooseTest = () => {
 
     fetchTests();
   }, []);
+
+
+
+   function handleChoice(){
+    tests.forEach((element) => {
+      if (element.testid == choice.testid) {
+        setChoice({ ...choice, courseid: element.id });
+      }
+    });
+
+    SetStartTest(true);
+   }
 
   console.log(choice);
   console.log(tests);
@@ -64,7 +75,7 @@ const ChooseTest = () => {
               className="timeselectform"
             >
               <div className="radiofield">
-                <input type="radio" value={75} name="time" defaultChecked />{" "}
+                <input type="radio" value={75} name="time" defaultChecked />
                 <label htmlFor="75 min">75 minuter</label>
               </div>
 
@@ -81,7 +92,7 @@ const ChooseTest = () => {
           </div>
 
           <div className="buttondiv">
-            <button onClick={() => SetStartTest(true)}>Fortsätt</button>
+            <button onClick={() => handleChoice()}>Fortsätt</button>
           </div>
         </div>
       )}
