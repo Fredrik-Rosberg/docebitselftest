@@ -27,32 +27,37 @@ const Course = () => {
   const [showErrorMessages, setShowErrorMessages] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const gridRef = useRef();
-  const [columnDefs] = useState([
-    {
-      field: "occasion.courseorganizer",
-      headerName: "Kursanordnare",
-      width: 150,
-    },
-    { field: "occasion.name", headerName: "Kursnamn", width: 120 },
-    { field: "occasion.startdate", headerName: "Startdatum", width: 120 },
-    { field: "occasion.enddate", headerName: "Slutdatum", width: 120 },
-    { field: "test.testname", headerName: "Test", width: 130 },
-    { field: "user.email", headerName: "Användarnamn", width: 214 },
-  ]);
+  const gridOptions = {
+    columnDefs: [
+      { field: "id", headerName: "Id", hide: true },
 
-  const defaultColDef = useMemo(
-    () => ({
-      sortable: true,
-      sortingOrder: ["asc", "desc", "null"],
-    }),
-    []
-  );
+      {
+        field: "occasion.courseorganizer",
+        headerName: "Kursanordnare",
+        width: 150,
+      },
+      { field: "occasion.name", headerName: "Kursnamn", width: 120 },
+      { field: "occasion.startdate", headerName: "Startdatum", width: 120 },
+      { field: "occasion.enddate", headerName: "Slutdatum", width: 120 },
+      { field: "test.testname", headerName: "Test", width: 130 },
+      { field: "user.email", headerName: "Användarnamn", width: 214 },
+      { field: "exists", hide: true },
+    ],
+
+    defaultColDef: useMemo(
+      () => ({
+        sortable: true,
+        sortingOrder: ["asc", "desc", "null"],
+      }),
+      []
+    ),
+  };
 
   useEffect(() => {
     setDeselectAll(false);
   }, [courses]);
 
-  const rowSelectionType = "multiple";
+  const rowSelectionType = "single";
 
   async function handleAddCourse() {
     const uniqueIds = new Set();
@@ -71,14 +76,10 @@ const Course = () => {
     setSelectedCourse([]);
   }
   const onRemoveSelected = useCallback(() => {
-    const selectedData = gridRef.current.api.getSelectedRows();
-    // console.log(selectedData);
-    // let updatedCourseArray = [];
-    // selectedData.map((el) =>
-    //   setCourses((current) => [current, current.filter((obj) => obj.userid != 40)])
-    // );
-    const res = gridRef.current.api.applyTransaction({ remove: selectedData });
-  }, []);
+    const selectedRow = gridRef.current.api.getSelectedRows()[0];
+    let c = courses.filter((course) => course != selectedRow);
+    setCourses(c);
+  });
 
   const saveCourses = async () => {
     let result = await createCourses(courses);
@@ -88,10 +89,12 @@ const Course = () => {
       setCourses([]);
     } else if (result.error) {
       console.log(result.error);
+      setCourses(courses);
       setErrorMessage(result.error);
       setShowErrorMessages(true);
     }
   };
+
   return (
     <>
       <div className="overview-main">
@@ -120,9 +123,8 @@ const Course = () => {
           >
             <AgGridReact
               ref={gridRef}
+              gridOptions={gridOptions}
               rowData={courses}
-              columnDefs={columnDefs}
-              defaultColDef={defaultColDef}
               rowSelection={rowSelectionType}
               rowMultiSelectWithClick={true}
               suppressCellFocus={true}
@@ -130,7 +132,7 @@ const Course = () => {
             ></AgGridReact>
           </div>
           <button className="form-button" onClick={onRemoveSelected}>
-            Ta bort rad(er)
+            Ta bort rad
           </button>
         </div>
         <div className="table-message">
