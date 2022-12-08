@@ -13,7 +13,7 @@ const ModalComponent = (props) => {
         className="questionmodal-content"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="questionmodal-topbody">{props.content}</div>
+        <div className="questionmodal-topbody"><div>{props.content}</div><div>{props.content2}</div></div>
         <div className="questionmodal-bottombody">
           <div onClick={props.signOut}>Ja</div>
           <div onClick={props.onClose}>Nej</div>

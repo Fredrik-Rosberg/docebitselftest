@@ -334,7 +334,8 @@ const Questions = () => {
         />
       )}
       <AbortQuestionsModal
-        content="Vill du avbryta testet?"
+        content="Vill du avbryta testet? "
+        content2="Resultatet kommer inte att sparas om du väljer att avbryta."
         onClose={() => setOpenModal2(!openModal2)}
         show={openModal2}
         signOut={handleAbort}
