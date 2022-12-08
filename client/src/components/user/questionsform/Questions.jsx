@@ -239,7 +239,9 @@ const Questions = () => {
           <p></p>
           <p>{useTimer.onExpire}</p>
           <div>
-            {!facitMode ? (
+
+            {!facitMode ? (choosenTime.testtime==0?"":
+
               <UseTimer expiryTimestamp={time} onexpire={handleFinishTest} />
             ) : (
               ""
