@@ -107,7 +107,7 @@ const getCoursesByFKId = async (id, table) => {
 // select test.testname, test.maxscore, results.score from course inner join results on results.courseid = course.id inner join test on test.id = course.testid where course.id=100
 const getCourseByUserId = async (req, res) => {
   const sqlQuery =
-    "SELECT DISTINCT courseoccasion.id, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, courseoccasion.courseorganizer from course inner join courseoccasion ON courseoccasion.id = course.courseoccasionid where course.userid=$1";
+    "SELECT DISTINCT courseoccasion.id, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, courseorganizer.name as organizer from course inner join courseorganizer on course.courseoccasionid= courseorganizer.id inner join courseoccasion ON courseoccasion.id = course.courseoccasionid where course.userid=$1";
 
   let result = await db.query(sqlQuery, [req.params.id]);
   if (result.rowCount > 0) {
@@ -188,12 +188,14 @@ const saveImage = async (req, res) => {
   });
 };
 const createResult = async (req, res) => {
-
-  
-
-  try {  
-    let sqlQuery = "INSERT INTO results(courseid, score, time) VALUES($1,$2,$3)";
-    let result = await db.query(sqlQuery, [req.body.courseid, req.body.score, req.body.time]);
+  try {
+    let sqlQuery =
+      "INSERT INTO results(courseid, score, time) VALUES($1,$2,$3)";
+    let result = await db.query(sqlQuery, [
+      req.body.courseid,
+      req.body.score,
+      req.body.time,
+    ]);
     console.log(result);
     if (result.rowCount) {
       res.status(200).json({ message: "Resultat sparat", result: true });
@@ -204,10 +206,6 @@ const createResult = async (req, res) => {
     res.status(400).json({ message: "Misslyckad ändring2" });
   }
 };
-
-
-
-
 
 const getOrganizers = async (req, res) => {
   const sqlQuery = "SELECT * FROM courseorganizer";
