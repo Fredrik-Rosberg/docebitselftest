@@ -7,6 +7,7 @@ const MyAccount = () => {
   async function loadUser(userId) {
     let user = await getUserById(userId);
     setUser(user);
+    console.log(user.role);
   }
 
   useEffect(() => {
@@ -17,29 +18,36 @@ const MyAccount = () => {
   }, []);
   return (
     <>
-        <h2 className="form-h2">Mitt konto</h2>
-        <form className="form-container my-account-form">
-          <div className="form-row-item">
-            <label htmlFor="firstname">Förnamn:</label>
-            <input
-              type="text"
-              name="firstname"
-              disabled
-              value={user.firstname}
-            />
-          </div>
-          <div className="form-row-item">
-            <label htmlFor="lastname">Efternamn:</label>
-            <input type="text" name="lastname" disabled value={user.lastname} />
-          </div>
-          <div className="form-row-item">
-            <label htmlFor="email">E-postadress:</label>
-            <input type="text" name="email" disabled value={user.email} />
-          </div>
-          <Link className='form-link' to={`/admin/account/${user.id}/changepassword`}>
+      <h2 className="form-h2">Mitt konto</h2>
+      <form className="form-container my-account-form">
+        <div className="form-row-item">
+          <label htmlFor="firstname">Förnamn:</label>
+          <input type="text" name="firstname" disabled value={user.firstname} />
+        </div>
+        <div className="form-row-item">
+          <label htmlFor="lastname">Efternamn:</label>
+          <input type="text" name="lastname" disabled value={user.lastname} />
+        </div>
+        <div className="form-row-item">
+          <label htmlFor="email">E-postadress:</label>
+          <input type="text" name="email" disabled value={user.email} />
+        </div>
+        {user.role == "user" ? (
+          <Link
+            className="form-link"
+            to={`/user/account/${user.id}/changepassword`}
+          >
             <button className="form-button">Ändra lösenord</button>
           </Link>
-        </form>
+        ) : (
+          <Link
+            className="form-link"
+            to={`/admin/account/${user.id}/changepassword`}
+          >
+            <button className="form-button">Ändra lösenord</button>
+          </Link>
+        )}
+      </form>
     </>
   );
 };

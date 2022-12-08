@@ -58,6 +58,10 @@ function App() {
               <Route path="/user/" element={<OverviewUser />} />
               <Route path="/user/test" element={<ChooseTest />} />
               <Route path="/user/myaccount" element={<MyAccount />} />
+              <Route
+              path="/user/account/:id/changepassword"
+              element={<ChangePassword />}
+            />
             </Route>
             <Route path="/user/test/questionform" element={<Questions />} />
           </Route>
