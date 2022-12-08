@@ -30,7 +30,7 @@ const Questions = () => {
   const [choosenTime, SetChoosenTime] = useContext(QuestionContext);
   const navigate = useNavigate();
   let time = new Date();
-  time.setSeconds(time.getSeconds() + choosenTime.testtime * 60);
+  time.setSeconds(time.getSeconds() + 0.2 * 60);
   useEffect(() => {
     console.log(choosenTime);
     const facitBool = sessionStorage.getItem("facitmode");
@@ -101,12 +101,25 @@ const Questions = () => {
 
   async function resultHandling() {
     let cleanUpArr = [];
-    const resultarray = localStorageCount.map((item) => [
+    const resultArray = localStorageCount.map((item) => [
       sessionStorage.getItem(item + 1),
     ]);
-    console.log(resultarray[0][0]);
-    if (resultarray[0][0] != null) {
-      let array1 = resultarray.map((item) =>
+
+    resultArray.forEach((element, elemindex) => {
+      element.map((item) => {
+        if (item == null) {
+          console.log("här"), console.log(elemindex);
+          resultArray[elemindex].fill(
+            "false, false, false, false, false, false, false, false, false, false, false,"
+          );
+        }
+      });
+    });
+    console.log(resultArray);
+
+    console.log(resultArray[0]);
+    if (resultArray[0][0] != null) {
+      let array1 = resultArray.map((item) =>
         item.map((item2) => item2.split(","))
       );
 
@@ -166,7 +179,7 @@ const Questions = () => {
   }
 
   async function handleFinishTest() {
-    time=0;
+    time = 0;
     await handleLastQuestion();
     await resultHandling();
 
@@ -226,7 +239,11 @@ const Questions = () => {
           <p></p>
           <p>{useTimer.onExpire}</p>
           <div>
-            {!facitMode ? <UseTimer expiryTimestamp={time} /> : ""}
+            {!facitMode ? (
+              <UseTimer expiryTimestamp={time} onexpire={handleFinishTest} />
+            ) : (
+              ""
+            )}
             <select
               className="questiondropdown"
               onChange={(e) => handleQuestionChoice(e.target.value)}
