@@ -26,7 +26,6 @@ const CreateCourseOccasion = () => {
       name: "",
       startdate: "",
       enddate: "",
-      courseorganizerid: "",
     });
   }, [message]);
 
@@ -107,7 +106,7 @@ const CreateCourseOccasion = () => {
               })
             }
           >
-            <option value="Ingen kursanordnare">Ingen kursanordnare</option>
+            <option value={null}>Ingen kursanordnare</option>
             {courseorganizer.map((organizer) => (
               <option
                 key={organizer.id + Math.random()}

@@ -27,12 +27,13 @@ const createCourseOccasion = async (req, res) => {
 const getCourseOccasions = async (req, res) => {
   try {
     const sqlQuery =
-      "SELECT courseoccasion.id, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, courseorganizer.name AS organizer, courseorganizer.city FROM courseoccasion INNER JOIN courseorganizer ON courseorganizer.id = courseoccasion.courseorganizerid";
+      "SELECT courseoccasion.id, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, courseorganizer.name AS organizer, courseorganizer.city FROM courseoccasion LEFT JOIN courseorganizer ON courseorganizer.id = courseoccasion.courseorganizerid";
     let result = await db.query(sqlQuery);
     console.log(result.rows);
     if (result.rowCount > 0) {
    result.rows.map((obj) => {
-        obj.organizer = obj.name + " " + obj.city;
+    if(obj.organizer != null)
+        obj.organizer = obj.organizer + " " + obj.city;
         obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
         obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
       });
