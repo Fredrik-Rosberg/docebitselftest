@@ -107,7 +107,7 @@ const getCoursesByFKId = async (id, table) => {
 // select test.testname, test.maxscore, results.score from course inner join results on results.courseid = course.id inner join test on test.id = course.testid where course.id=100
 const getCourseByUserId = async (req, res) => {
   const sqlQuery =
-    "SELECT DISTINCT courseoccasion.id, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, courseorganizer.name as organizer from course inner join courseorganizer on course.courseoccasionid= courseorganizer.id inner join courseoccasion ON courseoccasion.id = course.courseoccasionid where course.userid=$1";
+    "SELECT DISTINCT courseoccasion.id, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, courseorganizer.name as organizer from course left join courseorganizer on course.courseoccasionid= courseorganizer.id inner join courseoccasion ON courseoccasion.id = course.courseoccasionid where course.userid=$1";
 
   let result = await db.query(sqlQuery, [req.params.id]);
   if (result.rowCount > 0) {

@@ -20,7 +20,7 @@ Content-Type: application/json
 GET  http://localhost:3001/api/course/organizer HTTP/1.1c
 
 ###
-GET  http://localhost:3001/api/course/user/47 HTTP/1.1
+GET  http://localhost:3001/api/course/user/2 HTTP/1.1
 
 ###
 GET  http://localhost:3001/api/course/result/100 HTTP/1.1

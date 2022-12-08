@@ -34,7 +34,7 @@ const OverviewUser = () => {
           <div key={obj.id + Math.random()} className="overview-row">
             <h2>Kurs: {obj.name}</h2>
             <div className="overview-row-header">
-              <h2>Kursanordnare: {obj.courseorganizer}</h2>
+              <h2>Kursanordnare: {obj.organizer}</h2>
               <h2>Datum: {`${obj.startdate} - ${obj.enddate}`}</h2>
             </div>
             <CourseRow id={obj.id} />
