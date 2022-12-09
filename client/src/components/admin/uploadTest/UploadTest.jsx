@@ -31,7 +31,7 @@ const UploadTest = () => {
         skipEmptyLines: true,
         complete: function (results) {
           if (results.errors.length > 0) {
-            setStatus("Fel filformat");
+            setStatus("Ogiltigt filformat");
           } else {
             setFile(results.data);
           }
