@@ -51,9 +51,9 @@ id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 name varchar(55) NOT NULL,
 startdate date NOT NULL,
 enddate date NOT NULL,
-courseorganizerid int NOT NULL,
+courseorganizerid int,
 FOREIGN KEY (courseorganizerid) REFERENCES courseorganizer(id)ON DELETE CASCADE,
-UNIQUE (name, courseorganizerid, startdate)
+UNIQUE (name, startdate)
 );
 
 CREATE TABLE IF NOT EXISTS course(

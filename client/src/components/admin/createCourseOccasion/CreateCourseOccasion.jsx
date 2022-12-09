@@ -23,7 +23,6 @@ const CreateCourseOccasion = () => {
   const [courseorganizer, setCourseorganizer] = useState([]);
   useEffect(() => {
     setNewCourseOccasion({
-      ...newCourseOccasion,
       name: "",
       startdate: "",
       enddate: "",
@@ -47,12 +46,6 @@ const CreateCourseOccasion = () => {
     const getOrganizers = async () => {
       let data = await getCourseOrganizers();
       setCourseorganizer(data);
-      if (data) {
-        setNewCourseOccasion({
-          ...newCourseOccasion,
-          courseorganizerid: data[0].id,
-        });
-      }
     };
     getOrganizers();
   }, []);
@@ -104,8 +97,8 @@ const CreateCourseOccasion = () => {
         <div className="form-row-item">
           <label htmlFor="courseoccasion-organizer">Kursanordnare:</label>
           <select
-            value={newCourseOccasion?.courseorganizerid}
             className="form-select select-organizer"
+            value={newCourseOccasion.courseorganizerid}
             onChange={(e) =>
               setNewCourseOccasion({
                 ...newCourseOccasion,
@@ -113,13 +106,13 @@ const CreateCourseOccasion = () => {
               })
             }
           >
-            {courseorganizer?.length > 0 &&
-              courseorganizer?.map((organizer) => (
-                <option
-                  key={organizer.id + Math.random()}
-                  value={organizer.id}
-                >{`${organizer.name} ${organizer.city}`}</option>
-              ))}
+            <option value={null}>Ingen kursanordnare</option>
+            {courseorganizer.map((organizer) => (
+              <option
+                key={organizer.id + Math.random()}
+                value={organizer.id}
+              >{`${organizer.name} ${organizer.city}`}</option>
+            ))}
           </select>
         </div>
         <div className="form-row-item">

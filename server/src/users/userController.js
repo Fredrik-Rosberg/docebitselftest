@@ -106,6 +106,7 @@ const changePassword = async (req, res) => {
   try {
     let sqlQuery = "UPDATE users SET hashedpassword=$1 WHERE id=$2";
     let result = await db.query(sqlQuery, [encryptedPassword, req.body.id]);
+    console.log(result);
     if (result.rowCount) {
       res.status(200).json({ message: "Lösenord ändrat", result: true });
     } else {
@@ -124,6 +125,7 @@ const checkCurrentPassword = async (req, res) => {
       "SELECT hashedpassword FROM users WHERE id =$1 and hashedpassword=$2",
       [req.params.id, hashedpassword]
     );
+    console.log(getCurrentPassword);
     if (getCurrentPassword.rowCount) {
       res.status(200).json({ message: "correct password", result: true });
     } else {

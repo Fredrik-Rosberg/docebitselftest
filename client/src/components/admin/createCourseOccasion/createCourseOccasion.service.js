@@ -16,7 +16,7 @@ export const createCourseOccasion = async (course) => {
 
 export const getCourseOrganizers = async () => {
   try {
-    let dataResponse = await fetch("/api/organizer");
+    let dataResponse = await fetch("/api/course/organizer");
     let response = await dataResponse.json();
     return response;
   } catch (error) {

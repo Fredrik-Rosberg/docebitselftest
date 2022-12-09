@@ -62,6 +62,7 @@ const deleteFetch = async (url, data) => {
   let result = await dataResponse.json();
 
   if (dataResponse.ok) {
+    console.log(result);
     return result;
   } else {
     return null;
