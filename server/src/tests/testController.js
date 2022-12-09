@@ -1,19 +1,13 @@
 const db = require("../../db");
 const { getCoursesByFKId } = require("../course/courseController");
 
-const getQuestions = (data) => {
-  let questions = data.filter((element) => Object.values(element)[0] != "");
-  return questions;
-};
-
 const getTestByName = async (testname) => {
   try {
     const sqlQuery = "SELECT id FROM test WHERE testname=$1";
-    let result = await db.query(sqlQuery, [testname]);
-    if (result.error) return error;
-    return result;
+    let testnameExist = await db.query(sqlQuery, [testname]);
+    return testnameExist.rows[0] ? true : false;
   } catch (error) {
-    return error;
+    console.log(error);
   }
 };
 
@@ -31,12 +25,11 @@ const getTests = async (req, res) => {
 };
 
 const getTestByUserId = async (req, res) => {
-  console.log(req.params.id)
+  console.log(req.params.id);
   const sqlQuery =
     "SELECT test.testname,course.id, test.id AS testid FROM course INNER JOIN test ON test.id = course.testid WHERE course.userid=$1";
-  let result = await db.query(sqlQuery,[req.params.id]);
+  let result = await db.query(sqlQuery, [req.params.id]);
   if (result.rowCount > 0) {
-    
     res.status(200).json(result.rows);
   } else {
     res.status(404).json({ error: "Inga test funna" });
@@ -57,58 +50,58 @@ const getQuestionsById = async (req, res) => {
   }
 };
 
-const uploadTest = async (req, res) => {
+const addTest = async (req, res) => {
   try {
     let data = req.body;
-    let correctCsvFile = data.file.some((element) =>
-      Object.keys(element).includes("Fråga")
-    );
-    if (correctCsvFile) {
-      let questions = getQuestions(data.file);
-      let uploaded = new Date().toLocaleDateString("se-SE");
-      let testnameExist = await getTestByName(data.name);
 
-      if (!testnameExist.rows[0]) {
-        let sqlQuery =
-          "INSERT INTO test(testname, uploaddate, maxscore) VALUES ($1, $2, $3) RETURNING id";
-        let result = await db.query(sqlQuery, [
-          data.name,
-          uploaded,
-          questions.length,
-        ]);
-        if (!result.error) {
-          let id = result.rows[0].id;
-          let sqlQuery2 =
-            "INSERT INTO question(questionnr, question, alternativea, alternativeb, alternativec, alternatived, alternativee, alternativef, alternativeg, alternativeh, alternativei, alternativej, alternativek, answer, testid) VALUES ($1, $2, $3, $4,$5, $6, $7,$8,$9,$10,$11,$12,$13,$14, $15)";
-          questions.forEach((row) => {
-            row.testid = id;
-            db.query(sqlQuery2, Object.values(row), (err, res) => {
-              if (err) {
-                throw new Error(err);
-              } else {
-                console.log("Inserted" + res.rowCount + " row", row);
-              }
-            });
-          });
-          res.json({ message: "Test tillagt" });
-        }
-      } else {
-        throw "Angivet testnamn existerar redan";
-      }
-    } else {
-      throw "Fel på csv-filen";
+    // Kollar om en fil existerar
+    if (Object.keys(data.file).length === 0) {
+      throw "Ogiltigt filformat";
     }
+    // Kollar att csv-filen är giltig: om csv filen innehåller 14 kolumner eller innehåller kolumnerna Fråga och FrågealternativK
+    if (
+      Object.keys(data.file[0]).length != 14 ||
+      !csvFileContainsSpecificColumns
+    ) {
+      throw "Ogiltig csv-fil";
+    }
+    // Kollar om testnamn redan existerar i databasen
+    if (await getTestByName(data.name)) {
+      throw "Angivet testnamn existerar redan";
+    }
+    // Hämtar alla frågor
+    let questions = getQuestions(data.file);
+    // Lägger till test i db
+    let sqlQuery =
+      "INSERT INTO test(testname, uploaddate, maxscore) VALUES ($1, $2, $3) RETURNING id";
+    let result = await db.query(sqlQuery, [
+      data.name,
+      new Date().toLocaleDateString("se-SE"),
+      questions.length,
+    ]);
+
+    if (result.error) {
+      throw "Något gick fel";
+    }
+    // Lägger till frågor i db om inga error skett vid insert av test
+    let id = result.rows[0].id;
+    let sqlQuery2 =
+      "INSERT INTO question(questionnr, question, alternativea, alternativeb, alternativec, alternatived, alternativee, alternativef, alternativeg, alternativeh, alternativei, alternativej, alternativek, answer, testid) VALUES ($1, $2, $3, $4,$5, $6, $7,$8,$9,$10,$11,$12,$13,$14, $15)";
+    questions.forEach((row) => {
+      row.testid = id;
+      db.query(sqlQuery2, Object.values(row), (err, res) => {
+        if (err) {
+          throw new Error(err);
+        }
+      });
+    });
+    // Allt har gått bra
+    res.json({ message: "Test tillagt" });
   } catch (error) {
     console.log({ Error: error });
-    if (error.code == 23505) {
-      res.status(400).json({ error: "Angivet testnamn existerar redan" });
-    } else {
-      res.status(400).json({ error: error });
-    }
+    res.status(400).json({ error: error });
   }
 };
-//Lagt till cascade på foreignkey i table question
-//Error hantering behövs på backend
 
 const deleteTest = async (req, res) => {
   try {
@@ -125,4 +118,22 @@ const deleteTest = async (req, res) => {
   }
 };
 
-module.exports = { uploadTest, deleteTest, getTestByUserId, getTests, getQuestionsById };
+const csvFileContainsSpecificColumns = () => {
+  return data.file.some(
+    (element) =>
+      Object.keys(element).includes("Fråga") &&
+      Object.keys(element).includes("FrågealternativK")
+  );
+};
+
+const getQuestions = (data) => {
+  let questions = data.filter((element) => Object.values(element)[0] != "");
+  return questions;
+};
+module.exports = {
+  addTest,
+  deleteTest,
+  getTestByUserId,
+  getTests,
+  getQuestionsById,
+};

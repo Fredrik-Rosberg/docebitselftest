@@ -2,7 +2,10 @@ const db = require("../../db");
 const { getCoursesByFKId } = require("../course/courseController");
 const createCourseOccasion = async (req, res) => {
   try {
-    console.log(req.body);
+    //Kollar att värde i request body finns
+    if (!req.body.name || req.body.courseorganizerid == "") {
+      throw "Vänligen fyll i alla uppgifter";
+    }
     const sqlQuery =
       "INSERT INTO courseoccasion (name, startdate, enddate, courseorganizerid) VALUES($1, $2,$3, $4)";
     let result = await db.query(sqlQuery, [
@@ -29,11 +32,10 @@ const getCourseOccasions = async (req, res) => {
     const sqlQuery =
       "SELECT courseoccasion.id, courseoccasion.name, courseoccasion.startdate, courseoccasion.enddate, courseorganizer.name AS organizer, courseorganizer.city FROM courseoccasion LEFT JOIN courseorganizer ON courseorganizer.id = courseoccasion.courseorganizerid";
     let result = await db.query(sqlQuery);
-    console.log(result.rows);
     if (result.rowCount > 0) {
-   result.rows.map((obj) => {
-    if(obj.organizer != null)
-        obj.organizer = obj.organizer + " " + obj.city;
+      result.rows.map((obj) => {
+        if (obj.organizer != null)
+          obj.organizer = obj.organizer + " " + obj.city;
         obj.startdate = new Date(obj.startdate).toLocaleDateString("se-SE");
         obj.enddate = new Date(obj.enddate).toLocaleDateString("se-SE");
       });

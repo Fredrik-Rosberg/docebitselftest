@@ -6,8 +6,9 @@ const MyAccount = () => {
 
   async function loadUser(userId) {
     let user = await getUserById(userId);
-    setUser(user);
-    console.log(user.role);
+    if (user) {
+      setUser(user);
+    }
   }
 
   useEffect(() => {
@@ -22,7 +23,12 @@ const MyAccount = () => {
       <form className="form-container my-account-form">
         <div className="form-row-item">
           <label htmlFor="firstname">Förnamn:</label>
-          <input type="text" name="firstname" disabled value={user.firstname} />
+          <input
+            type="text"
+            name="firstname"
+            disabled
+            value={user.firstname}
+          />
         </div>
         <div className="form-row-item">
           <label htmlFor="lastname">Efternamn:</label>
