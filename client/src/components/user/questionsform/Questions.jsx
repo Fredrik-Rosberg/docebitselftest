@@ -2,8 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import "./questions.css";
 import { useTimer } from "react-timer-hook";
 import UseTimer from "./Timer";
+import UseTimerModal from "./TimerModal";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import QuestionModalComponent from "../../modal/QuestionModal";
+import WarningModalComponent from "../../modal/WarningModalComponent";
 import AbortQuestionsModal from "../../modal/AbortQuestionModal";
 import Result from "../result/Result";
 import { useNavigate } from "react-router-dom";
@@ -25,12 +27,15 @@ const Questions = () => {
   const [wrongAnswers, SetWrongAnswers] = useState([{}]);
   const [openModal, setOpenModal] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
+  const [openModal3, setOpenModal3] = useState(false);
   const [getToResult, setGetToResult] = useState(false);
   const [facitMode, SetFacitMode] = useState(false);
   const [choosenTime, SetChoosenTime] = useContext(QuestionContext);
   const navigate = useNavigate();
   let time = new Date();
-  time.setSeconds(time.getSeconds() + 0.2 * 60);
+  time.setSeconds(time.getSeconds() + 1.1 * 60);
+  let timeModal = new Date();
+  timeModal.setSeconds(time.getSeconds() + (1.1 * 60) - 60);
   useEffect(() => {
     console.log(choosenTime);
     const facitBool = sessionStorage.getItem("facitmode");
@@ -189,6 +194,7 @@ const Questions = () => {
     sessionStorage.setItem("facitmode", "true");
     setGetToResult(true);
     setOpenModal(false);
+    setOpenModal3(false)
     console.log(wrongAnswers);
   }
 
@@ -232,6 +238,8 @@ const Questions = () => {
 
     navigate("/user");
   }
+
+  function setWarningModal() {}
   return (
     <>
       {!getToResult ? (
@@ -239,10 +247,21 @@ const Questions = () => {
           <p></p>
           <p>{useTimer.onExpire}</p>
           <div>
-
-            {!facitMode ? (choosenTime.testtime==0?"":
-
-              <UseTimer expiryTimestamp={time} onexpire={handleFinishTest} />
+            {!facitMode ? (
+              choosenTime.testtime == 0 ? (
+                ""
+              ) : (
+                <>
+                  <UseTimerModal
+                    expiryTimestamp={timeModal}
+                    onmodalwarning={() => setOpenModal3(true)}
+                  ></UseTimerModal>
+                  <UseTimer
+                    expiryTimestamp={time}
+                    onexpire={handleFinishTest}
+                  />
+                </>
+              )
             ) : (
               ""
             )}
@@ -352,6 +371,12 @@ const Questions = () => {
           setfacit={SetFacitMode}
         />
       )}
+      <WarningModalComponent
+        content="OBS!"
+        content2="Det återstår endast 1 minut. Därefter avslutas testet automatiskt"
+        onClose={() => setOpenModal3(!openModal3)}
+        show={openModal3}
+      ></WarningModalComponent>
       <AbortQuestionsModal
         content="Vill du avbryta testet? "
         content2="Resultatet kommer inte att sparas om du väljer att avbryta."

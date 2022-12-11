@@ -7,9 +7,9 @@ import "./chooseTest.css";
 const ChooseTest = () => {
   const [tests, setTests] = useState([]);
   const [choice, setChoice] = useState({
-    testid: "",
+    courseid: "",
     testtime: 75,
-    courseid: 0,
+    testid: 0,
   });
   const [startTest, SetStartTest] = useState(false);
 
@@ -29,11 +29,12 @@ const ChooseTest = () => {
 
    function handleChoice(){
     tests.forEach((element) => {
-      if (element.testid == choice.testid) {
-        setChoice({ ...choice, courseid: element.id });
+      if (element.courseid == choice.courseid) {
+        setChoice({ ...choice, testid: element.testid });
       }
-    });
 
+    });
+    console.log(tests)
     SetStartTest(true);
    }
 
@@ -55,11 +56,11 @@ const ChooseTest = () => {
             <select
               className="choose-test-field"
               onChange={(e) =>
-                setChoice({ ...choice, testid: parseInt(e.target.value) })
+                setChoice({ ...choice, courseid: parseInt(e.target.value) })
               }
             >
               {tests.map((test) => (
-                <option value={test.testid} key={test.id}>
+                <option value={test.id} key={test.id}>
                   {test.testname}
                 </option>
               ))}
