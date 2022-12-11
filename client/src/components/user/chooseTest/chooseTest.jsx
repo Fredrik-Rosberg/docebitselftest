@@ -29,10 +29,10 @@ const ChooseTest = () => {
 
    function handleChoice(){
     tests.forEach((element) => {
-      if (element.courseid == choice.courseid) {
+      if (element.id == choice.courseid) {
         setChoice({ ...choice, testid: element.testid });
       }
-
+    
     });
     console.log(tests)
     SetStartTest(true);
@@ -93,7 +93,7 @@ const ChooseTest = () => {
           </div>
 
           <div className="buttondiv">
-            <button onClick={() => handleChoice()}>Fortsätt</button>
+            <button onClick={ handleChoice}>Fortsätt</button>
           </div>
         </div>
       )}
