@@ -21,17 +21,10 @@ table {
   grid-template-columns: 350px 253px auto;
 }
 .course-table {
-  padding-left: 20px;
   display: grid;
-  grid-template-columns: 830px 150px;
+  width: 65vw;
   grid-template-rows: 260px 60px;
   align-items: flex-end;
-}
-.course-table > :nth-child(2) {
-  grid-area: 2;
-}
-.course-table > :nth-child(3) {
-  grid-area: 3/ 2;
 }
 
 .admin-main-button {

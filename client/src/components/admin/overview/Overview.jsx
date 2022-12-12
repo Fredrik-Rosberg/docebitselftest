@@ -32,13 +32,13 @@ const Overview = () => {
     {
       field: "organizer",
       headerName: "Kursanordnare",
-      width: 126,
+      width: 140
     },
-    { field: "name", headerName: "Kursnamn", width: 120 },
-    { field: "startdate", headerName: "Startdatum", width: 120 },
-    { field: "enddate", headerName: "Slutdatum", width: 120 },
-    { field: "testname", headerName: "Test", width: 130 },
-    { field: "email", headerName: "Användarnamn", width: 214 },
+    { field: "name", headerName: "Kursnamn", width: 140 },
+    { field: "startdate", headerName: "Startdatum", width: 140 },
+    { field: "enddate", headerName: "Slutdatum", width: 140 },
+    { field: "testname", headerName: "Test", width: 140 },
+    { field: "email", headerName: "Användarnamn", width: 297 },
   ]);
   useEffect(() => {
     const getCours = async () => {
@@ -110,7 +110,7 @@ const Overview = () => {
         <div className="course-table">
           <div
             className="ag-theme-alpine"
-            style={{ height: 220, width: 832, fontFamily: "Raleway" }}
+            style={{ height: 220, width: 1000, fontFamily: "Raleway" }}
           >
             <AgGridReact
               ref={gridRef}

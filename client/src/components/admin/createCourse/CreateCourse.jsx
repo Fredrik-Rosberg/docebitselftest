@@ -34,13 +34,13 @@ const Course = () => {
       {
         field: "occasion.organizer",
         headerName: "Kursanordnare",
-        width: 150,
+        width: 140,
       },
-      { field: "occasion.name", headerName: "Kursnamn", width: 120 },
-      { field: "occasion.startdate", headerName: "Startdatum", width: 120 },
-      { field: "occasion.enddate", headerName: "Slutdatum", width: 120 },
-      { field: "test.testname", headerName: "Test", width: 130 },
-      { field: "user.email", headerName: "Användarnamn", width: 214 },
+      { field: "occasion.name", headerName: "Kursnamn", width: 140 },
+      { field: "occasion.startdate", headerName: "Startdatum", width: 140 },
+      { field: "occasion.enddate", headerName: "Slutdatum", width: 140 },
+      { field: "test.testname", headerName: "Test", width: 140 },
+      { field: "user.email", headerName: "Användarnamn", width: 297 },
       { field: "exists", hide: true },
     ],
 
@@ -126,7 +126,7 @@ const Course = () => {
         <div className="course-table">
           <div
             className="ag-theme-alpine"
-            style={{ height: 220, width: 832, fontFamily: "Raleway" }}
+            style={{ height: 220, width: 1000, fontFamily: "Raleway" }}
           >
             <AgGridReact
               ref={gridRef}
