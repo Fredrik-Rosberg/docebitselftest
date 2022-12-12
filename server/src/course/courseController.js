@@ -10,48 +10,45 @@ const getCourseById = async (data) => {
 };
 const createCourses = async (req, res) => {
   let responseArray = [];
+
   let dataArray = req.body;
-  console.log(dataArray);
+
   let sqlQuery =
     "INSERT INTO course(courseoccasionid, userid, testid) VALUES ($1, $2, $3)";
 
   let iteration = 1;
-  try {
-    dataArray.forEach(async (data) => {
-      let result = await getCourseById(data);
-      if ((await result).rows[0]) {
-        responseArray.push(result.rows[0]);
-      }
 
-      if (iteration == dataArray.length) {
-        if (responseArray.length > 0) {
-          res
-            .status(400)
-            .json({ data: responseArray, error: "Kurs(er) existerar redan" });
-        } else {
-          try {
-            dataArray.map(async (obj) => {
-              await db.query(sqlQuery, [
-                obj.courseoccasionid,
-                obj.userid,
-                obj.testid,
-              ]);
-            });
-
-            res.status(200).json({
-              addcount: dataArray.length,
-              message: "Kurs(er) tillagda",
-            });
-          } catch (error) {
-            res.status(404).json(error);
-          }
-        }
+  dataArray.forEach(async (data) => {
+    try {
+      await db.query(sqlQuery, [
+        data.courseoccasionid,
+        data.userid,
+        data.testid,
+      ]);
+    } catch (error) {
+      responseArray.push(error.detail);
+    }
+    console.log(iteration);
+    if (iteration == dataArray.length) {
+      if (responseArray.length > 0) {
+        res.status(400).json({
+          message:
+            dataArray.length - responseArray.length + " kurs(er) tillagda",
+          errorcount: responseArray.length,
+          errormessage: `${responseArray.length} kurs(er) existerar redan`,
+          error: responseArray,
+        });
+      } else {
+        res
+          .status(200)
+          .json({
+            addcount: dataArray.length,
+            message: `${dataArray.length} kurs(er) tillagda`,
+          });
       }
-      iteration++;
-    });
-  } catch (error) {
-    console.log(error);
-  }
+    }
+    iteration++;
+  });
 };
 
 const getCourse = async (req, res) => {

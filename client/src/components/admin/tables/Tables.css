@@ -2,7 +2,7 @@
   display: grid;
   grid-template-rows: auto 50px auto;
   margin-left: -80px;
-  margin-top: -80px;
+  margin-top: -85px;
 }
 td {
   padding: 0;
@@ -24,7 +24,7 @@ table {
   padding-left: 20px;
   display: grid;
   grid-template-columns: 830px 150px;
-  grid-template-rows: 280px 60px;
+  grid-template-rows: 260px 60px;
   align-items: flex-end;
 }
 .course-table > :nth-child(2) {
@@ -72,7 +72,18 @@ table {
 
 .table-message {
   display: grid;
-  grid-template-columns: auto auto;
-  justify-content: end;
-  height: 40px;
+  grid-template-columns: 55vw auto;
+  width: 65vw;
+  height: 80px;
+}
+
+.table-button {
+  display: grid;
+  width: 65vw;
+}
+
+.tables-messages {
+  justify-self: flex-end;
+  text-align: start;
+  width: auto;
 }

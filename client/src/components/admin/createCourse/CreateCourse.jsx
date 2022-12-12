@@ -60,6 +60,9 @@ const Course = () => {
   const rowSelectionType = "single";
 
   async function handleAddCourse() {
+    setErrorMessage("");
+    setMessage("");
+
     const uniqueIds = new Set();
     let concatenatedArray = courses.concat(selectedCourse);
     const unique = concatenatedArray.filter((element) => {
@@ -84,13 +87,15 @@ const Course = () => {
   const saveCourses = async () => {
     let result = await createCourses(courses);
     if (result.message) {
+      console.log(result);
       setMessage(result.message);
       setShowMessages(true);
       setCourses([]);
-    } else if (result.error) {
+    }
+    if (result.error) {
       console.log(result.error);
-      setCourses(courses);
-      setErrorMessage(result.error);
+      setCourses([]);
+      setErrorMessage(result.errormessage);
       setShowErrorMessages(true);
     }
   };
@@ -103,19 +108,21 @@ const Course = () => {
           <TestTable />
           <CourseOccasionTable />
         </div>
-        {selectedCourse.length > 0 ? (
-          <button className="form-button" onClick={handleAddCourse}>
-            Lägg till rad(er)
-          </button>
-        ) : (
-          <button
-            disabled={true}
-            className="form-button"
-            onClick={handleAddCourse}
-          >
-            Lägg till rad(er)
-          </button>
-        )}
+        <div className="table-button">
+          {selectedCourse.length > 0 ? (
+            <button className="form-button" onClick={handleAddCourse}>
+              Lägg till rad(er)
+            </button>
+          ) : (
+            <button
+              disabled={true}
+              className="form-button"
+              onClick={handleAddCourse}
+            >
+              Lägg till rad(er)
+            </button>
+          )}
+        </div>
         <div className="course-table">
           <div
             className="ag-theme-alpine"
@@ -136,7 +143,7 @@ const Course = () => {
           </button>
         </div>
         <div className="table-message">
-          <div className="messages">
+          <div className="messages tables-messages">
             {showMessages && (
               <>
                 <p className="success-message">{message}</p>
