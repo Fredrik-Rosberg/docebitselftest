@@ -33,11 +33,10 @@ const Questions = () => {
   const [choosenTime, SetChoosenTime] = useContext(QuestionContext);
   const navigate = useNavigate();
   let time = new Date();
-  time.setSeconds(time.getSeconds() + 1.1 * 60);
+  time.setSeconds(time.getSeconds() + choosenTime.testtime * 60);
   let timeModal = new Date();
-  timeModal.setSeconds(time.getSeconds() + (1.1 * 60) - 60);
+  timeModal.setSeconds(time.getSeconds() + 1.1 * 60 - 60);
   useEffect(() => {
-    console.log(choosenTime);
     const facitBool = sessionStorage.getItem("facitmode");
     resultHandling();
     if (localStorageCount.length + 1 != sessionStorage.length) {
@@ -194,7 +193,7 @@ const Questions = () => {
     sessionStorage.setItem("facitmode", "true");
     setGetToResult(true);
     setOpenModal(false);
-    setOpenModal3(false)
+    setOpenModal3(false);
     console.log(wrongAnswers);
   }
 

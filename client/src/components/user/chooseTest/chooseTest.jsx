@@ -18,8 +18,6 @@ const ChooseTest = () => {
       const data = await getTestByUserId(localStorage.getItem("user"));
       setTests(data);
       setChoice({ ...choice, testid: data[0].testid, courseid: data[0].id });
-
-      console.log(data);
     }
 
     fetchTests();
@@ -34,12 +32,8 @@ const ChooseTest = () => {
       }
     
     });
-    console.log(tests)
     SetStartTest(true);
    }
-
-  console.log(choice);
-  console.log(tests);
 
   return (
     <>
