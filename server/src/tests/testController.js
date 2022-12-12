@@ -61,7 +61,7 @@ const addTest = async (req, res) => {
     // Kollar att csv-filen är giltig: om csv filen innehåller 14 kolumner eller innehåller kolumnerna Fråga och FrågealternativK
     if (
       Object.keys(data.file[0]).length != 14 ||
-      !csvFileContainsSpecificColumns
+      !csvFileContainsSpecificColumns(data.file)
     ) {
       throw "Ogiltig csv-fil";
     }
@@ -118,8 +118,8 @@ const deleteTest = async (req, res) => {
   }
 };
 
-const csvFileContainsSpecificColumns = () => {
-  return data.file.some(
+const csvFileContainsSpecificColumns = (data) => {
+  return data.some(
     (element) =>
       Object.keys(element).includes("Fråga") &&
       Object.keys(element).includes("FrågealternativK")
