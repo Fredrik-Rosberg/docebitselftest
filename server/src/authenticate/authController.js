@@ -8,7 +8,7 @@ const signInUser = async (req, res) => {
   let encryptedPassword = encrypt(req.body.password);
   try {
     let user = await db.query(
-      "SELECT id, email FROM users WHERE email =$1 AND hashedpassword=$2",
+      "SELECT id, email, role FROM users WHERE email =$1 AND hashedpassword=$2",
       [req.body.email, encryptedPassword]
     );
 
@@ -18,7 +18,12 @@ const signInUser = async (req, res) => {
       req.session.user.loggedIn = true;
       res
         .status(200)
-        .json({ loggedIn: true, message: "Inloggad", userId: user.id });
+        .json({
+          loggedIn: true,
+          message: "Inloggad",
+          userId: user.id,
+          role: user.role,
+        });
     } else {
       res
         .status(401)
