@@ -17,23 +17,20 @@ const ChooseTest = () => {
     async function fetchTests() {
       const data = await getTestByUserId(localStorage.getItem("user"));
       setTests(data);
-      setChoice({ ...choice, testid: data[0].testid, courseid: data[0].id });
+      setChoice({ ...choice, testid: data[0]?.testid, courseid: data[0]?.id });
     }
 
     fetchTests();
   }, []);
 
-
-
-   function handleChoice(){
+  function handleChoice() {
     tests.forEach((element) => {
       if (element.id == choice.courseid) {
         setChoice({ ...choice, testid: element.testid });
       }
-    
     });
     SetStartTest(true);
-   }
+  }
 
   return (
     <>
@@ -53,11 +50,12 @@ const ChooseTest = () => {
                 setChoice({ ...choice, courseid: parseInt(e.target.value) })
               }
             >
-              {tests.map((test) => (
-                <option value={test.id} key={test.id}>
-                  {test.testname}
-                </option>
-              ))}
+              {tests.length > 0 &&
+                tests.map((test) => (
+                  <option value={test.id} key={test.id}>
+                    {test.testname}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="midsection">
@@ -87,7 +85,7 @@ const ChooseTest = () => {
           </div>
 
           <div className="buttondiv">
-            <button onClick={ handleChoice}>Fortsätt</button>
+            <button onClick={handleChoice}>Fortsätt</button>
           </div>
         </div>
       )}
